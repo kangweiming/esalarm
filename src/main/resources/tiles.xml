@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC  "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">  
+
+<tiles-definitions>  
+ 
+   <!-- Base Definition -->
+   <definition name="base-definition" 
+       template="/WEB-INF/tiles/layouts/defaultLayout.jsp">  
+       <put-attribute name="title" value="" />  
+       <put-attribute name="header" value="/WEB-INF/tiles/template/defaultHeader.jsp" />  
+       <put-attribute name="menu" value="/WEB-INF/tiles/template/defaultMenu.jsp" />  
+       <put-attribute name="body" value="" />  
+       <put-attribute name="footer" value="/WEB-INF/tiles/template/defaultFooter.jsp" />  
+   </definition>  
+   
+   <!-- login definition -->
+   <definition name="login-definition" 
+       template="/WEB-INF/tiles/layouts/loginLayout.jsp">  
+       <put-attribute name="title" value="" />  
+       <put-attribute name="body" value="" />  
+   </definition>   
+ 
+   <!-- userList Page -->
+   <definition name="tiles-userList" extends="base-definition">  
+       <put-attribute name="title" value="人员信息" />  
+       <put-attribute name="body" value="/WEB-INF/tiles/user/userList.jsp" />  
+   </definition>  
+   
+   <!-- login Page -->
+   <definition name="tiles-login" extends="login-definition">  
+       <put-attribute name="title" value="登录" />  
+       <put-attribute name="body" value="/WEB-INF/tiles/login.jsp" />  
+   </definition>    
+   
+   <!-- welcome Page -->
+   <definition name="tiles-welcome" extends="login-definition">  
+       <put-attribute name="title" value="user page" />  
+       <put-attribute name="body" value="/WEB-INF/tiles/welcom.jsp" />  
+   </definition>    
+ 
+   <!-- admin Page -->
+   <definition name="tiles-admin" extends="login-definition">  
+       <put-attribute name="title" value="admin page" />  
+       <put-attribute name="body" value="/WEB-INF/tiles/admin.jsp" />  
+   </definition>    
+
+   <!-- dba Page -->
+   <definition name="tiles-dba" extends="login-definition">  
+       <put-attribute name="title" value="dba page" />  
+       <put-attribute name="body" value="/WEB-INF/tiles/dba.jsp" />  
+   </definition> 
+   
+   <!-- accessDenied Page -->
+   <definition name="tiles-accessDenied" extends="login-definition">  
+       <put-attribute name="title" value="accessDenied page" />  
+       <put-attribute name="body" value="/WEB-INF/tiles/accessDenied.jsp" />  
+   </definition>  
+    
+ 
+</tiles-definitions>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="esalarm">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="toolkit-common-lang-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/toolkit-common-lang/toolkit-common-lang">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="toolkit-common-convert-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/toolkit-common-convert/toolkit-common-convert">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="toolkit-common-collection-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/toolkit-common-collection/toolkit-common-collection">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="esclient-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/esclient/esclient">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="esalarm"/>
+        <property name="java-output-path" value="/esalarm/target/classes"/>
+    </wb-module>
+</project-modules>
