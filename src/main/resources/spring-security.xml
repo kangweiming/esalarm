@@ -3,6 +3,10 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd  
     http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd">
 
+	<!-- 从内存中获取用户权限 -->
+	
+	
+	
 	<!-- 静态资源 -->
 	<http pattern="/css/**" security="none"/>
 	<http pattern="/images/**" security="none"/>
@@ -28,7 +32,7 @@
 		<intercept-url pattern="/**" access="hasRole('USER') or hasRole('ADMIN')" />
 				
 		<!-- 自定义登录页面  -->
-		<form-login login-page="/login" username-parameter="ssoId"
+		<form-login login-page="/login" username-parameter="userName"
 			password-parameter="password" authentication-success-handler-ref="customSuccessHandler"
 			authentication-failure-url="/login?error"
 			/>
@@ -39,9 +43,7 @@
 
 	<!-- 权限管理者 -->
 	<authentication-manager>
-		<!-- 权限提供者 -->
 		<authentication-provider>
-			<!-- 可提供登陆访问的用户 -->
 			<user-service>
 				<user name="kwm" password="123456" authorities="ROLE_USER" />
 				<user name="admin" password="123456" authorities="ROLE_ADMIN" />

@@ -8,8 +8,6 @@
 
 http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
-
-
 	<display-name>Archetype Created Web Application</display-name>
 
 	<!-- Spring security begin 这样配置不好用，貌似没有加载,在配置security之前已经在<context-param>配置了mybatis，
@@ -67,7 +65,11 @@ http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 	<!-- load Spring security和mybatis的配置文件 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:spring-mybatis.xml,classpath:spring-security.xml</param-value>
+		 
+		<param-value>classpath:spring-mybatis.xml,classpath:spring-security-db.xml</param-value>
+		<!-- 
+		<param-value>classpath:spring-mybatis.xml</param-value>
+		-->
 	</context-param>
 	
 	<!-- 编码过滤器 -->

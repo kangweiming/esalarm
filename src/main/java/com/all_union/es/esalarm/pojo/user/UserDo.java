@@ -1,7 +1,14 @@
 package com.all_union.es.esalarm.pojo.user;
 
-public class UserDo {
-    private Integer id;
+import java.io.Serializable;
+
+public class UserDo implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4667970326611811861L;
+
+	private Integer id;
 
     private String userName;
 

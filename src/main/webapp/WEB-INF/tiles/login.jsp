@@ -37,8 +37,8 @@
 			<tr>
 				<td align="center"><br />
 					<P>
-						<b>User Name:</b> <INPUT TYPE="text" id="username"
-							NAME="ssoId" placeholder="Enter Username" 
+						<b>User Name:</b> <INPUT TYPE="text" id="userName"
+							NAME="userName" placeholder="Enter Username" 
 							SIZE="15" required> <br />
 						<br /></td>
 			</tr>

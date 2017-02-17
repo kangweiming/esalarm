@@ -34,19 +34,19 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public UserDo getUserById(int userId) {
-		logger.debug("done");
+		logger.debug("excute ...");
 		return this.userDao.selectByPrimaryKey(userId);
 	}
 
 	@Override
 	public int countUserByUserName(UserQuery query) {
-		logger.debug("done");
+		logger.debug("excute ...");
 		return this.userDao.countUserByUserName(query);
 	}
 
 	@Override
 	public List<UserDo> listUserByUserName(UserQuery query) {
-		logger.debug("done");
+		logger.debug("excute ...");
 		
 		//获得总数
 		int count = this.userDao.countUserByUserName(query);
