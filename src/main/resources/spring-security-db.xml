@@ -1,0 +1,60 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd  
+    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+
+	<!-- 从数据库中获取用户权限 -->
+	<!-- 静态资源 -->
+	<http pattern="/css/**" security="none" />
+	<http pattern="/images/**" security="none" />
+	<http pattern="/js/**" security="none" />
+
+	<!-- 开启默认的拦截器 -->
+	<http use-expressions="true" auto-config="true">
+		<!-- <headers/> -->
+
+		<!-- 静态资源 这么除了/login好用，其他页面获取不到资源 <intercept-url pattern="/css/**" access="anonymous"/> 
+			<intercept-url pattern="/images/**" access="anonymous"/> <intercept-url pattern="/js/**" 
+			access="anonymous"/> -->
+
+		<!-- 允许访问的 uri -->
+		<intercept-url pattern="/login*" access="permitAll" />
+		<intercept-url pattern="/logout*" access="permitAll" />
+		<intercept-url pattern="/home" access="hasRole('USER')" />
+		<intercept-url pattern="/admin**"
+			access="hasRole('ADMIN') and hasRole('DBA')" />
+		<intercept-url pattern="/dba**" access="hasRole('DBA')" />
+
+		<!-- 其余uri的规则 -->
+		<intercept-url pattern="/**"
+			access="hasRole('USER') or hasRole('ADMIN')" />
+
+		<!-- 自定义登录页面  -->
+		<!-- 
+			form-login如果不配置authentication-success-handler-ref="customSuccessHandler"，
+			则默认调用SavedRequestAwareAuthenticationSuccessHandler，会自动记忆登录前请求的页面
+		 -->
+		<form-login login-page="/login" username-parameter="userName"
+			password-parameter="password"  authentication-success-handler-ref="customSuccessHandler"
+			authentication-failure-url="/login?error" />
+		<csrf />
+		<access-denied-handler error-page="/Access_Denied" />
+
+	</http>
+
+	<!-- 权限管理者 -->
+	<authentication-manager>
+		<authentication-provider user-service-ref="customUserDetailsService" />
+	</authentication-manager>
+
+	<!-- 处理spring security用户信息 -->
+	<beans:bean id="customUserDetailsService"
+		class="com.all_union.es.esalarm.service.security.impl.CustomUserDetailsService" />
+		
+	<!-- 身份认证成功后，处理方法 -->
+	<beans:bean id="customSuccessHandler"
+		class="com.all_union.es.esalarm.security.config.CustomSaveReuestAwareSuccessHandler" />
+	
+
+</beans:beans>
+	

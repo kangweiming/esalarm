@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.all_union.es.esalarm.dao.sysuser.SysUserDoMapper">
+	<resultMap id="BaseResultMap"
+		type="com.all_union.es.esalarm.pojo.sysuser.SysUserDo">
+		<id column="ID" jdbcType="BIGINT" property="id" />
+		<result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+		<result column="PASSWORD" jdbcType="VARCHAR" property="password" />
+		<result column="FIRST_NAME" jdbcType="VARCHAR" property="firstName" />
+		<result column="LAST_NAME" jdbcType="VARCHAR" property="lastName" />
+		<result column="NICK_NAME" jdbcType="VARCHAR" property="nickName" />
+		<result column="EMAIL" jdbcType="VARCHAR" property="email" />
+		<result column="STATE" jdbcType="VARCHAR" property="state" />
+		<result column="GMT_CREATE" jdbcType="TIMESTAMP" property="gmtCreate" />
+		<result column="GMT_MODIFIED" jdbcType="TIMESTAMP" property="gmtModified" />
+		<result column="GMT_LAST_LOGIN" jdbcType="TIMESTAMP" property="gmtLastLogin" />
+	</resultMap>
+
+	<!-- add by kwm begin -->
+	<resultMap id="WithUserProfileResultMap"
+		type="com.all_union.es.esalarm.pojo.sysuser.SysUserDo" extends="BaseResultMap">
+		<collection property="userProfiles"
+			ofType="com.all_union.es.esalarm.pojo.sysuser.UserProfileDo">
+			<id column="p_id" property="id" jdbcType="VARCHAR" />
+			<result column="p_type" property="type" jdbcType="VARCHAR" />
+		</collection>
+	</resultMap>
+
+	<!-- add by kwm end -->
+
+	<sql id="Base_Column_List">
+		ID, USER_NAME, PASSWORD, FIRST_NAME, LAST_NAME, NICK_NAME, EMAIL, STATE,
+		GMT_CREATE,
+		GMT_MODIFIED, GMT_LAST_LOGIN
+	</sql>
+
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_user
+		where ID = #{id,jdbcType=BIGINT}
+	</select>
+	<!-- add by kwm begin -->
+	<select id="selectByUserName" parameterType="java.lang.String"
+		resultMap="WithUserProfileResultMap">
+		select
+		u.*,
+		p.id as p_id,
+		p.type as p_type
+		from sys_user u ,profile_relation r,user_profile p
+		where
+		1=1
+		and u.user_name = #{userName,jdbcType=VARCHAR}
+		and r.USER_ID = u.id
+		and r.USER_PROFILE_ID = p.id
+
+	</select>
+	<!-- add by kwm end -->
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from sys_user
+		where ID = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.all_union.es.esalarm.pojo.sysuser.SysUserDo">
+		insert into sys_user (ID, USER_NAME, PASSWORD,
+		FIRST_NAME, LAST_NAME, NICK_NAME,
+		EMAIL, STATE, GMT_CREATE,
+		GMT_MODIFIED, GMT_LAST_LOGIN)
+		values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR},
+		#{password,jdbcType=VARCHAR},
+		#{firstName,jdbcType=VARCHAR}, #{lastName,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR},
+		#{email,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR},
+		#{gmtCreate,jdbcType=TIMESTAMP},
+		#{gmtModified,jdbcType=TIMESTAMP}, #{gmtLastLogin,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="com.all_union.es.esalarm.pojo.sysuser.SysUserDo">
+		insert into sys_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="userName != null">
+				USER_NAME,
+			</if>
+			<if test="password != null">
+				PASSWORD,
+			</if>
+			<if test="firstName != null">
+				FIRST_NAME,
+			</if>
+			<if test="lastName != null">
+				LAST_NAME,
+			</if>
+			<if test="nickName != null">
+				NICK_NAME,
+			</if>
+			<if test="email != null">
+				EMAIL,
+			</if>
+			<if test="state != null">
+				STATE,
+			</if>
+			<if test="gmtCreate != null">
+				GMT_CREATE,
+			</if>
+			<if test="gmtModified != null">
+				GMT_MODIFIED,
+			</if>
+			<if test="gmtLastLogin != null">
+				GMT_LAST_LOGIN,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="userName != null">
+				#{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				#{password,jdbcType=VARCHAR},
+			</if>
+			<if test="firstName != null">
+				#{firstName,jdbcType=VARCHAR},
+			</if>
+			<if test="lastName != null">
+				#{lastName,jdbcType=VARCHAR},
+			</if>
+			<if test="nickName != null">
+				#{nickName,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=VARCHAR},
+			</if>
+			<if test="gmtCreate != null">
+				#{gmtCreate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="gmtModified != null">
+				#{gmtModified,jdbcType=TIMESTAMP},
+			</if>
+			<if test="gmtLastLogin != null">
+				#{gmtLastLogin,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.all_union.es.esalarm.pojo.sysuser.SysUserDo">
+		update sys_user
+		<set>
+			<if test="userName != null">
+				USER_NAME = #{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				PASSWORD = #{password,jdbcType=VARCHAR},
+			</if>
+			<if test="firstName != null">
+				FIRST_NAME = #{firstName,jdbcType=VARCHAR},
+			</if>
+			<if test="lastName != null">
+				LAST_NAME = #{lastName,jdbcType=VARCHAR},
+			</if>
+			<if test="nickName != null">
+				NICK_NAME = #{nickName,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				EMAIL = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				STATE = #{state,jdbcType=VARCHAR},
+			</if>
+			<if test="gmtCreate != null">
+				GMT_CREATE = #{gmtCreate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="gmtModified != null">
+				GMT_MODIFIED = #{gmtModified,jdbcType=TIMESTAMP},
+			</if>
+			<if test="gmtLastLogin != null">
+				GMT_LAST_LOGIN = #{gmtLastLogin,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.all_union.es.esalarm.pojo.sysuser.SysUserDo">
+		update sys_user
+		set USER_NAME = #{userName,jdbcType=VARCHAR},
+		PASSWORD = #{password,jdbcType=VARCHAR},
+		FIRST_NAME = #{firstName,jdbcType=VARCHAR},
+		LAST_NAME = #{lastName,jdbcType=VARCHAR},
+		NICK_NAME = #{nickName,jdbcType=VARCHAR},
+		EMAIL = #{email,jdbcType=VARCHAR},
+		STATE = #{state,jdbcType=VARCHAR},
+		GMT_CREATE = #{gmtCreate,jdbcType=TIMESTAMP},
+		GMT_MODIFIED = #{gmtModified,jdbcType=TIMESTAMP},
+		GMT_LAST_LOGIN = #{gmtLastLogin,jdbcType=TIMESTAMP}
+		where ID = #{id,jdbcType=BIGINT}
+	</update>
+	
+	<update id="updateLastLoginByUserName" parameterType="java.lang.String">
+		update sys_user
+		set GMT_LAST_LOGIN = NOW()
+		where USER_NAME = #{userName,jdbcType=VARCHAR}
+	</update>	
+</mapper>
