@@ -24,6 +24,7 @@
 		
 		<!-- 允许访问的 uri -->
 		<intercept-url pattern="/login*" access="permitAll"/>
+		<intercept-url pattern="/logout*" access="permitAll"/>
 		<intercept-url pattern="/home" access="hasRole('USER')" />
 		<intercept-url pattern="/admin**" access="hasRole('ADMIN')" />
 		<intercept-url pattern="/dba**" access="hasRole('ADMIN') and hasRole('DBA')" />

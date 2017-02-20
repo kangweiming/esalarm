@@ -34,6 +34,7 @@ import org.springframework.stereotype.Component;
 @Component  
 public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {  
    
+	// SavedRequestAwareAuthenticationSuccessHandler
 	private static Logger logger = LogManager.getLogger(CustomSuccessHandler.class);
 	
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();  
@@ -42,12 +43,12 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication)  
             throws IOException {  
         String targetUrl = determineTargetUrl(authentication);  
-        logger.debug("do method handle");
+        logger.debug("do handle");
         if (response.isCommitted()) {  
         	logger.debug("Can't redirect");
             return;  
         }  
-   
+        
         redirectStrategy.sendRedirect(request, response, targetUrl);  
     }  
    
@@ -65,14 +66,16 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         for (GrantedAuthority a : authorities) {  
             roles.add(a.getAuthority());  
         }  
-   
         if (isDba(roles)) {  
-            url = "/dba";  
+//            url = "/dba";
+        	url = "/userList";        	
         } else if (isAdmin(roles)) {  
-            //url = "/admin";  
+//            url = "/admin";  
         	url = "/userList";
         } else if (isUser(roles)) {  
-            url = "/home";  
+//            url = "/home";  
+        	url = "/userList";
+            
         } else {  
             url = "/accessDenied";  
         }  

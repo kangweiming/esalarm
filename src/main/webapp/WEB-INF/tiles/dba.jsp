@@ -3,7 +3,7 @@
 	pageEncoding="UTF-8"%>
 
 <div style="margin">	
-Dear <strong>${user}</strong>, Welcome to DBA Page.  
+Dear <strong>${user.username}</strong>, Welcome to DBA Page.  
     <a href="<c:url value="/logout" />">Logout</a>  
-    
+      
 </div>    	

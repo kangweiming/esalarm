@@ -17,7 +17,7 @@ http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 		<param-value>classpath:spring-security.xml</param-value>
 	</context-param>
 	-->
-	
+	<!-- Spring security begin -->
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -31,16 +31,6 @@ http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 	<!-- Spring security end -->
 
 	<!-- log4j2 -->
-	<context-param>
-		<param-name>isLog4jAutoInitializationDisabled</param-name>
-		<param-value>false</param-value>
-	</context-param>
-
-	<context-param>
-		<param-name>log4jConfiguration</param-name>
-		<param-value>classpath:log4j2.xml</param-value>
-	</context-param>
-
 	<listener>
 		<listener-class>org.apache.logging.log4j.web.Log4jServletContextListener</listener-class>
 	</listener>
@@ -49,6 +39,7 @@ http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 		<filter-name>log4jServletFilter</filter-name>
 		<filter-class>org.apache.logging.log4j.web.Log4jServletFilter</filter-class>
 	</filter>
+		
 	<filter-mapping>
 		<filter-name>log4jServletFilter</filter-name>
 		<url-pattern>/*</url-pattern>
@@ -59,9 +50,8 @@ http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 		<dispatcher>ASYNC</dispatcher><!-- Servlet 3.0 w/ disabled auto-initialization 
 			only; not supported in 2.5 -->
 	</filter-mapping>
-
 	<!-- end -->
-
+	
 	<!-- load Spring security和mybatis的配置文件 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
@@ -113,9 +103,8 @@ http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 		<!-- 此处可以可以配置成*.do，对应struts的后缀习惯 -->
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-	<!-- Spring security begin -->
 
-	<!-- Spring security end -->
+
 	<!-- add for static resources begin -->
 	<servlet-mapping>
 		<servlet-name>default</servlet-name>

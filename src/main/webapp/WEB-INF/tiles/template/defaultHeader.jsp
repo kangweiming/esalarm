@@ -3,8 +3,9 @@
 <div class="header" id="top">
 <div class="section">
     <div class="floatf title">
-        <h1>ALL-PAY平台实时监控任务管理系统</h1>
+        <h1>ALL-PAY平台实时监控任务管理系统 </h1>
+        
     </div>
-    <p>Welcome ${loginID} | <a class="logoutlink" href="<c:url value="/logout" />">Logout</a></p>
+    <p>Welcome ${user.username} | <a class="logoutlink" href="<c:url value="/logout" />">Logout</a></p>
 </div>
 </div>

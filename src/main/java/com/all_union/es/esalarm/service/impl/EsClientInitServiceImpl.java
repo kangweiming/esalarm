@@ -32,7 +32,7 @@ public class EsClientInitServiceImpl implements EsClientInitService {
 	 * @see com.all_union.es.esalarm.service.EsClientInitService#EsClientInit()
 	 */
 	@Override
-	@PostConstruct
+	@PostConstruct //初始化
 	public void init() {
 		// 执行esclient.jar中的初始化流程
 		Registory.init();

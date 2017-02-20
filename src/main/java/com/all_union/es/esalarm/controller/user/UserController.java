@@ -3,8 +3,10 @@
  */
 package com.all_union.es.esalarm.controller.user;
 
+import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -16,9 +18,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.all_union.es.esalarm.controller.ControllerBase;
 import com.all_union.es.esalarm.dao.user.UserQuery;
 import com.all_union.es.esalarm.pojo.user.UserDo;
 import com.all_union.es.esalarm.service.user.UserService;
+import com.all_union.es.esclient.test.GetData;
 import com.kwm.common.convert.Convert;
 import com.kwm.common.lang.DateUtil;
 import com.kwm.common.lang.StringUtil;;
@@ -32,7 +36,7 @@ import com.kwm.common.lang.StringUtil;;
 //处理请求地址映射的注解,表示类中的所有响应请求的方法都是以该地址作为父路径 
 @Controller
 //@RequestMapping("/user")
-public class UserController {
+public class UserController extends ControllerBase{
 
 	private static Logger logger = LogManager.getLogger(UserController.class);
 	
@@ -45,11 +49,8 @@ public class UserController {
     //@RequestMapping(value = "/userList", method = RequestMethod.GET)
     public String showInfoTiles(HttpServletRequest request,Model model){  
     	
-    	logger.debug("do showInfoTiles method");    	
-    	
-    	// 获得init参数
-    	//Boolean init = Boolean.valueOf(request.getParameter("init").trim());
-    	
+    	logger.debug("do showInfoTiles method");  
+    	    	
     	Boolean init = Convert.asBoolean(StringUtil.trim(request.getParameter("init")));
     	
     	// 设置查询条件
@@ -119,8 +120,7 @@ public class UserController {
 		model.addAttribute("curPage", query.getCurrentPage());
 		model.addAttribute("endPage", iEndPage);
 		model.addAttribute("startPage", iStartPage);
-		model.addAttribute("current_time", System.currentTimeMillis());
-        
+		        
         return "tiles-userList"; 
         
     }   
@@ -129,26 +129,16 @@ public class UserController {
     @RequestMapping("/showUser.kkk")  
     public String showInfoJSP(HttpServletRequest request,Model model){  
     	
-    	// 1. 查询条件可以暂存在query中
     	logger.debug("do showInfoJSP method");
-    	
-    	// 设置查询条件
-    	UserQuery query = new UserQuery();
-    	query.setUserName("测试");
-    	
-    	List<UserDo> userList = this.userService.listUserByUserName(query);
-    	
-    	model.addAttribute("userList", userList);
-    	model.addAttribute("query", query);
-    	
-//        logger.info("==== es查询结果");
-//        List<Map> esList ;
-//        try {
-//			esList = GetData.ESDataTest2();
-//			model.addAttribute("ls", esList);
-//		} catch (UnknownHostException e) {
-//			logger.error(e.getMessage(),e); 
-//		}
+    	    	
+        logger.debug("==== es查询结果");
+        List<Map> esList ;
+        try {
+			esList = GetData.ESDataTest2();
+			model.addAttribute("ls", esList);
+		} catch (UnknownHostException e) {
+			logger.error(e.getMessage(),e); 
+		}
         
         return "/user/showUser"; 
         

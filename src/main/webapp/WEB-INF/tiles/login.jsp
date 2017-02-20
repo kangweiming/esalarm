@@ -4,7 +4,7 @@
 <%@ page isELIgnored="false"%>
 
 <div style="margin:0 auto;width:400px;">
-	<form name="form1" action="/esalarm/login" method="post">
+	<form name="form1" action=<c:url value="/login" /> method="post">
 		<input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />
 		<input type="hidden" name="action" value="loginAction" /> 
 		<input
@@ -38,7 +38,7 @@
 				<td align="center"><br />
 					<P>
 						<b>User Name:</b> <INPUT TYPE="text" id="userName"
-							NAME="userName" placeholder="Enter Username" 
+							NAME="userName" value="${loginID}" placeholder="Enter Username" 
 							SIZE="15" required> <br />
 						<br /></td>
 			</tr>

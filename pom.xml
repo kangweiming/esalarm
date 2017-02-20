@@ -37,7 +37,7 @@
 		<spring.version>4.3.5.RELEASE</spring.version>
 		<!-- spring security版本号 -->
 		<springsecurity.version>4.0.1.RELEASE</springsecurity.version>
-		
+
 		<!-- mybatis版本号 -->
 		<mybatis.version>3.4.2</mybatis.version>
 		<!-- log4j日志文件管理包版本 -->
@@ -78,29 +78,28 @@
 	</properties>
 
 	<dependencies>
+		<!-- 通用工具包 -->
 		<dependency>
 			<groupId>toolkit.common</groupId>
 			<artifactId>toolkit-common-lang</artifactId>
 			<version>${toolkit.common.lang.version}</version>
-			<type>jar</type>		  
-		</dependency> 
+			<type>jar</type>
+		</dependency>
 		<dependency>
 			<groupId>toolkit.common</groupId>
 			<artifactId>toolkit-common-convert</artifactId>
 			<version>${toolkit.common.convert.version}</version>
-			<type>jar</type>		  
-		</dependency> 			
+			<type>jar</type>
+		</dependency>
 		<!-- es.client包 -->
 		<dependency>
 			<groupId>com.all-union.es</groupId>
 			<artifactId>esclient</artifactId>
 			<version>${es.client.version}</version>
 			<type>jar</type>
-			<!--  
-			<classifier>jar-with-dependencies</classifier>
-			-->			  
-		</dependency>	
-	<!-- Apache Tiles -->
+			<!-- <classifier>jar-with-dependencies</classifier> -->
+		</dependency>
+		<!-- Apache Tiles -->
 		<dependency>
 			<groupId>org.apache.tiles</groupId>
 			<artifactId>tiles-core</artifactId>
@@ -138,7 +137,6 @@
 
 
 		<!-- add for quartz begin -->
-		<!-- -->
 		<dependency>
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
@@ -217,18 +215,23 @@
 			<artifactId>spring-test</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		
-        <!-- Spring Security -->  
-        <dependency>  
-            <groupId>org.springframework.security</groupId>  
-            <artifactId>spring-security-web</artifactId>  
-            <version>${springsecurity.version}</version>  
-        </dependency>  
-        <dependency>  
-            <groupId>org.springframework.security</groupId>  
-            <artifactId>spring-security-config</artifactId>  
-            <version>${springsecurity.version}</version>  
-        </dependency>		
+
+		<!-- Spring Security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${springsecurity.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${springsecurity.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>${springsecurity.version}</version>
+		</dependency>
 		<!-- mybatis核心包 -->
 		<dependency>
 			<groupId>org.mybatis</groupId>
@@ -277,30 +280,42 @@
 			<artifactId>log4j-web</artifactId>
 			<version>${log4j.version}</version>
 		</dependency>
+		<!-- log4j2要输出spring、mybatis等框架的日志，这个依赖必须有 -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j-impl</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+
+		<!-- 
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>log4j-over-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>		
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-jcl</artifactId>
 			<version>${log4j.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		 -->
+		<!-- log end -->
 		<!-- 格式化对象，方便输出日志 -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>${fastjson.version}</version>
 		</dependency>
-
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${slf4j.version}</version>
-		</dependency>
-		<!-- log end -->
 		<!-- 映入JSON jackson1.x -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>

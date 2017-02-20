@@ -4,7 +4,7 @@
 
 <div style="margin:0 auto;width:400px; height:100px; ">
 
-	Dear <strong>${user}</strong>, You are not authorized to access this page  
+	Dear <strong>${user.username}</strong>, You are not authorized to access this page  
     <a class="logoutlink" href="<c:url value="/logout" />">Logout</a> 
    
 </div>    	
