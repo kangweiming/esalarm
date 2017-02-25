@@ -34,7 +34,7 @@ h4{font-size:14px;margin:12px 0px 1px 0px;padding:4px;background:#8D9FD3;}
 .topbottom {width:100%;height:11px;background: url(../images/top_bottom_bg.gif) repeat-x ;}
 .page{margin:0 auto;background:#f0f0f0 url(../images/mainbg.gif) repeat-y ;width:950px;padding:10px;}
 .singlePage{width:500px;margin:0 auto;}
-.pageB{width:960px;;margin:0 auto;padding:0 10px;}
+.pageB{width:1300px;;margin:0 auto;padding:0 10px;}
 .column5{width:19.9%;float:left;}
 #menu_top{padding:0 0 4px 10px;margin-bottom:10px;height:30px;background:#D7E3F3 url('../images/subnav_left.gif') top left no-repeat;}
 #menu_top ul{margin:0;padding-top:3px;float:left;width:100%;background: url('../images/subnav_right.gif') top right no-repeat;}
@@ -47,7 +47,7 @@ h4{font-size:14px;margin:12px 0px 1px 0px;padding:4px;background:#8D9FD3;}
 #menu_top li.subNavRight a{background:none;}
 .left{float:left;width:180px;background-color:#e5f0ff;}
 .left h3{margin:0;padding:3px 3px 1px 10px;font:bold 12px/22px arial;color:#fff;}
-.right{padding-left:10px;float:left;width:760px;}
+.right{padding-left:10px;float:left;width:1100px;}
 .right h1{font-size:1.8em;text-align:center;margin:4px 0 0 0;}
 .right h2{font-size:13px;border-bottom:2px solid #ccc;margin:0px;padding:4px;}
 .menu_left h3{border-bottom:1px solid #587EAB;background:#5E90C3 url(../images/menu_left_h3.gif) repeat-x;}

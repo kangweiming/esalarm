@@ -15,6 +15,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -47,43 +48,46 @@ public class UserController extends ControllerBase{
     // 处理请求地址映射的注解,访问/userList这个URI时，调用此方法 
     @RequestMapping("/userList")  
     //@RequestMapping(value = "/userList", method = RequestMethod.GET)
-    public String showInfoTiles(HttpServletRequest request,Model model){  
+    public String showInfoTiles(Model model,
+    		@ModelAttribute("init") String  init,
+    		@ModelAttribute("userName") String  userName,
+    		@ModelAttribute("password") String  password,
+    		@ModelAttribute("age") String  age,
+    		@ModelAttribute("gmtStart1") String  gmtStart1,
+    		@ModelAttribute("gmtStart2") String  gmtStart2,
+    		@ModelAttribute("gmtEnd1") String  gmtEnd1,
+    		@ModelAttribute("gmtEnd2") String  gmtEnd2,
+    		@ModelAttribute("goPage") String  goPage,
+    		@ModelAttribute("curPage") String  curPage,
+    		@ModelAttribute("flag") String  flag	
+    		){  
     	
     	logger.debug("do showInfoTiles method");  
-    	    	
-    	Boolean init = Convert.asBoolean(StringUtil.trim(request.getParameter("init")));
-    	
+    	    	    	
     	// 设置查询条件
     	UserQuery query = new UserQuery();
 		// 转到的页数变量
 		String strGoPage = null;
 		// 列表下面显示的分页数开始页
-		int iStartPage = 0;
+		//int iStartPage = 0;
 		// 列表下面显示的分页数结束页
-		int iEndPage = 0;
+		//int iEndPage = 0;
 		
 		// for test
 		query.setPageSize(2);
 		
 		// 非init标识，则获得查询条件
-		if(!init){
-			query.setUserName(StringUtil.trim(request.getParameter("userName")));
-			query.setPassword(StringUtil.trim(request.getParameter("password")));	
+		if(!Convert.asBoolean(init)){
+			query.setUserName(StringUtil.trim(userName));
+			query.setPassword(StringUtil.trim(password));	
 			
-			String age = request.getParameter("age");
 			if(StringUtil.isNotBlank(age))
 				query.setAge(Convert.asInt(StringUtil.trim(age)));		
-			
-						
-			Date gmtStart1 = DateUtil.getYmdDate(StringUtil.trim(request.getParameter("gmtStart1")));
-			Date gmtStart2 = DateUtil.getYmdDate(StringUtil.trim(request.getParameter("gmtStart2")));
-			Date gmtEnd1   = DateUtil.getYmdDate(StringUtil.trim(request.getParameter("gmtEnd1")));
-			Date gmtEnd2   = DateUtil.getYmdDate(StringUtil.trim(request.getParameter("gmtEnd2")));
-			
-			query.setGmtStart1(DateUtil.getYmdDateString(gmtStart1));
-			query.setGmtEnd1(DateUtil.getYmdDateString(gmtEnd1));
-			query.setGmtStart2(DateUtil.getYmdDateString(gmtStart2));
-			query.setGmtEnd2(DateUtil.getYmdDateString(gmtEnd2));						
+									
+			query.setGmtStart1(StringUtil.trim(gmtStart1));
+			query.setGmtEnd1(StringUtil.trim(gmtEnd1));
+			query.setGmtStart2(StringUtil.trim(gmtStart2));
+			query.setGmtEnd2(StringUtil.trim(gmtEnd2));						
 			
 		}
 		else{
@@ -92,34 +96,29 @@ public class UserController extends ControllerBase{
 		}
 		
 		// 跳转页面号参数
-		strGoPage = StringUtil.trim(request.getParameter("goPage"));
+		strGoPage = StringUtil.trim(goPage);
 		
 		if (null == strGoPage) {
 			
 			if(!model.containsAttribute("curPage"))
 				strGoPage = "1";
 			else
-				strGoPage = (String) model.asMap().get("curPage");
+				strGoPage = StringUtil.trim(curPage);
 		}
 		query.setCurrentPageString(strGoPage);
 		
-		iEndPage = query.getTotalPage();
-		
-		String flag = StringUtil.trim(request.getParameter("flag"));
-		
-		List<UserDo> userList = this.userService.listUserByUserName(query);
 		
 		if (StringUtil.isNotBlank(flag)) {
 			model.addAttribute("toPage1", query.getCurrentPage());
 			model.addAttribute("toPage", query.getCurrentPage());
 		}		    	
+
+		List<UserDo> userList = this.userService.listUserByUserName(query);
     	
-    	model.addAttribute("userList", userList);
+		model.addAttribute("userList", userList);
     	model.addAttribute("query", query);
     	
 		model.addAttribute("curPage", query.getCurrentPage());
-		model.addAttribute("endPage", iEndPage);
-		model.addAttribute("startPage", iStartPage);
 		        
         return "tiles-userList"; 
         

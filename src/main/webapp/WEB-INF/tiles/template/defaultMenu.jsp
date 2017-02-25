@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <div class="left">
 <div class="menu_left">
@@ -11,9 +11,9 @@
 </ul>
 <!-- 人员菜单 begin -->
 <sec:authorize access="hasRole('ADMIN')">
-<h3>测试菜单</h3>
+<h3>任务管理</h3>
 <ul>
-	<li><a href="/esalarm/userList?init=true&timeStamp=${current_time}">测试菜单</a></li>
+	<li><a href="/esalarm/triggerList?init=true&timeStamp=${current_time}">任务信息</a></li>
 </ul>
 </sec:authorize>
 </div>

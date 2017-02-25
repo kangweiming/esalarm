@@ -1,14 +1,14 @@
 /**
  * 
  */
-package com.all_union.es.esalarm.service.impl;
+package com.all_union.es.esalarm.service.impl.esclient;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 import org.springframework.stereotype.Service;
 
-import com.all_union.es.esalarm.service.EsClientInitService;
+import com.all_union.es.esalarm.service.esclient.EsClientService;
 import com.all_union.es.esclient.Registory;
 
 /** 
@@ -18,13 +18,13 @@ import com.all_union.es.esclient.Registory;
  * @version V1.0 
  * 
 */
-@Service("esClientInitService")
-public class EsClientInitServiceImpl implements EsClientInitService {
+@Service("esClientService")
+public class EsClientServiceImpl implements EsClientService {
 
 	/**
 	 * 
 	 */
-	public EsClientInitServiceImpl() {
+	public EsClientServiceImpl() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -40,7 +40,7 @@ public class EsClientInitServiceImpl implements EsClientInitService {
 	
 	@Override  
     @PreDestroy  
-    public void  dostory(){  
+    public void  destory(){  
         
     }	
 

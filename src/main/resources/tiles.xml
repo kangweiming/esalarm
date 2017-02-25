@@ -24,6 +24,13 @@
        <put-attribute name="title" value="人员信息" />  
        <put-attribute name="body" value="/WEB-INF/tiles/user/userList.jsp" />  
    </definition>  
+
+   <!-- triggerList Page -->
+   <definition name="tiles-triggerList" extends="base-definition">  
+       <put-attribute name="title" value="任务信息" />  
+       <put-attribute name="body" value="/WEB-INF/tiles/schedule/triggerList.jsp" />  
+   </definition>  
+
    
    <!-- login definition -->
    <definition name="login-definition" 

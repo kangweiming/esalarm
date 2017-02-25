@@ -36,7 +36,7 @@
 		<!-- spring版本号 -->
 		<spring.version>4.3.5.RELEASE</spring.version>
 		<!-- spring security版本号 -->
-		<springsecurity.version>4.0.1.RELEASE</springsecurity.version>
+		<springsecurity.version>4.2.1.RELEASE</springsecurity.version>
 
 		<!-- mybatis版本号 -->
 		<mybatis.version>3.4.2</mybatis.version>
@@ -133,20 +133,21 @@
 			<groupId>javax.servlet.jsp.jstl</groupId>
 			<artifactId>jstl-api</artifactId>
 			<version>${jstl-api.version}</version>
-		</dependency>
-
+		</dependency> 
 
 		<!-- add for quartz begin -->
 		<dependency>
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
 			<version>${quartz.version}</version>
+			<!-- 
 			<exclusions>
 				<exclusion>
 					<groupId>c3p0</groupId>
 					<artifactId>c3p0</artifactId>
 				</exclusion>
 			</exclusions>
+			 -->
 		</dependency>
 
 		<dependency>
@@ -216,7 +217,12 @@
 			<version>${spring.version}</version>
 		</dependency>
 
-		<!-- Spring Security -->
+		<!-- Spring Security spring-security-core-->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${springsecurity.version}</version>
+		</dependency>		
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
