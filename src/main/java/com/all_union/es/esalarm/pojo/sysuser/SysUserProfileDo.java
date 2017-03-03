@@ -1,15 +1,9 @@
 package com.all_union.es.esalarm.pojo.sysuser;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class UserProfileDo implements Serializable{
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 5635882186244894983L;
-
-	private Long id;
+public class SysUserProfileDo {
+    private Long id;
 
     private String type;
 

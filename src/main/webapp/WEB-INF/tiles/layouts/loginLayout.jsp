@@ -6,12 +6,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><tiles:getAsString name="title" /></title>
-<link rel="stylesheet" type="text/css" href="css/bops.css" />
-<script type="text/javascript" src="js/base.js"></script>
-<script type="text/javascript" src="js/prototype.js"></script>
+<link rel="stylesheet" type="text/css" href="${basePath}/css/bops.css" />
+<script type="text/javascript" src="${basePath}/js/base.js"></script>
+<script type="text/javascript" src="${basePath}/js/prototype.js"></script>
 
 </head>
-<body style="margin:10px auto;background:#dcdcdc;" onload="javascript:document.getElementById('username').focus();">
+<body style="margin:10px auto;background:#dcdcdc;" >
 		<tiles:insertAttribute name="body" />
 </body>
 </html>

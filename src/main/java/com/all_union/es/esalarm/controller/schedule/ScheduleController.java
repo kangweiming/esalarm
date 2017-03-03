@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import com.all_union.es.esalarm.annotation.TokenAnnotation;
 import com.all_union.es.esalarm.controller.ControllerBase;
 import com.all_union.es.esalarm.pojo.schedule.ScheduleQuery;
 import com.all_union.es.esalarm.pojo.schedule.ScheduleTask;
@@ -39,6 +40,7 @@ import com.kwm.common.lang.StringUtil;
  * 
 */
 @Controller
+@RequestMapping("/background")
 public class ScheduleController extends ControllerBase{
 	private static Logger logger = LogManager.getLogger(ScheduleController.class);
 	
@@ -46,6 +48,7 @@ public class ScheduleController extends ControllerBase{
     private ScheduleService scheduleService; 
 	
 	// trigger opt：paused resume runimmediately
+	//@TokenAnnotation(needRemoveToken = true) // 自定义注解，需要拦截的方法上如此设置
 	@RequestMapping("/triggerOpt")
 	public String triggerOpt(RedirectAttributes attr,
 			@ModelAttribute("triggerName") String  triggerName,
@@ -94,11 +97,12 @@ public class ScheduleController extends ControllerBase{
 		attr.addFlashAttribute("goPage",goPage);
 		attr.addFlashAttribute("curPage",curPage);
 
-		return "redirect:/triggerList";
+		return "redirect:/background/triggerList";
 	}
 	
 	//使用@ModelAttribute，保证重定向时参数不丢失 
 	@RequestMapping("/triggerList")
+	//@TokenAnnotation(needSaveToken = true) // 自定义注解，需要拦截的方法上如此设置
 	public String showTirggersTiles(Model model,
 		@ModelAttribute("init") String  init,
 		@ModelAttribute("triggerName") String  triggerName,

@@ -3,6 +3,7 @@
  */
 package com.all_union.es.esalarm.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,7 +40,7 @@ public class ControllerBase {
 	
 	// 在所有的handler method之前执行
 	@ModelAttribute
-	public void saveToSession(HttpSession session){
+	public void saveToSession(HttpSession session,HttpServletRequest request){
 		// contrller执行时间
 		session.setAttribute("current_time", System.currentTimeMillis());
 		
@@ -47,6 +48,10 @@ public class ControllerBase {
 		User authUser = getLoginUser();
 		if(null != authUser)
 			session.setAttribute("user", authUser);
+				
+		// http://localhost:8080/esalarm/
+	    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath();
+	    session.setAttribute("basePath", basePath);
 				
 	}
 }

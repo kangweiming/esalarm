@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public UserDo getUserById(int userId) {
-		logger.debug("excute ...");
+		logger.debug("excute...");
 		return this.userDao.selectByPrimaryKey(userId);
 	}
 
@@ -60,6 +60,26 @@ public class UserServiceImpl implements UserService {
 			return null;
 		}
 				
+	}
+
+	@Override
+	public int insertSelective(UserDo record) {
+		logger.debug("excute...");
+		
+		return this.userDao.insertSelective(record);
+	}
+
+	@Override
+	public int updateByPrimaryKeySelective(UserDo record) {
+		logger.debug("excute...");
+		
+		return this.userDao.updateByPrimaryKeySelective(record);
+	}
+
+	@Override
+	public int deleteByPrimaryKey(Integer id) {
+		logger.debug("excute...");
+		return this.userDao.deleteByPrimaryKey(id);
 	}
 
 }

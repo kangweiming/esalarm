@@ -9,19 +9,14 @@
                         http://www.springframework.org/schema/context/spring-context-4.3.xsd    
                         http://www.springframework.org/schema/mvc    
                         http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd"> 
+
                          
     <!-- 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 -->  
     <context:component-scan base-package="com.all_union.es.esalarm.controller" />  	
-	
+
 	<!-- 注解支持    spring4新特性：在使用 mvc:annotation-driven 会 需要注册一个validator  
 	参考 http://jinnianshilongnian.iteye.com/blog/1990081 -->  
     <mvc:annotation-driven/>
-	
-	
-    <!-- 静态资源在WEB-INF下，就是访问不到，不知如何配置 -->
-    <!-- 开启这个配置，必须配置   <mvc:annotation-driven/> 
- 	<mvc:resources mapping="/css/**" location="/WEB-INF/css/"/>
-    -->  
 	
     <!--避免IE执行AJAX时，返回JSON出现下载文件 -->  
     <bean id="mappingJacksonHttpMessageConverter"  
@@ -81,8 +76,33 @@
         <property name="maxInMemorySize" value="40960" />    
     </bean>   
   
+  	<!-- 拦截器配置 -->
+  	<!--  
+  	页面代码中加入：
+  	<input type="hidden" name="token" value="${token}" />
   	
+  	-->
+    <mvc:interceptors>
+        <!-- 配置Token拦截器，防止用户重复提交数据 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.all_union.es.esalarm.Interceptor.TokenInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
   	 
-  	 	
+	
+    <!-- 
+	1.指定静态资源,不会被(视图解析器拦截)(如果一定要放在web-inf下)。
+	2.开启这个配置，必须配置   <mvc:annotation-driven/> 
+ 	
+ 	3.web.xml中<servlet-mapping>配置与此处配置会冲突
+ 	(不要对 SimpleUrlHandlerMapping 设置 defaultHandler. 因为对 static uri 的 defaultHandler 
+ 	就是ResourceHttpRequestHandler,否则无法处理static resources request.)
+ 	
+ 	结论：静态资源，可以在这里配置，也可以在web.xml中配置，都可以生效。
+ 	但是如果一定要把静态资源放在web-inf目录下，则只能配置成下面这样。
+ 	另外，web.xml中和此处不能重复配置
+    -->  
+	<mvc:resources mapping="/html/**" location="/WEB-INF/html/" />   	 	
   
 </beans>  

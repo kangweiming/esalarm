@@ -9,10 +9,31 @@
 
 
 	<!-- 从数据库中获取用户权限 -->
-	<!-- 静态资源 -->
+	<!-- 静态资源 与web.xml配置对应：
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>/js/*</url-pattern>
+	</servlet-mapping>
+	-->
 	<http pattern="/css/**" security="none" />
 	<http pattern="/images/**" security="none" />
 	<http pattern="/js/**" security="none" />
+	<!-- 放开前端页面 -->
+	<http pattern="/html/**" security="none" />
+	
+	<!-- Stateless RESTful service using Basic authentication 
+		rest api的认证暂时先不配置，要看实际需要basic auth还是oAUTH2
+	-->
+	<!--  
+	<http pattern="/rest/**" create-session="stateless">
+		<intercept-url pattern='/**' access="hasRole('REMOTE')" />
+		<http-basic />
+	</http>
+	-->
+	
+	<!-- 放开rest api -->
+	<http pattern="/rest/**" security="none" />
+
 	
 	<!-- 开启默认的拦截器 -->
 	<http use-expressions="true" auto-config="true">
@@ -23,16 +44,16 @@
 			access="anonymous"/> -->
 
 		<!-- 允许访问的 uri -->
-		<intercept-url pattern="/login*" access="permitAll" />
-		<intercept-url pattern="/logout*" access="permitAll" />
+		<intercept-url pattern="/login" access="permitAll" />
+		<intercept-url pattern="/logout" access="permitAll" />
 		<intercept-url pattern="/home" access="hasRole('USER')" />
-		<intercept-url pattern="/admin**"
-			access="hasRole('ADMIN') and hasRole('DBA')" />
-		<intercept-url pattern="/dba**" access="hasRole('DBA')" />
+		<intercept-url pattern="/admin" access="hasRole('ADMIN') and hasRole('DBA')" />
+		<intercept-url pattern="/dba" access="hasRole('DBA')" />
 
 		<!-- 其余uri的规则 -->
-		<intercept-url pattern="/**"
-			access="hasRole('USER') or hasRole('ADMIN')" />
+		<intercept-url pattern="/background/**" access="hasRole('USER') or hasRole('ADMIN')" />
+		
+		<intercept-url pattern="/**" access="authenticated" />
 
 		<!-- 自定义登录页面  -->
 		<!-- 

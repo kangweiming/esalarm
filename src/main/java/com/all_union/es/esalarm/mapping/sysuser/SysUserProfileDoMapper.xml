@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.all_union.es.esalarm.dao.sysuser.UserProfileDoMapper">
-  <resultMap id="BaseResultMap" type="com.all_union.es.esalarm.pojo.sysuser.UserProfileDo">
+<mapper namespace="com.all_union.es.esalarm.dao.sysuser.SysUserProfileDoMapper">
+  <resultMap id="BaseResultMap" type="com.all_union.es.esalarm.pojo.sysuser.SysUserProfileDo">
     <id column="ID" jdbcType="BIGINT" property="id" />
     <result column="TYPE" jdbcType="VARCHAR" property="type" />
     <result column="GMT_CREATE" jdbcType="TIMESTAMP" property="gmtCreate" />
@@ -13,21 +13,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from user_profile
+    from sys_user_profile
     where ID = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from user_profile
+    delete from sys_user_profile
     where ID = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.all_union.es.esalarm.pojo.sysuser.UserProfileDo">
-    insert into user_profile (ID, TYPE, GMT_CREATE, 
+  <insert id="insert" parameterType="com.all_union.es.esalarm.pojo.sysuser.SysUserProfileDo">
+    insert into sys_user_profile (ID, TYPE, GMT_CREATE, 
       GMT_MODIFIED)
     values (#{id,jdbcType=BIGINT}, #{type,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
       #{gmtModified,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.all_union.es.esalarm.pojo.sysuser.UserProfileDo">
-    insert into user_profile
+  <insert id="insertSelective" parameterType="com.all_union.es.esalarm.pojo.sysuser.SysUserProfileDo">
+    insert into sys_user_profile
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         ID,
@@ -57,8 +57,8 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.all_union.es.esalarm.pojo.sysuser.UserProfileDo">
-    update user_profile
+  <update id="updateByPrimaryKeySelective" parameterType="com.all_union.es.esalarm.pojo.sysuser.SysUserProfileDo">
+    update sys_user_profile
     <set>
       <if test="type != null">
         TYPE = #{type,jdbcType=VARCHAR},
@@ -72,8 +72,8 @@
     </set>
     where ID = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.all_union.es.esalarm.pojo.sysuser.UserProfileDo">
-    update user_profile
+  <update id="updateByPrimaryKey" parameterType="com.all_union.es.esalarm.pojo.sysuser.SysUserProfileDo">
+    update sys_user_profile
     set TYPE = #{type,jdbcType=VARCHAR},
       GMT_CREATE = #{gmtCreate,jdbcType=TIMESTAMP},
       GMT_MODIFIED = #{gmtModified,jdbcType=TIMESTAMP}

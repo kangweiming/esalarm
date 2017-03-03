@@ -47,15 +47,15 @@
 	<loggers>
 
 		<!--建立一个默认的root的logger trace -->
-		<root level="info">
+		<root level="debug">
 			<appender-ref ref="RollingFile" />
 			<appender-ref ref="Console" />
 			<appender-ref ref="FileLog" />
 		</root>
 		<!-- 
 			如果下面注释掉，将按照上面定义的root的level输出log，如果不注释，将使用各自配置的level,
-			但是不会高于root level 
-		-->
+			但是不会高于root level -->
+		
         <logger name="org.springframework.core" level="error" />
         <logger name="org.springframework.beans" level="error" />
         <logger name="org.springframework.context" level="error" />
@@ -70,7 +70,7 @@
         <logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="info" />
         <logger name="com.ibatis" level="info" />
         <logger name="org.apache.http" level="info" />  
-         
+        <logger name="org.quartz" level="info" /> 
                		
 	</loggers>
 </configuration>

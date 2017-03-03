@@ -3,12 +3,11 @@ package com.all_union.es.esalarm.pojo.sysuser;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class SysUserDo implements Serializable{
-    /**
+
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -763620027099830192L;
@@ -35,25 +34,11 @@ public class SysUserDo implements Serializable{
 
     private Date gmtLastLogin;
 
-    private List<UserProfileDo> userProfiles = new ArrayList<UserProfileDo>();
+    private List<SysUserProfileDo> sysUserProfiles = new ArrayList<SysUserProfileDo>();
     
     public Long getId() {
         return id;
     }
-
-
-
-	public List<UserProfileDo> getUserProfiles() {
-		return userProfiles;
-	}
-
-
-
-	public void setUserProfiles(List<UserProfileDo> userProfiles) {
-		this.userProfiles = userProfiles;
-	}
-
-
 
 	public void setId(Long id) {
         this.id = id;
@@ -138,4 +123,13 @@ public class SysUserDo implements Serializable{
     public void setGmtLastLogin(Date gmtLastLogin) {
         this.gmtLastLogin = gmtLastLogin;
     }
+    
+    public List<SysUserProfileDo> getSysUserProfiles() {
+		return sysUserProfiles;
+	}
+
+	public void setSysUserProfiles(List<SysUserProfileDo> sysUserProfiles) {
+		this.sysUserProfiles = sysUserProfiles;
+	}
+    
 }

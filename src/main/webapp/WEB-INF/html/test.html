@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	
+	<!-- Bootstrap css -->
+    <link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	
+	<title>HTML5 consume rest api test</title>
+</head>
+<body>
+	<h1>HTML5 consume rest api with jQuery</h1>
+<div class="btn-group" data-toggle="buttons">
+	<label class="btn btn-primary">
+		<input type="radio" name="options" id="option1"> 选项 1
+	</label>
+	<label class="btn btn-primary">
+		<input type="radio" name="options" id="option2"> 选项 2
+	</label>
+	<label class="btn btn-primary">
+		<input type="radio" name="options" id="option3"> 选项 3
+	</label>
+</div>	
+		
+        <div>
+        	<p></p>
+        	<a href="#" id="getinfo1">获取1</a>
+     		<input type="button" class="btn-primary.active" id ="getinfo" value="获取2"/>
+            <p>The name is <span class="name"></span></p>
+            <p>The password is <span class="password"></span></p>
+            <p>The age is <span class="age"></span></p>
+        </div>		
+</body>
+
+ 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="./bootstrap/js/jquery-3.1.1.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="./bootstrap/js/bootstrap.min.js"></script>
+    <!-- include customer's js -->
+    <script src="./bootstrap/js/commons.js"></script>
+    
+<script>
+$(document).ready(function() {
+	
+	jQuery("#getinfo").click(function(){
+		
+	    $.ajax({
+	    	type:"GET",
+	    	dataType: "json",
+	        url: restUrl + "6"//支持相对地址
+	    }).then(function(data) {
+	       $('.name').text(data.userName);
+	       $('.password').text(data.password);
+	       $('.age').text(data.age);
+	    });
+	});
+	
+});
+
+</script>
+</html>

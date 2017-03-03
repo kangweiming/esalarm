@@ -4,7 +4,7 @@
 	
 <%@ page isELIgnored="false"%>
 	
-<script type="text/javascript" src="js/user/showuser.js"></script>
+<script type="text/javascript" src="${basePath}/js/user/showuser.js"></script>
 
 <form name="userListForm" id="userListForm" action="userList"
 	method="post">

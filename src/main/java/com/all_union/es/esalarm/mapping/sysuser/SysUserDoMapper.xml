@@ -19,8 +19,8 @@
 	<!-- add by kwm begin -->
 	<resultMap id="WithUserProfileResultMap"
 		type="com.all_union.es.esalarm.pojo.sysuser.SysUserDo" extends="BaseResultMap">
-		<collection property="userProfiles"
-			ofType="com.all_union.es.esalarm.pojo.sysuser.UserProfileDo">
+		<collection property="sysUserProfiles"
+			ofType="com.all_union.es.esalarm.pojo.sysuser.SysUserProfileDo">
 			<id column="p_id" property="id" jdbcType="VARCHAR" />
 			<result column="p_type" property="type" jdbcType="VARCHAR" />
 		</collection>
@@ -48,7 +48,7 @@
 		u.*,
 		p.id as p_id,
 		p.type as p_type
-		from sys_user u ,profile_relation r,user_profile p
+		from sys_user u ,sys_profile_relation r,sys_user_profile p
 		where
 		1=1
 		and u.user_name = #{userName,jdbcType=VARCHAR}

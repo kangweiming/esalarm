@@ -10,7 +10,7 @@ package com.all_union.es.esalarm.pojo.sysuser;
  * @version V1.0 
  * 
 */
-public enum UserProfileType {
+public enum SysUserProfileType {
 	
     USER("USER"),  
     DBA("DBA"),  
@@ -18,7 +18,7 @@ public enum UserProfileType {
        
     String userProfileType;  
        
-    private UserProfileType(String userProfileType){  
+    private SysUserProfileType(String userProfileType){  
         this.userProfileType = userProfileType;  
     }  
        

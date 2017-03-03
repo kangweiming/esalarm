@@ -18,12 +18,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.all_union.es.esalarm.pojo.sysuser.SysUserDo;
-import com.all_union.es.esalarm.pojo.sysuser.UserProfileDo;
-import com.all_union.es.esalarm.pojo.sysuser.UserState;
-import com.all_union.es.esalarm.pojo.user.UserDo;
-import com.all_union.es.esalarm.service.impl.user.UserServiceImpl;
+import com.all_union.es.esalarm.pojo.sysuser.SysUserProfileDo;
+import com.all_union.es.esalarm.pojo.sysuser.SysUserState;
 import com.all_union.es.esalarm.service.sysuser.SysUserService;
-import com.all_union.es.esalarm.service.user.UserService;
 
 /** 
  * @Description: spring security user service
@@ -54,7 +51,7 @@ public class CustomUserDetailsService implements UserDetailsService{
         }  
         
             return new org.springframework.security.core.userdetails.User(sysUser.getUserName(), sysUser.getPassword(),   
-            		sysUser.getState().equals(UserState.ACTIVE.toString()), true, true, true, getGrantedAuthorities(sysUser));  
+            		sysUser.getState().equals(SysUserState.ACTIVE.toString()), true, true, true, getGrantedAuthorities(sysUser));  
     }  
    
     /**
@@ -65,7 +62,7 @@ public class CustomUserDetailsService implements UserDetailsService{
     private List<GrantedAuthority> getGrantedAuthorities(SysUserDo sysUser){  
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();  
            
-        for(UserProfileDo sysUserProfile : sysUser.getUserProfiles()){  
+        for(SysUserProfileDo sysUserProfile : sysUser.getSysUserProfiles()){  
         	logger.debug("SysUserProfile : " + sysUserProfile);  
             authorities.add(new SimpleGrantedAuthority("ROLE_" + sysUserProfile.getType()));
             //authorities.add(new SimpleGrantedAuthority(sysUserProfile.getType()));

@@ -1,8 +1,8 @@
 USE db_kwm;
 
-DROP TABLE IF EXISTS `profile_relation`; 
+DROP TABLE IF EXISTS `sys_profile_relation`; 
 DROP TABLE IF EXISTS `sys_user`; 
-DROP TABLE IF EXISTS `USER_PROFILE`; 
+DROP TABLE IF EXISTS `sys_user_profile`; 
 
 
 /* 创建系统用户表及权限表等*/
@@ -25,7 +25,7 @@ create table sys_user (
 );  
     
 /* 权限表 */
-create table USER_PROFILE(  
+create table sys_user_profile(  
    ID BIGINT NOT NULL AUTO_INCREMENT,  
    TYPE VARCHAR(30) NOT NULL,  
    GMT_CREATE DATETIME NOT NULL, 
@@ -35,24 +35,24 @@ create table USER_PROFILE(
 );  
      
 /* 用户与权限对应关系表 多对多 */
-CREATE TABLE profile_relation (  
+CREATE TABLE sys_profile_relation (  
 		USER_ID BIGINT NOT NULL,  
     USER_PROFILE_ID BIGINT NOT NULL,  
    	GMT_CREATE DATETIME NOT NULL, 
    	GMT_MODIFIED DATETIME NOT NULL,     
     PRIMARY KEY (USER_ID, USER_PROFILE_ID),  
     CONSTRAINT FK_SYS_USER FOREIGN KEY (USER_ID) REFERENCES sys_user (ID),  
-    CONSTRAINT FK_USER_PROFILE FOREIGN KEY (USER_PROFILE_ID) REFERENCES USER_PROFILE (ID)  
+    CONSTRAINT FK_SYS_USER_PROFILE FOREIGN KEY (USER_PROFILE_ID) REFERENCES sys_user_profile (ID)  
 );  
    
 /* Populate USER_PROFILE Table */  
-INSERT INTO USER_PROFILE(TYPE,GMT_CREATE,GMT_MODIFIED)  
+INSERT INTO sys_user_profile(TYPE,GMT_CREATE,GMT_MODIFIED)  
 VALUES ('USER',NOW(),NOW());
    
-INSERT INTO USER_PROFILE(TYPE,GMT_CREATE,GMT_MODIFIED)  
+INSERT INTO sys_user_profile(TYPE,GMT_CREATE,GMT_MODIFIED)  
 VALUES ('ADMIN',NOW(),NOW());
 
-INSERT INTO USER_PROFILE(TYPE,GMT_CREATE,GMT_MODIFIED)  
+INSERT INTO sys_user_profile(TYPE,GMT_CREATE,GMT_MODIFIED)  
 VALUES ('DBA',NOW(),NOW());
  
    
@@ -68,18 +68,18 @@ VALUES ('dba','123456', 'dba','dba','dba','dba@xyz.com', 'Active',NOW(),NOW());
    
    
 /* Populate JOIN Table */  
-INSERT INTO profile_relation (USER_ID, USER_PROFILE_ID,GMT_CREATE,GMT_MODIFIED)  
-  SELECT user.ID, profile.ID,NOW(),NOW() FROM sys_user user, USER_PROFILE profile    
+INSERT INTO sys_profile_relation (USER_ID, USER_PROFILE_ID,GMT_CREATE,GMT_MODIFIED)  
+  SELECT user.ID, profile.ID,NOW(),NOW() FROM sys_user user, sys_user_profile profile    
   where user.USER_NAME='kwm' and profile.TYPE='USER';  
    
-INSERT INTO profile_relation (USER_ID, USER_PROFILE_ID,GMT_CREATE,GMT_MODIFIED)  
-  SELECT user.ID, profile.ID,NOW(),NOW() FROM sys_user user, USER_PROFILE profile    
+INSERT INTO sys_profile_relation (USER_ID, USER_PROFILE_ID,GMT_CREATE,GMT_MODIFIED)  
+  SELECT user.ID, profile.ID,NOW(),NOW() FROM sys_user user, sys_user_profile profile    
   where user.USER_NAME='admin' and profile.TYPE='ADMIN';  
 
-INSERT INTO profile_relation (USER_ID, USER_PROFILE_ID,GMT_CREATE,GMT_MODIFIED)  
-  SELECT user.ID, profile.ID,NOW(),NOW() FROM sys_user user, USER_PROFILE profile    
+INSERT INTO sys_profile_relation (USER_ID, USER_PROFILE_ID,GMT_CREATE,GMT_MODIFIED)  
+  SELECT user.ID, profile.ID,NOW(),NOW() FROM sys_user user, sys_user_profile profile    
   where user.USER_NAME='admin' and profile.TYPE='DBA';  
 
-INSERT INTO profile_relation (USER_ID, USER_PROFILE_ID,GMT_CREATE,GMT_MODIFIED)  
-  SELECT user.ID, profile.ID,NOW(),NOW() FROM sys_user user, USER_PROFILE profile    
+INSERT INTO sys_profile_relation (USER_ID, USER_PROFILE_ID,GMT_CREATE,GMT_MODIFIED)  
+  SELECT user.ID, profile.ID,NOW(),NOW() FROM sys_user user, sys_user_profile profile    
   where user.USER_NAME='dba' and profile.TYPE='DBA';  

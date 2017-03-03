@@ -52,8 +52,6 @@ public class PassParameterByJobDataMap {
 	public static void deleteJobAll() throws SchedulerException{
 		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
 		
-		System.err.println("list jobKyes");
-		
 		GroupMatcher<JobKey> matcher = GroupMatcher.anyJobGroup();
 		Set<JobKey> jobKeys = scheduler.getJobKeys(matcher);
 		List<JobKey> keys = new ArrayList<JobKey>();		
@@ -92,6 +90,7 @@ public class PassParameterByJobDataMap {
 	}
 	
 	public static void start() throws SchedulerException{
+		System.err.println("start quartz2 ...");
 		// 创建scheduler factory,默认从配置文件里读取相关信息-quartz.properties
 		//SchedulerFactory schedulerFactory = new StdSchedulerFactory();
 		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
@@ -99,8 +98,8 @@ public class PassParameterByJobDataMap {
 		//deleteJob("ramjob","ourgroup","ramtrigger","ourgroup");
 		
 		// 删除所有任务
-		scheduler.clear();
-		//deleteJobAll();		
+		//scheduler.clear();
+		deleteJobAll();		
 		
 		//create first JobDetail and Trigger
 		JobDetail jobDetail = JobBuilder.newJob(ESQueryJob.class)
@@ -148,7 +147,7 @@ public class PassParameterByJobDataMap {
 			
 		try {
 			//wait for 30 seconds to finish the job
-			Thread.sleep(10 * 1000);
+			Thread.sleep(5 * 1000);
 			
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -159,14 +158,19 @@ public class PassParameterByJobDataMap {
 	}
 	
 	@Test
-	public void test() throws SchedulerException {
+	public void test() {
+		try{
+			start();
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+		}
 		
-		start();
 		
 		List<? extends JobDetail> jobs = this.scheduleService.listJobs();
-//		for(JobDetail job : jobs){
-//			System.err.println(" ============ " + job.getKey().toString());
-//		}
+		for(JobDetail job : jobs){
+			System.err.println(" ============ " + job.getKey().toString());
+		}
 		
 	}
 }

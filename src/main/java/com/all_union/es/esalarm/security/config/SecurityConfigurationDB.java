@@ -63,6 +63,8 @@ public class SecurityConfigurationDB extends WebSecurityConfigurerAdapter {
         .usernameParameter("userName").passwordParameter("password")  
         .and().csrf()  
         .and().exceptionHandling().accessDeniedPage("/Access_Denied");  
+      
+      
     }   
      
 }  

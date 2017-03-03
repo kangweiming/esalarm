@@ -6,7 +6,7 @@
 	
 <%@ page isELIgnored="false"%>
 
-<script type="text/javascript" src="js/schedule/triggerlist.js"></script>
+<script type="text/javascript" src="${basePath}/js/schedule/triggerlist.js"></script>
 
 <form name="triggerListForm" id="triggerListForm" action="triggerList"
 	method="post">
@@ -19,6 +19,8 @@
 	<input type="hidden" id="opt" name="opt" value="" />
 	<input type="hidden" id="optName" name="optName" value="" />
 	<input type="hidden" id="optGroup" name="optGroup" value="" />
+	
+	<input type="hidden" name="token" value="${token}">
 	
 	<div class="right">
 		<div class="board errorB" id="dateFormat" name="dateFormat"

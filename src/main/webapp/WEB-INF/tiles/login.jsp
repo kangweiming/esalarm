@@ -39,7 +39,7 @@
 					<P>
 						<b>User Name:</b> <INPUT TYPE="text" id="userName"
 							NAME="userName" value="${loginID}" placeholder="Enter Username" 
-							SIZE="15" required> <br />
+							SIZE="15" required autofocus > <br />
 						<br /></td>
 			</tr>
 			<tr>

@@ -10,7 +10,7 @@ package com.all_union.es.esalarm.pojo.sysuser;
  * @version V1.0 
  * 
 */
-public enum  UserState {
+public enum  SysUserState {
 	
     ACTIVE("Active"),  
     INACTIVE("Inactive"),  
@@ -19,7 +19,7 @@ public enum  UserState {
        
     private String state;  
        
-    private UserState(final String state){  
+    private SysUserState(final String state){  
         this.state = state;  
     }  
        

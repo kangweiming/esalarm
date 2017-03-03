@@ -6,17 +6,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><tiles:getAsString name="title" /></title>
-<link rel="stylesheet" type="text/css" href="css/bops.css" />
-<link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/jquery-ui.js"></script>
-<script type="text/javascript" src="js/jquery.bgiframe.js"></script>
+<link rel="stylesheet" type="text/css" href="${basePath}/css/bops.css" />
+<link rel="stylesheet" type="text/css" href="${basePath}/css/jquery-ui.css">
+<script type="text/javascript" src="${basePath}/js/jquery.js"></script>
+<script type="text/javascript" src="${basePath}/js/jquery-ui.js"></script>
+<script type="text/javascript" src="${basePath}/js/jquery.bgiframe.js"></script>
 <script type="text/javascript">
 	$(function() {
 		$(".date-pick").datepicker({
 			dateFormat : "yy-mm-dd",
 			showOn : "button",
-			buttonImage : "images/icon_calendar.gif",
+			buttonImage : "${basePath}/images/icon_calendar.gif",
 			buttonImageOnly : true,
 			buttonText : "Select date"
 		});

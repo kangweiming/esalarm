@@ -36,7 +36,7 @@ import com.kwm.common.lang.StringUtil;;
 */
 //处理请求地址映射的注解,表示类中的所有响应请求的方法都是以该地址作为父路径 
 @Controller
-//@RequestMapping("/user")
+@RequestMapping("/background")
 public class UserController extends ControllerBase{
 
 	private static Logger logger = LogManager.getLogger(UserController.class);

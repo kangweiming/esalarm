@@ -55,7 +55,7 @@ public class ESQueryJob implements Job{
 			count++;
 			
 			//logger.info(jobKey+": "+ name+"-"+count+": flag="+flag);		
-			System.err.println(jobKey+" - "+ "Count: " + count + "  dsl : " + dsl);
+			//System.err.println(jobKey+" - "+ "Count: " + count + "  dsl : " + dsl);
 
 			//add next counter to JobDataMap
 			dataMap.put(ScheduleConstants.FIRE_COUNT, count);
