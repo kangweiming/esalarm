@@ -30,43 +30,42 @@
 				</div>
 			</div>
 			<div class="row clearfix">
-				<div class="col-md-12 column text-center">
+				<div id="goodsContent" class="col-md-12 column text-center">
 					
-					<div class="btn-group-lg btn-group-justified" data-toggle="buttons">
-						<label class="btn btn-primary"> <input type="radio"
-							name="options" id="option1"> 选项 1
+					<div id="goodsGroup1" class="btn-group-lg btn-group-justified" >
+						<label class="btn btn-primary"> 
+						<input type="radio" name="options" id="option1" value="opt1" > 选项 1
 						</label> 
 						<label class="btn btn-primary"> <input type="radio"
-							name="options" id="option2"> 选项 2
+							name="options" id="option2" value="opt2"> 选项 2
 						</label> 
 						<label class="btn btn-primary"> <input type="radio"
-							name="options" id="option3"> 选项 3
-						</label>
-						
+							name="options" id="option3" value="opt3"> 选项 3
+						</label>						
 					</div>
 					<br/>
-					<div class="btn-group-lg btn-group-justified" data-toggle="buttons">
+					<div id="goodsGroup2" class="btn-group-lg btn-group-justified" >
 						<label class="btn btn-primary"> <input type="radio"
-							name="options" id="option4"> 选项 4
+							name="options" id="option4" value="opt4"> 选项 4
 						</label>
 						<label class="btn btn-primary"> <input type="radio"
-							name="options" id="option5"> 选项 5
+							name="options" id="option5" value="opt5"> 选项 5
 						</label>
 						<label class="btn btn-primary"> <input type="radio"
-							name="options" id="option6"> 选项 6
+							name="options" id="option6" value="opt6"> 选项 6
 						</label>
 											
 					</div>
 					<br/>
-					<div class="btn-group-lg btn-group-justified" data-toggle="buttons">
+					<div id="goodsGroup3" class="btn-group-lg btn-group-justified" >
 						<label class="btn btn-primary"> <input type="radio"
-							name="options" id="option7"> 选项 7
+							name="options" id="option7" value="opt7"> 选项 7
 						</label>
 						<label class="btn btn-primary"> <input type="radio"
-							name="options" id="option8"> 选项 8
+							name="options" id="option8" value="opt8"> 选项 8
 						</label>	
 						<label class="btn btn-primary"> <input type="radio"
-							name="options" id="option9"> 选项 9
+							name="options" id="option9" value="opt9"> 选项 9
 						</label>				
 					</div>	
 					<br/>	
@@ -75,14 +74,15 @@
 				
 			</div>
 			<div class="row clearfix ">
-				<div class="col-md-12 column ">
+				<div id="buyContent" class="col-md-12 column ">
 		
-					<table class="table">
+					<table id="buyTable" class="table">
 						<tbody>
+						<!--  
 							<tr>
 								<td>
 									<h2>80.00元</h2>
-									<span class="label label-primary">本地流量</span>
+									<span class="label label-primary">省内流量</span>
 									<small>即时生效，当月有效</small>
 								</td>
 								<td class="text-right" style="vertical-align: middle;">
@@ -97,10 +97,11 @@
 								</td>
 								<td class="text-right" style="vertical-align: middle;">
 									<div class="btn-group ">										
-										<button type="button" class="btn btn-primary">购买</button>
+										<button type="button" id="buyTop" name="buyTop" class="btn btn-primary">购买</button>
 									</div>
 								</td>
 							</tr>
+							-->
 						</tbody>
 					</table>							
 						
@@ -117,57 +118,12 @@
 </body>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="./bootstrap/js/jquery-3.1.1.min.js"></script>
+<script src="./js/jquery-3.1.1.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="./bootstrap/js/bootstrap.min.js"></script>
 <!-- include customer's js -->
-<script src="./bootstrap/js/commons.js"></script>
+<script src="./js/commons.js"></script>
+<script src="./js/dataHelper.js"></script>
+<script src="./js/aydata.js"></script>
 
-<script>
-	$(document).ready(function() {
-		
-		//-------------- 手机号码归属地查询
-		  var tel;
-		  var ajax=function(){
-		    //淘宝接口  
-		    $.ajax({
-		       type: "get",
-		       url: 'http://tcc.taobao.com/cc/json/mobile_tel_segment.htm?tel='+tel,
-		       dataType: "jsonp",
-		       jsonp: "callback",
-		       success: function(data){
-		        console.log(data);
-		        $('.alert-warning').css('display','none');		        
-		        var carrier = data.carrier;
-		        $('.text-muted').css('display','block');
-		        $('.text-muted').html(carrier);
-		       },
-		       error:function (){  
-		        $('.text-muted').css('display','none');
-		        $('.alert-warning').css('display','block');    
-		       }
-		     });
-		  }
-		  var reg = /^(13|15|18)[0-9]{9}$/;
-		  
-		  //输入查询
-		  $("#mobilenum").keyup(function(){
-			  tel=$('#mobilenum').val();	  
-			  if(tel && tel.length == 11){
-			      if(reg.test(tel)){
-			          ajax();
-			        }else{
-				        $('.text-muted').css('display','none');
-				        $('.alert-warning').css('display','block'); 
-			        }		  
-			  }
-			  else{
-				  $('.text-muted').css('display','none');
-				  $('.alert-warning').css('display','none');
-			  }
-		  });		
-		//--------------
-
-	});
-</script>
 </html>

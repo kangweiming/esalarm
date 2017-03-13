@@ -4,6 +4,7 @@
 package com.all_union.es.esalarm.service.impl.schedule;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -251,9 +252,14 @@ public class ScheduleServiceImpl implements ScheduleService {
 			return null;
 		}
 		
+		// 设置总数
 		query.setTotalItem(list.size());
 		
-		return list;		
+		// 只保留当前页的task对象
+		// limit #{pageFristItemZero},#{pageSize}		
+		return list.subList(query.getPageFristItemZero(), query.getPageLastItem());
+		
+		//return list;		
 		
 	}
 

@@ -36,11 +36,11 @@
 </body>
 
  	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="./bootstrap/js/jquery-3.1.1.min.js"></script>
+	<script src="./js/jquery-3.1.1.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="./bootstrap/js/bootstrap.min.js"></script>
     <!-- include customer's js -->
-    <script src="./bootstrap/js/commons.js"></script>
+    <script src="./js/commons.js"></script>
     
 <script>
 $(document).ready(function() {
@@ -50,7 +50,7 @@ $(document).ready(function() {
 	    $.ajax({
 	    	type:"GET",
 	    	dataType: "json",
-	        url: restUrl + "6"//支持相对地址
+	        url: resUsertUrl + "6"//支持相对地址
 	    }).then(function(data) {
 	       $('.name').text(data.userName);
 	       $('.password').text(data.password);

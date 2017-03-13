@@ -73,6 +73,8 @@
 		<toolkit.common.lang.version>1.0</toolkit.common.lang.version>
 		<!-- toolkit-common-convert -->
 		<toolkit.common.convert.version>1.0</toolkit.common.convert.version>
+		<!-- toolkit-common-collection -->
+		<toolkit.common.collection.version>1.0</toolkit.common.collection.version>
 		<!-- es client version -->
 		<es.client.version>0.0.1-SNAPSHOT</es.client.version>
 	</properties>
@@ -91,6 +93,14 @@
 			<version>${toolkit.common.convert.version}</version>
 			<type>jar</type>
 		</dependency>
+		<!--  
+		<dependency>
+			<groupId>toolkit.common</groupId>
+			<artifactId>toolkit-common-collection</artifactId>
+			<version>${toolkit.common.collection.version}</version>
+			<type>jar</type>
+		</dependency>
+		-->
 		<!-- es.client包 -->
 		<dependency>
 			<groupId>com.all-union.es</groupId>

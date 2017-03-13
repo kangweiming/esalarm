@@ -127,7 +127,7 @@ public class ScheduleController extends ControllerBase{
 		String strGoPage = null;
 		
 		// for test
-		query.setPageSize(10);
+		query.setPageSize(1);
 		
 		// 非init标识，则获得查询条件
 		if(!Convert.asBoolean(init)){

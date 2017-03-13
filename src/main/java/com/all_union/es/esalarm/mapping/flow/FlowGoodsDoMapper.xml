@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.all_union.es.esalarm.dao.flow.FlowGoodsDoMapper">
+  <resultMap id="BaseResultMap" type="com.all_union.es.esalarm.pojo.flow.FlowGoodsDo">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="GOODS_CHANNEL_ID" jdbcType="BIGINT" property="goodsChannelId" />
+    <result column="GOODS_NAME" jdbcType="VARCHAR" property="goodsName" />
+    <result column="GOODS_DESC" jdbcType="VARCHAR" property="goodsDesc" />
+    <result column="GOODS_TP_ID" jdbcType="BIGINT" property="goodsTpId" />
+    <result column="GOODS_PROVINCE_ID" jdbcType="INTEGER" property="goodsProvinceId" />
+    <result column="GOODS_PRICE" jdbcType="DECIMAL" property="goodsPrice" />
+    <result column="GOODS_AMOUNT" jdbcType="INTEGER" property="goodsAmount" />
+    <result column="GOODS_STATE" jdbcType="VARCHAR" property="goodsState" />
+    <result column="GOODS_EXPIRE" jdbcType="TIMESTAMP" property="goodsExpire" />
+    <result column="GMT_CREATE" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="GMT_UPDATE" jdbcType="TIMESTAMP" property="gmtUpdate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, GOODS_CHANNEL_ID, GOODS_NAME, GOODS_DESC, GOODS_TP_ID, GOODS_PROVINCE_ID, GOODS_PRICE, 
+    GOODS_AMOUNT, GOODS_STATE, GOODS_EXPIRE, GMT_CREATE, GMT_UPDATE
+  </sql>
+  
+  <!-- add by kwm beigin -->
+  <select id="listGoodsByTPNameAndProvinceName" resultMap="BaseResultMap">
+SELECT
+	g1.*
+FROM
+	flow_goods g1
+INNER JOIN (
+	SELECT
+		MIN(GOODS_PRICE) AS price,
+		g.GOODS_NAME,
+		g.GOODS_PROVINCE_ID
+	FROM
+		flow_goods g,
+		resource_area r,
+		flow_telecom_operator tp
+	WHERE
+		1 = 1
+	AND (
+		g.GOODS_AMOUNT = - 1
+		OR g.GOODS_AMOUNT > 0
+	)
+	AND g.GOODS_STATE = '1'
+	AND g.GOODS_TP_ID = tp.id
+	AND TP_NAME = #{tpName}
+	AND r.parentid = 0
+	AND r.shortname = #{provinceShortName}
+	AND (
+		g.GOODS_PROVINCE_ID = r.id
+		OR g.GOODS_PROVINCE_ID = 0
+	)
+	GROUP BY
+		g.GOODS_NAME,
+		g.GOODS_PROVINCE_ID
+) m ON m.price = g1.GOODS_PRICE
+AND m.GOODS_NAME = g1.GOODS_NAME
+AND m.GOODS_PROVINCE_ID = g1.GOODS_PROVINCE_ID
+GROUP BY
+	g1.GOODS_NAME,
+	g1.GOODS_PROVINCE_ID
+ORDER BY
+	(g1.GOODS_NAME + 0) 
+    
+  </select>  
+  <!-- add by kwm end -->
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from flow_goods
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from flow_goods
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.all_union.es.esalarm.pojo.flow.FlowGoodsDo">
+    insert into flow_goods (ID, GOODS_CHANNEL_ID, GOODS_NAME, 
+      GOODS_DESC, GOODS_TP_ID, GOODS_PROVINCE_ID, 
+      GOODS_PRICE, GOODS_AMOUNT, GOODS_STATE, 
+      GOODS_EXPIRE, GMT_CREATE, GMT_UPDATE
+      )
+    values (#{id,jdbcType=BIGINT}, #{goodsChannelId,jdbcType=BIGINT}, #{goodsName,jdbcType=VARCHAR}, 
+      #{goodsDesc,jdbcType=VARCHAR}, #{goodsTpId,jdbcType=BIGINT}, #{goodsProvinceId,jdbcType=INTEGER}, 
+      #{goodsPrice,jdbcType=DECIMAL}, #{goodsAmount,jdbcType=INTEGER}, #{goodsState,jdbcType=VARCHAR}, 
+      #{goodsExpire,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtUpdate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.all_union.es.esalarm.pojo.flow.FlowGoodsDo">
+    insert into flow_goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="goodsChannelId != null">
+        GOODS_CHANNEL_ID,
+      </if>
+      <if test="goodsName != null">
+        GOODS_NAME,
+      </if>
+      <if test="goodsDesc != null">
+        GOODS_DESC,
+      </if>
+      <if test="goodsTpId != null">
+        GOODS_TP_ID,
+      </if>
+      <if test="goodsProvinceId != null">
+        GOODS_PROVINCE_ID,
+      </if>
+      <if test="goodsPrice != null">
+        GOODS_PRICE,
+      </if>
+      <if test="goodsAmount != null">
+        GOODS_AMOUNT,
+      </if>
+      <if test="goodsState != null">
+        GOODS_STATE,
+      </if>
+      <if test="goodsExpire != null">
+        GOODS_EXPIRE,
+      </if>
+      <if test="gmtCreate != null">
+        GMT_CREATE,
+      </if>
+      <if test="gmtUpdate != null">
+        GMT_UPDATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="goodsChannelId != null">
+        #{goodsChannelId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsDesc != null">
+        #{goodsDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsTpId != null">
+        #{goodsTpId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsProvinceId != null">
+        #{goodsProvinceId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsPrice != null">
+        #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsAmount != null">
+        #{goodsAmount,jdbcType=INTEGER},
+      </if>
+      <if test="goodsState != null">
+        #{goodsState,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsExpire != null">
+        #{goodsExpire,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtUpdate != null">
+        #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.all_union.es.esalarm.pojo.flow.FlowGoodsDo">
+    update flow_goods
+    <set>
+      <if test="goodsChannelId != null">
+        GOODS_CHANNEL_ID = #{goodsChannelId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsName != null">
+        GOODS_NAME = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsDesc != null">
+        GOODS_DESC = #{goodsDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsTpId != null">
+        GOODS_TP_ID = #{goodsTpId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsProvinceId != null">
+        GOODS_PROVINCE_ID = #{goodsProvinceId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsPrice != null">
+        GOODS_PRICE = #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsAmount != null">
+        GOODS_AMOUNT = #{goodsAmount,jdbcType=INTEGER},
+      </if>
+      <if test="goodsState != null">
+        GOODS_STATE = #{goodsState,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsExpire != null">
+        GOODS_EXPIRE = #{goodsExpire,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        GMT_CREATE = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtUpdate != null">
+        GMT_UPDATE = #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.all_union.es.esalarm.pojo.flow.FlowGoodsDo">
+    update flow_goods
+    set GOODS_CHANNEL_ID = #{goodsChannelId,jdbcType=BIGINT},
+      GOODS_NAME = #{goodsName,jdbcType=VARCHAR},
+      GOODS_DESC = #{goodsDesc,jdbcType=VARCHAR},
+      GOODS_TP_ID = #{goodsTpId,jdbcType=BIGINT},
+      GOODS_PROVINCE_ID = #{goodsProvinceId,jdbcType=INTEGER},
+      GOODS_PRICE = #{goodsPrice,jdbcType=DECIMAL},
+      GOODS_AMOUNT = #{goodsAmount,jdbcType=INTEGER},
+      GOODS_STATE = #{goodsState,jdbcType=VARCHAR},
+      GOODS_EXPIRE = #{goodsExpire,jdbcType=TIMESTAMP},
+      GMT_CREATE = #{gmtCreate,jdbcType=TIMESTAMP},
+      GMT_UPDATE = #{gmtUpdate,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

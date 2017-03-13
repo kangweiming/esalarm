@@ -1,3 +1,5 @@
+CREATE DATABASE IF NOT EXISTS db_kwm default charset utf8 COLLATE utf8_general_ci;
+
 USE db_kwm;
 
 DROP TABLE IF EXISTS `user_t`;  
