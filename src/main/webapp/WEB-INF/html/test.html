@@ -50,7 +50,7 @@ $(document).ready(function() {
 	    $.ajax({
 	    	type:"GET",
 	    	dataType: "json",
-	        url: resUsertUrl + "6"//支持相对地址
+	        url: resUserUrl + "6"//支持相对地址
 	    }).then(function(data) {
 	       $('.name').text(data.userName);
 	       $('.password').text(data.password);

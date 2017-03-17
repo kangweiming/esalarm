@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.all_union.es.esalarm.dao.flow.FlowOrderTransDoMapper">
+  <resultMap id="BaseResultMap" type="com.all_union.es.esalarm.pojo.flow.FlowOrderTransDo">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="ORDER_NO" jdbcType="BIGINT" property="orderNo" />
+    <result column="MERCH_ID" jdbcType="BIGINT" property="merchId" />
+    <result column="SHOP_ID" jdbcType="BIGINT" property="shopId" />
+    <result column="TRANS_CODE" jdbcType="VARCHAR" property="transCode" />
+    <result column="TRANS_NAME" jdbcType="VARCHAR" property="transName" />
+    <result column="STATE" jdbcType="VARCHAR" property="state" />
+    <result column="STATE_DESC" jdbcType="VARCHAR" property="stateDesc" />
+    <result column="TOTAL_PRICE" jdbcType="DECIMAL" property="totalPrice" />
+    <result column="ACTUALLY_PAID" jdbcType="DECIMAL" property="actuallyPaid" />
+    <result column="NICK_NAME" jdbcType="VARCHAR" property="nickName" />
+    <result column="OPEN_ID" jdbcType="VARCHAR" property="openId" />
+    <result column="PREPAY_ID" jdbcType="VARCHAR" property="prepayId" />
+    <result column="BANK_TYPE" jdbcType="VARCHAR" property="bankType" />
+    <result column="GMT_CREATE" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="GMT_UPDATE" jdbcType="TIMESTAMP" property="gmtUpdate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, ORDER_NO, MERCH_ID, SHOP_ID, TRANS_CODE, TRANS_NAME, STATE, STATE_DESC, TOTAL_PRICE, 
+    ACTUALLY_PAID, NICK_NAME, OPEN_ID, PREPAY_ID, BANK_TYPE, GMT_CREATE, GMT_UPDATE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from flow_order_trans
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from flow_order_trans
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.all_union.es.esalarm.pojo.flow.FlowOrderTransDo">
+    insert into flow_order_trans (ORDER_NO, MERCH_ID, 
+      SHOP_ID, TRANS_CODE, TRANS_NAME, 
+      STATE, STATE_DESC, TOTAL_PRICE, 
+      ACTUALLY_PAID, NICK_NAME, OPEN_ID, 
+      PREPAY_ID, BANK_TYPE, GMT_CREATE, 
+      GMT_UPDATE)
+    values (#{orderNo,jdbcType=BIGINT}, #{merchId,jdbcType=BIGINT}, 
+      #{shopId,jdbcType=BIGINT}, #{transCode,jdbcType=VARCHAR}, #{transName,jdbcType=VARCHAR}, 
+      #{state,jdbcType=VARCHAR}, #{stateDesc,jdbcType=VARCHAR}, #{totalPrice,jdbcType=DECIMAL}, 
+      #{actuallyPaid,jdbcType=DECIMAL}, #{nickName,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, 
+      #{prepayId,jdbcType=VARCHAR}, #{bankType,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtUpdate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.all_union.es.esalarm.pojo.flow.FlowOrderTransDo">
+    insert into flow_order_trans
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderNo != null">
+        ORDER_NO,
+      </if>
+      <if test="merchId != null">
+        MERCH_ID,
+      </if>
+      <if test="shopId != null">
+        SHOP_ID,
+      </if>
+      <if test="transCode != null">
+        TRANS_CODE,
+      </if>
+      <if test="transName != null">
+        TRANS_NAME,
+      </if>
+      <if test="state != null">
+        STATE,
+      </if>
+      <if test="stateDesc != null">
+        STATE_DESC,
+      </if>
+      <if test="totalPrice != null">
+        TOTAL_PRICE,
+      </if>
+      <if test="actuallyPaid != null">
+        ACTUALLY_PAID,
+      </if>
+      <if test="nickName != null">
+        NICK_NAME,
+      </if>
+      <if test="openId != null">
+        OPEN_ID,
+      </if>
+      <if test="prepayId != null">
+        PREPAY_ID,
+      </if>
+      <if test="bankType != null">
+        BANK_TYPE,
+      </if>
+      <if test="gmtCreate != null">
+        GMT_CREATE,
+      </if>
+      <if test="gmtUpdate != null">
+        GMT_UPDATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=BIGINT},
+      </if>
+      <if test="merchId != null">
+        #{merchId,jdbcType=BIGINT},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="transCode != null">
+        #{transCode,jdbcType=VARCHAR},
+      </if>
+      <if test="transName != null">
+        #{transName,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="stateDesc != null">
+        #{stateDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPrice != null">
+        #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="actuallyPaid != null">
+        #{actuallyPaid,jdbcType=DECIMAL},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null">
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="prepayId != null">
+        #{prepayId,jdbcType=VARCHAR},
+      </if>
+      <if test="bankType != null">
+        #{bankType,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtUpdate != null">
+        #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.all_union.es.esalarm.pojo.flow.FlowOrderTransDo">
+    update flow_order_trans
+    <set>
+      <if test="orderNo != null">
+        ORDER_NO = #{orderNo,jdbcType=BIGINT},
+      </if>
+      <if test="merchId != null">
+        MERCH_ID = #{merchId,jdbcType=BIGINT},
+      </if>
+      <if test="shopId != null">
+        SHOP_ID = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="transCode != null">
+        TRANS_CODE = #{transCode,jdbcType=VARCHAR},
+      </if>
+      <if test="transName != null">
+        TRANS_NAME = #{transName,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        STATE = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="stateDesc != null">
+        STATE_DESC = #{stateDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPrice != null">
+        TOTAL_PRICE = #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="actuallyPaid != null">
+        ACTUALLY_PAID = #{actuallyPaid,jdbcType=DECIMAL},
+      </if>
+      <if test="nickName != null">
+        NICK_NAME = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null">
+        OPEN_ID = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="prepayId != null">
+        PREPAY_ID = #{prepayId,jdbcType=VARCHAR},
+      </if>
+      <if test="bankType != null">
+        BANK_TYPE = #{bankType,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        GMT_CREATE = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtUpdate != null">
+        GMT_UPDATE = #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.all_union.es.esalarm.pojo.flow.FlowOrderTransDo">
+    update flow_order_trans
+    set ORDER_NO = #{orderNo,jdbcType=BIGINT},
+      MERCH_ID = #{merchId,jdbcType=BIGINT},
+      SHOP_ID = #{shopId,jdbcType=BIGINT},
+      TRANS_CODE = #{transCode,jdbcType=VARCHAR},
+      TRANS_NAME = #{transName,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=VARCHAR},
+      STATE_DESC = #{stateDesc,jdbcType=VARCHAR},
+      TOTAL_PRICE = #{totalPrice,jdbcType=DECIMAL},
+      ACTUALLY_PAID = #{actuallyPaid,jdbcType=DECIMAL},
+      NICK_NAME = #{nickName,jdbcType=VARCHAR},
+      OPEN_ID = #{openId,jdbcType=VARCHAR},
+      PREPAY_ID = #{prepayId,jdbcType=VARCHAR},
+      BANK_TYPE = #{bankType,jdbcType=VARCHAR},
+      GMT_CREATE = #{gmtCreate,jdbcType=TIMESTAMP},
+      GMT_UPDATE = #{gmtUpdate,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

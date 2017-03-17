@@ -17,7 +17,8 @@ import com.all_union.es.esalarm.pojo.flow.FlowGoodsDo;
 */
 public interface FlowGoodsService {
 
-
+	FlowGoodsDo selectByPrimaryKey(Long id);
+	
 	/**
 	 * 根据运营商名称和所属省的简称查询价格最低的流量包，按流量包名称和省代码group by
 	 * @param tpName 运营商名称 如 tpName = 移动

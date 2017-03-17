@@ -1,11 +1,17 @@
 // 定义rest接口地址
-var resUsertUrl = "http://192.168.16.86:8080/esalarm/rest/user/";
-var resFlowtUrl = "http://192.168.16.86:8080/esalarm/rest/flow/";
+var resUserUrl = "http://192.168.16.86:8080/esalarm/rest/user/";
+var resFlowUrl = "http://192.168.16.86:8080/esalarm/rest/flow/";
+//var resFlowUrl = "http://localhost:8080/esalarm/rest/flow/";
+
+// 定义ajax调用时的全局变量
+var key;
+
 
 // 淘宝查询手机号归属地接口 JSONP GET 参数是手机号码
 var restTaobaoMobile = "http://tcc.taobao.com/cc/json/mobile_tel_segment.htm?tel=";
-// 手机号码正则表达式
+// 手机号码正则表达式 不支持170
 var moblieExp = /^(13|15|18)[0-9]{9}$/;
+//var moblieExp =	/^[1][35678][0-9]{9}$/;
 
 $(function() {
 	/**
@@ -102,22 +108,21 @@ $(function() {
 		});
 	};
 
-	// 发送给SpringMvc controller，数据转换成json字符串，controller以String类型接收，然后再转成json object进行处理
-	jQuery.axjsonpPostMvc = function(url, data, successfn, config, key) {
+	// 发送给SpringMvc controller，数据转换成json字符串，controller以String(或JSONObject)类型接收，然后再进行处理
+	jQuery.axjsonpPostMvc = function(url, data, successfn, config, key, isAsync) {
 		data = (data == null || data == "" || typeof(data) == "undefined") ? {
 			"date": new Date().getTime()
 		} : data;
 		$.ajax({
 			type: "POST",
 			url: url,
-			// data不需要stringify方法处理，controller直接接收的是JSONObject对象
-			//data: JSON.stringify(data),
-			data:data,
+			data: JSON.stringify(data),
+			//data:data,
 			headers: {
 				'Content-Type': 'application/json',
 				'AuthKey': key
 			},
-			async: true,
+			async: isAsync,
 			//在请求之前调用的函数
 			beforeSend: function() {
 				$("#btn_loading").css('display', '');

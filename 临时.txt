@@ -1,0 +1,88 @@
+微信用户表 flow_user
+用户关注公众号拿到的信息
+ID
+OPEN_ID 28个字符
+NICK_NAME
+SEX
+PROVINCE
+CITY
+COUNTRY
+HEAD_IMG_URL
+PRIVILEGE 用户特权信息，json 数组，如微信沃卡用户为（chinaunicom）
+SUBSCRIBE_TIME 最后关注时间
+GMT_CREATE
+GMT_UPDATE
+
+=====================
+		订单状态枚举:
+		SUCCESS	("SUCCESS",	"支付成功"),
+		REFUND		("REFUND",		"退款成功"),
+		NOTPAY		("NOTPAY",		"未支付"),
+		CLOSED		("CLOSED",		"已关闭"),
+		REVOKED	("REVOKED",	"已撤销"),
+		USERPAYING	("USERPAYING","支付中"),
+		PAYERROR	("PAYERROR",	"支付失败"),
+		REFUND_FAIL("REFUND_FAIL","退款失败"),
+		REVERSAL	("REVERSAL", 	"冲正");
+=====================
+订单表 flow_order
+ID
+ORDER_NO
+TYPE 订单类型 流量商品订单类型码为'01'
+STATE 订单状态代码
+STATE_DESC 订单状态描述
+EXPIRE_TIME 有效期截止时间
+USER_ID 下单人ID ，在这里对应 flow_user的ID字段 
+MOBILE 收货人
+TOTAL_PRICE 总价 
+ACTUALLY_PAID 实付金额
+GMT_CREATE
+GMT_UPDATE
+
+=====================
+订单商品表 flow_order_goods
+同一订单可能有多个商品
+ID
+ORDER_NO
+GOODS_ID 订单商品的ID
+AMOUNT 数量
+DISCOUT 折扣率 0.01-1.00之间 1.00表示没有折扣。做折扣活动需要创建活动表，每种商品同时只有一种折扣
+GMT_CREATE
+GMT_UPDATE
+
+=====================
+订单流水表 flow_order_trans
+ID
+ORDER_NO
+MERCH_ID 商户ID
+SHOP_ID 店铺ID
+TRANS_CODE 交易代码
+TRANS_NAME 交易名称
+STATE 订单状态代码
+STATE_DESC 描述
+TOTAL_PRICE 总价 
+ACTUALLY_PAID 实付金额 
+GMT_CREATE
+GMT_UPDATE
+
+// 微信支付专用字段
+NICK_NAME 微信用户昵称
+
+OPEN_ID 微信用户ID
+PREPAY_ID 微信预支付交易会话标识
+BANK_TYPE 付款银行
+
+
+
+{"marked":"floworder","code":"10002","jsonStr":"{\"open_id\":123456,\"goodslist\":[\"{\\\"goodsid\\\":7}\",\"{\\\"goodsid\\\":\\\"2\\\"}\"]}","version":"1.0"}
+
+["{\"goodsid\":7}","{\"goodsid\":\"2\"}"]
+
+13998240710
+
+		
+
+		
+		
+
+

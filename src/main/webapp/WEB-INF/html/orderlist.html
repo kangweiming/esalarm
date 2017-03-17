@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+<!-- Bootstrap css -->
+<link href="./bootstrap/css/bootstrap.css" rel="stylesheet">
+<title>充值记录</title>
+</head>
+<body>
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+		</div>
+	</div>
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<ul class="breadcrumb">
+				<li>
+					 <a href="aydata.html">流量充值</a>
+				</li>
+				<li class="active">
+					充值记录
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<table id="RechargeRecord" class="table table-hover">
+				<thead>
+					<tr>
+						<th>
+							手机号
+						</th>
+						<th>
+							流量包
+						</th>
+						<th>
+							充值时间
+						</th>
+						<th>
+							状态
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="success">
+						<td>
+							13998240710
+						</td>
+						<td>
+							全国30M
+						</td>
+						<td>
+							2017-03-11 11:12:11
+						</td>
+						<td>
+							支付成功
+						</td>
+					</tr>
+					<tr class="warning">
+						<td>
+							13998240710
+						</td>
+						<td>
+							全国100M
+						</td>
+						<td>
+							2017-03-12 11:12:11
+						</td>
+						<td>
+							未支付
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+			<div class="row clearfix">
+				<div class="col-md-12 column text-center >
+					<a href="#" id="loadMore" class="btn btn-link ">点击加载更多</a>
+				</div>
+			</div>		
+</div>
+
+</body>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="./js/jquery-3.1.1.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./bootstrap/js/bootstrap.min.js"></script>
+<!-- include customer's js -->
+<script src="./js/commons.js"></script>
+<script src="./js/dataHelper.js"></script>
+
+<script src="./js/orderlist.js"></script>
+
+</html>

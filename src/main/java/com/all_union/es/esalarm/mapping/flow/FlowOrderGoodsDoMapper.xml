@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.all_union.es.esalarm.dao.flow.FlowOrderGoodsDoMapper">
+  <resultMap id="BaseResultMap" type="com.all_union.es.esalarm.pojo.flow.FlowOrderGoodsDo">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="ORDER_NO" jdbcType="BIGINT" property="orderNo" />
+    <result column="GOODS_ID" jdbcType="BIGINT" property="goodsId" />
+    <result column="AMOUNT" jdbcType="INTEGER" property="amount" />
+    <result column="DISCOUT" jdbcType="DECIMAL" property="discout" />
+    <result column="GMT_CREATE" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="GMT_UPDATE" jdbcType="TIMESTAMP" property="gmtUpdate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, ORDER_NO, GOODS_ID, AMOUNT, DISCOUT, GMT_CREATE, GMT_UPDATE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from flow_order_goods
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from flow_order_goods
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.all_union.es.esalarm.pojo.flow.FlowOrderGoodsDo">
+    insert into flow_order_goods (ORDER_NO, GOODS_ID, 
+      AMOUNT, DISCOUT, GMT_CREATE, 
+      GMT_UPDATE)
+    values (#{orderNo,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, 
+      #{amount,jdbcType=INTEGER}, #{discout,jdbcType=DECIMAL}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtUpdate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.all_union.es.esalarm.pojo.flow.FlowOrderGoodsDo">
+    insert into flow_order_goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderNo != null">
+        ORDER_NO,
+      </if>
+      <if test="goodsId != null">
+        GOODS_ID,
+      </if>
+      <if test="amount != null">
+        AMOUNT,
+      </if>
+      <if test="discout != null">
+        DISCOUT,
+      </if>
+      <if test="gmtCreate != null">
+        GMT_CREATE,
+      </if>
+      <if test="gmtUpdate != null">
+        GMT_UPDATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="discout != null">
+        #{discout,jdbcType=DECIMAL},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtUpdate != null">
+        #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.all_union.es.esalarm.pojo.flow.FlowOrderGoodsDo">
+    update flow_order_goods
+    <set>
+      <if test="orderNo != null">
+        ORDER_NO = #{orderNo,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null">
+        GOODS_ID = #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null">
+        AMOUNT = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="discout != null">
+        DISCOUT = #{discout,jdbcType=DECIMAL},
+      </if>
+      <if test="gmtCreate != null">
+        GMT_CREATE = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtUpdate != null">
+        GMT_UPDATE = #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.all_union.es.esalarm.pojo.flow.FlowOrderGoodsDo">
+    update flow_order_goods
+    set ORDER_NO = #{orderNo,jdbcType=BIGINT},
+      GOODS_ID = #{goodsId,jdbcType=BIGINT},
+      AMOUNT = #{amount,jdbcType=INTEGER},
+      DISCOUT = #{discout,jdbcType=DECIMAL},
+      GMT_CREATE = #{gmtCreate,jdbcType=TIMESTAMP},
+      GMT_UPDATE = #{gmtUpdate,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

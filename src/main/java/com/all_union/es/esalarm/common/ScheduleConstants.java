@@ -16,6 +16,8 @@ public class ScheduleConstants {
 	 * trigger的执行次数
 	 */
 	public static final String FIRE_COUNT = "triggerFireCount";
-	
+	/** 
+	 * quartz任务的查询条件
+	 */
 	public static final String ES_QUERY_CONDITION = "esQueryCondition";
 }

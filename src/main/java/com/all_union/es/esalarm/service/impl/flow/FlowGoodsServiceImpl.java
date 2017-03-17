@@ -18,7 +18,6 @@ import com.all_union.es.esalarm.dao.flow.FlowGoodsDoMapper;
 import com.all_union.es.esalarm.pojo.flow.FlowGoodsDo;
 import com.all_union.es.esalarm.service.flow.FlowGoodsService;
 import com.kwm.common.lang.StringUtil;
-import com.mysql.jdbc.StringUtils;
 
 /** 
  * @Description: 
@@ -27,7 +26,7 @@ import com.mysql.jdbc.StringUtils;
  * @version V1.0 
  * 
 */
-@Service("flowService")
+@Service("flowGoodsService")
 public class FlowGoodsServiceImpl implements FlowGoodsService {
 	
 	private static Logger logger = LogManager.getLogger(FlowGoodsServiceImpl.class);
@@ -54,6 +53,12 @@ public class FlowGoodsServiceImpl implements FlowGoodsService {
 		
 		return this.flowGoodsDao.listGoodsByTPNameAndProvinceName(map);
 
+	}
+
+	@Override
+	public FlowGoodsDo selectByPrimaryKey(Long id) {
+		logger.debug("excute...");
+		return this.flowGoodsDao.selectByPrimaryKey(id);
 	}
 
 }

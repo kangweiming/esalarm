@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.all_union.es.esalarm.dao.flow.FlowOrderDoMapper">
+  <resultMap id="BaseResultMap" type="com.all_union.es.esalarm.pojo.flow.FlowOrderDo">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <id column="ORDER_NO" jdbcType="BIGINT" property="orderNo" />
+    <result column="TYPE" jdbcType="VARCHAR" property="type" />
+    <result column="STATE" jdbcType="VARCHAR" property="state" />
+    <result column="STATE_DESC" jdbcType="VARCHAR" property="stateDesc" />
+    <result column="EXPIRE_TIME" jdbcType="TIMESTAMP" property="expireTime" />
+    <result column="USER_ID" jdbcType="BIGINT" property="userId" />
+    <result column="MOBILE" jdbcType="VARCHAR" property="mobile" />
+    <result column="TOTAL_PRICE" jdbcType="DECIMAL" property="totalPrice" />
+    <result column="ACTUALLY_PAID" jdbcType="DECIMAL" property="actuallyPaid" />
+    <result column="GMT_CREATE" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="GMT_UPDATE" jdbcType="TIMESTAMP" property="gmtUpdate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, ORDER_NO, TYPE, STATE, STATE_DESC, EXPIRE_TIME, USER_ID, MOBILE, TOTAL_PRICE, 
+    ACTUALLY_PAID, GMT_CREATE, GMT_UPDATE
+  </sql>
+  
+  <!-- add by kwm for recharge record begin -->
+  	<resultMap id="WithGoodsListResultMap"
+		type="com.all_union.es.esalarm.pojo.flow.FlowRechargeRecordDo" extends="BaseResultMap">
+		<collection property="goodsList"
+			ofType="com.all_union.es.esalarm.pojo.flow.FlowGoodsDo">			
+			    <id column="G_ID" jdbcType="BIGINT" property="id" />
+			    <result column="G_NAME" jdbcType="VARCHAR" property="goodsName" />
+			    <result column="G_PID" jdbcType="INTEGER" property="goodsProvinceId" />
+			
+		</collection>
+	</resultMap>
+	
+	<select id="listOrderByOpenIdWithGoodsInfo" parameterType="java.lang.String"
+		resultMap="WithGoodsListResultMap">
+		SELECT
+			o.*, g.ID as G_ID,g.GOODS_NAME as G_NAME,g.GOODS_PROVINCE_ID as G_PID
+		FROM
+			flow_order o,
+			flow_goods g,
+			flow_order_goods og,
+			flow_user u
+		WHERE
+			1 = 1
+		AND u.ID = o.USER_ID
+		AND og.ORDER_NO = o.ORDER_NO
+		AND og.GOODS_ID = g.ID
+		AND o.STATE IN ('SUCCESS', 'NOTPAY')
+		<if test="open_id != null">
+			AND u.OPEN_ID = #{open_id,jdbcType=VARCHAR}
+		</if>
+		ORDER BY o.GMT_UPDATE DESC		
+		<if test="idx > -1 and pageSize > -1" >
+			LIMIT #{idx},#{pageSize}
+		</if>
+		
+	</select>	
+	
+  <!-- add by kwm for recharge record end -->
+  
+  <select id="selectByOrderNo" parameterType="com.all_union.es.esalarm.pojo.flow.FlowOrderDoKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from flow_order
+    where ORDER_NO = #{orderNo,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.all_union.es.esalarm.pojo.flow.FlowOrderDoKey">
+    delete from flow_order
+    where ID = #{id,jdbcType=BIGINT}
+      and ORDER_NO = #{orderNo,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.all_union.es.esalarm.pojo.flow.FlowOrderDo">
+    insert into flow_order (ORDER_NO, TYPE, 
+      STATE, STATE_DESC, EXPIRE_TIME, 
+      USER_ID, MOBILE, TOTAL_PRICE, 
+      ACTUALLY_PAID, GMT_CREATE, GMT_UPDATE
+      )
+    values  #{orderNo,jdbcType=BIGINT}, #{type,jdbcType=VARCHAR}, 
+      #{state,jdbcType=VARCHAR}, #{stateDesc,jdbcType=VARCHAR}, #{expireTime,jdbcType=TIMESTAMP}, 
+      #{userId,jdbcType=BIGINT}, #{mobile,jdbcType=VARCHAR}, #{totalPrice,jdbcType=DECIMAL}, 
+      #{actuallyPaid,jdbcType=DECIMAL}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtUpdate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.all_union.es.esalarm.pojo.flow.FlowOrderDo">
+    insert into flow_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderNo != null">
+        ORDER_NO,
+      </if>
+      <if test="type != null">
+        TYPE,
+      </if>
+      <if test="state != null">
+        STATE,
+      </if>
+      <if test="stateDesc != null">
+        STATE_DESC,
+      </if>
+      <if test="expireTime != null">
+        EXPIRE_TIME,
+      </if>
+      <if test="userId != null">
+        USER_ID,
+      </if>
+      <if test="mobile != null">
+        MOBILE,
+      </if>
+      <if test="totalPrice != null">
+        TOTAL_PRICE,
+      </if>
+      <if test="actuallyPaid != null">
+        ACTUALLY_PAID,
+      </if>
+      <if test="gmtCreate != null">
+        GMT_CREATE,
+      </if>
+      <if test="gmtUpdate != null">
+        GMT_UPDATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="stateDesc != null">
+        #{stateDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="expireTime != null">
+        #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPrice != null">
+        #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="actuallyPaid != null">
+        #{actuallyPaid,jdbcType=DECIMAL},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtUpdate != null">
+        #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByOrderNoSelective" parameterType="com.all_union.es.esalarm.pojo.flow.FlowOrderDo">
+    update flow_order
+    <set>
+      <if test="type != null">
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        STATE = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="stateDesc != null">
+        STATE_DESC = #{stateDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="expireTime != null">
+        EXPIRE_TIME = #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        USER_ID = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="mobile != null">
+        MOBILE = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPrice != null">
+        TOTAL_PRICE = #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="actuallyPaid != null">
+        ACTUALLY_PAID = #{actuallyPaid,jdbcType=DECIMAL},
+      </if>
+      <if test="gmtUpdate != null">
+        GMT_UPDATE = #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ORDER_NO = #{orderNo,jdbcType=BIGINT}
+  </update>
+  <update id="updateByOrderNo" parameterType="com.all_union.es.esalarm.pojo.flow.FlowOrderDo">
+    update flow_order
+    set TYPE = #{type,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=VARCHAR},
+      STATE_DESC = #{stateDesc,jdbcType=VARCHAR},
+      EXPIRE_TIME = #{expireTime,jdbcType=TIMESTAMP},
+      USER_ID = #{userId,jdbcType=BIGINT},
+      MOBILE = #{mobile,jdbcType=VARCHAR},
+      TOTAL_PRICE = #{totalPrice,jdbcType=DECIMAL},
+      ACTUALLY_PAID = #{actuallyPaid,jdbcType=DECIMAL},
+      GMT_UPDATE = #{gmtUpdate,jdbcType=TIMESTAMP}
+    where ORDER_NO = #{orderNo,jdbcType=BIGINT}
+  </update>
+</mapper>

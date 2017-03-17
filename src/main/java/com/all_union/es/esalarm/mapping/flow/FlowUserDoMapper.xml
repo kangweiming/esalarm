@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.all_union.es.esalarm.dao.flow.FlowUserDoMapper">
+  <resultMap id="BaseResultMap" type="com.all_union.es.esalarm.pojo.flow.FlowUserDo">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="OPEN_ID" jdbcType="VARCHAR" property="openId" />
+    <result column="NICK_NAME" jdbcType="VARCHAR" property="nickName" />
+    <result column="SEX" jdbcType="VARCHAR" property="sex" />
+    <result column="PROVINCE" jdbcType="VARCHAR" property="province" />
+    <result column="CITY" jdbcType="VARCHAR" property="city" />
+    <result column="COUNTRY" jdbcType="VARCHAR" property="country" />
+    <result column="HEAD_IMG_URL" jdbcType="VARCHAR" property="headImgUrl" />
+    <result column="PRIVILEGE" jdbcType="VARCHAR" property="privilege" />
+    <result column="SUBSCRIBE_TIME" jdbcType="TIMESTAMP" property="subscribeTime" />
+    <result column="GMT_CREATE" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="GMT_UPDATE" jdbcType="TIMESTAMP" property="gmtUpdate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, OPEN_ID, NICK_NAME, SEX, PROVINCE, CITY, COUNTRY, HEAD_IMG_URL, PRIVILEGE, SUBSCRIBE_TIME, 
+    GMT_CREATE, GMT_UPDATE
+  </sql>
+  <select id="selectByOpenId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from flow_user
+    where OPEN_ID = #{openId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByOpenId" parameterType="java.lang.String">
+    delete from flow_user
+    where OPEN_ID = #{openId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.all_union.es.esalarm.pojo.flow.FlowUserDo">
+    insert into flow_user (OPEN_ID, NICK_NAME, 
+      SEX, PROVINCE, CITY, 
+      COUNTRY, HEAD_IMG_URL, PRIVILEGE, 
+      SUBSCRIBE_TIME, GMT_CREATE, GMT_UPDATE
+      )
+    values (#{openId,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{country,jdbcType=VARCHAR}, #{headImgUrl,jdbcType=VARCHAR}, #{privilege,jdbcType=VARCHAR}, 
+      #{subscribeTime,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtUpdate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.all_union.es.esalarm.pojo.flow.FlowUserDo">
+    insert into flow_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="openId != null">
+        OPEN_ID,
+      </if>
+      <if test="nickName != null">
+        NICK_NAME,
+      </if>
+      <if test="sex != null">
+        SEX,
+      </if>
+      <if test="province != null">
+        PROVINCE,
+      </if>
+      <if test="city != null">
+        CITY,
+      </if>
+      <if test="country != null">
+        COUNTRY,
+      </if>
+      <if test="headImgUrl != null">
+        HEAD_IMG_URL,
+      </if>
+      <if test="privilege != null">
+        PRIVILEGE,
+      </if>
+      <if test="subscribeTime != null">
+        SUBSCRIBE_TIME,
+      </if>
+      <if test="gmtCreate != null">
+        GMT_CREATE,
+      </if>
+      <if test="gmtUpdate != null">
+        GMT_UPDATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="openId != null">
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="headImgUrl != null">
+        #{headImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="privilege != null">
+        #{privilege,jdbcType=VARCHAR},
+      </if>
+      <if test="subscribeTime != null">
+        #{subscribeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtUpdate != null">
+        #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByOpenIdSelective" parameterType="com.all_union.es.esalarm.pojo.flow.FlowUserDo">
+    update flow_user
+    <set>
+      <if test="nickName != null">
+        NICK_NAME = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        SEX = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        PROVINCE = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        CITY = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        COUNTRY = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="headImgUrl != null">
+        HEAD_IMG_URL = #{headImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="privilege != null">
+        PRIVILEGE = #{privilege,jdbcType=VARCHAR},
+      </if>
+      <if test="subscribeTime != null">
+        SUBSCRIBE_TIME = #{subscribeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        GMT_CREATE = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtUpdate != null">
+        GMT_UPDATE = #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where OPEN_ID = #{openId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByOpenId" parameterType="com.all_union.es.esalarm.pojo.flow.FlowUserDo">
+    update flow_user
+    set
+      NICK_NAME = #{nickName,jdbcType=VARCHAR},
+      SEX = #{sex,jdbcType=VARCHAR},
+      PROVINCE = #{province,jdbcType=VARCHAR},
+      CITY = #{city,jdbcType=VARCHAR},
+      COUNTRY = #{country,jdbcType=VARCHAR},
+      HEAD_IMG_URL = #{headImgUrl,jdbcType=VARCHAR},
+      PRIVILEGE = #{privilege,jdbcType=VARCHAR},
+      SUBSCRIBE_TIME = #{subscribeTime,jdbcType=TIMESTAMP},
+      GMT_CREATE = #{gmtCreate,jdbcType=TIMESTAMP},
+      GMT_UPDATE = #{gmtUpdate,jdbcType=TIMESTAMP}
+    where OPEN_ID = #{openId,jdbcType=VARCHAR}
+  </update>
+</mapper>
