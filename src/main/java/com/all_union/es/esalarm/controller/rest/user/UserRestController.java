@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.all_union.es.esalarm.dao.user.UserQuery;
 import com.all_union.es.esalarm.pojo.user.UserDo;
+import com.all_union.es.esalarm.pojo.user.UserQuery;
 import com.all_union.es.esalarm.service.user.UserService;
 
 /**

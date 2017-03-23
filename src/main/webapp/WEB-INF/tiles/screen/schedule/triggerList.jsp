@@ -23,7 +23,7 @@
 	<input type="hidden" name="token" value="${token}">
 	
 	<div class="right">
-		<div class="board errorB" id="dateFormat" name="dateFormat"
+		<div class="board errorB" id="dateFormat" 
 			style="display: none"></div>
 		<h2>任务信息</h2>
 		<div class="formA">
@@ -178,7 +178,6 @@
 							</c:otherwise>
 						</c:choose>
 												
-						
 						<td>${task.cronExpression}</td>
 						<td>${task.triggerStatus}</td>
 						<td><fmt:formatDate value="${task.trigger.getStartTime()}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
@@ -263,6 +262,7 @@
 				href="taskAdd?timeStamp=${current_time}"
 				target="_self">[ 添加任务 ]</a>
 		</div>
+	</div>	
 </form>
 <!--  
 	<span>es查询结果:</span>

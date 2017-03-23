@@ -62,4 +62,23 @@ public class WebConstants {
 	 *  测试用open_id
 	 */
 	public static final String OPEN_ID_TEST = "1234567890AABBCCDD1234567890";
+	
+	// =============================================================================
+	/**
+	 * 新增信息action
+	 */
+	public static final String FORM_ACTION_ADD = "add";
+	/**
+	 * 更新信息action
+	 */
+	public static final String FORM_ACTION_UPDATE = "update";
+	// =============================================================================
+	// 缓存中名字（key）定义
+	/**
+	 * 运营商缓存名
+	 */
+	public static final String CACHE_TP_LIST = "tpList";
+	
+	public static final String CACHE_PROVINCE_LIST = "provinceList";
+	
 }

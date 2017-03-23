@@ -4,7 +4,6 @@
 package com.all_union.es.esalarm.controller.user;
 
 import java.net.UnknownHostException;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -17,15 +16,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.all_union.es.esalarm.controller.ControllerBase;
-import com.all_union.es.esalarm.dao.user.UserQuery;
+import com.all_union.es.esalarm.controller.BaseController;
 import com.all_union.es.esalarm.pojo.user.UserDo;
+import com.all_union.es.esalarm.pojo.user.UserQuery;
 import com.all_union.es.esalarm.service.user.UserService;
 import com.all_union.es.esclient.test.GetData;
 import com.kwm.common.convert.Convert;
-import com.kwm.common.lang.DateUtil;
 import com.kwm.common.lang.StringUtil;;
 /** 
  * @Description: 
@@ -36,8 +33,8 @@ import com.kwm.common.lang.StringUtil;;
 */
 //处理请求地址映射的注解,表示类中的所有响应请求的方法都是以该地址作为父路径 
 @Controller
-@RequestMapping("/background")
-public class UserController extends ControllerBase{
+@RequestMapping("/background/user")
+public class UserController extends BaseController{
 
 	private static Logger logger = LogManager.getLogger(UserController.class);
 	
@@ -48,7 +45,7 @@ public class UserController extends ControllerBase{
     // 处理请求地址映射的注解,访问/userList这个URI时，调用此方法 
     @RequestMapping("/userList")  
     //@RequestMapping(value = "/userList", method = RequestMethod.GET)
-    public String showInfoTiles(Model model,
+    public String listUserTiles(Model model,
     		@ModelAttribute("init") String  init,
     		@ModelAttribute("userName") String  userName,
     		@ModelAttribute("password") String  password,
@@ -62,7 +59,7 @@ public class UserController extends ControllerBase{
     		@ModelAttribute("flag") String  flag	
     		){  
     	
-    	logger.debug("do showInfoTiles method");  
+    	logger.debug("do listUserTiles method");  
     	    	    	
     	// 设置查询条件
     	UserQuery query = new UserQuery();
@@ -139,6 +136,7 @@ public class UserController extends ControllerBase{
 			logger.error(e.getMessage(),e); 
 		}
         
+        // 映射全路径为 /WEB-INF/jsp/user/showUser.jsp 详见spring-mvc.xml视图配置部分
         return "/user/showUser"; 
         
     }        

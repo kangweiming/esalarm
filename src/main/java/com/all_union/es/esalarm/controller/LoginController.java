@@ -27,7 +27,7 @@ import com.all_union.es.esalarm.common.WebConstants;
  * 
 */
 @Controller
-public class LoginController extends ControllerBase{
+public class LoginController extends BaseController{
 
 	private static Logger logger = LogManager.getLogger(LoginController.class);
 	

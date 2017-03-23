@@ -47,6 +47,10 @@
 			AND r.parentid = 0
 			AND r.shortname = #{provinceShortName}
 			AND g.GOODS_PROVINCE_ID IN (0,r.id)
+			AND (
+				g.GOODS_EXPIRE IS NULL
+				OR g.GOODS_EXPIRE > NOW()
+			)
 			GROUP BY
 				g.GOODS_NAME,
 				g.GOODS_PROVINCE_ID
@@ -60,6 +64,122 @@
 			(g1.GOODS_NAME + 0) 
     
   </select>  
+  <select id="listGoodsByQuery" parameterType="com.all_union.es.esalarm.pojo.flow.FlowGoodsQuery" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from flow_goods
+    where 1=1
+      <if test="id != null">
+        AND ID = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="goodsChannelId != null">
+        AND GOODS_CHANNEL_ID = #{goodsChannelId,jdbcType=BIGINT}
+      </if>
+      <if test="goodsName != null">
+        and GOODS_NAME like CONCAT('%',#{goodsName,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="goodsDesc != null">
+        and GOODS_DESC like CONCAT('%',#{goodsDesc,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="goodsTpId != null">
+        and GOODS_TP_ID = #{goodsTpId,jdbcType=BIGINT}
+      </if>
+      <if test="goodsProvinceId != null">
+        and GOODS_PROVINCE_ID = #{goodsProvinceId,jdbcType=INTEGER}
+      </if>
+      <if test="startPrice != null">
+        and GOODS_PRICE &gt;= #{startPrice,jdbcType=DECIMAL}
+      </if>
+      <if test="endPrice != null">
+        and GOODS_PRICE &lt;= #{endPrice,jdbcType=DECIMAL}
+      </if>
+      <if test="goodsAmount != null">
+        and GOODS_AMOUNT = #{goodsAmount,jdbcType=INTEGER}
+      </if>
+      <if test="goodsState != null">
+        and GOODS_STATE = #{goodsState,jdbcType=VARCHAR}
+      </if>
+		AND (GOODS_EXPIRE is NULL OR 
+			(
+				1=1
+		      <if test="gmtStartExpire != null">
+		        and GOODS_EXPIRE &gt;= #{gmtStartExpire,jdbcType=TIMESTAMP}
+		      </if>
+		      <if test="gmtEndExpire != null">
+		        and GOODS_EXPIRE &lt;= #{gmtEndExpire,jdbcType=TIMESTAMP}
+		      </if>
+			)
+		)      
+      <if test="gmtStartCreate != null">
+        and GMT_CREATE &gt;= #{gmtStartCreate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="gmtEndCreate != null">
+        and GMT_CREATE &lt;= #{gmtEndCreate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="gmtUpdate != null">
+        and GMT_UPDATE = #{gmtUpdate,jdbcType=TIMESTAMP}
+      </if>
+      order by GMT_CREATE DESC
+	  limit #{pageFristItemZero},#{pageSize}	
+  </select>
+  
+  <select id="countGoodsByQuery" parameterType="com.all_union.es.esalarm.pojo.flow.FlowGoodsQuery" resultType="java.lang.Integer">
+    select 
+    	count(*)
+    from flow_goods
+    where 1=1
+      <if test="id != null">
+        AND ID = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="goodsChannelId != null">
+        AND GOODS_CHANNEL_ID = #{goodsChannelId,jdbcType=BIGINT}
+      </if>
+      <if test="goodsName != null">
+        and GOODS_NAME like CONCAT('%',#{goodsName,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="goodsDesc != null">
+        and GOODS_DESC like CONCAT('%',#{goodsDesc,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="goodsTpId != null">
+        and GOODS_TP_ID = #{goodsTpId,jdbcType=BIGINT}
+      </if>
+      <if test="goodsProvinceId != null">
+        and GOODS_PROVINCE_ID = #{goodsProvinceId,jdbcType=INTEGER}
+      </if>
+      <if test="startPrice != null">
+        and GOODS_PRICE &gt;= #{startPrice,jdbcType=DECIMAL}
+      </if>
+      <if test="endPrice != null">
+        and GOODS_PRICE &lt;= #{endPrice,jdbcType=DECIMAL}
+      </if>
+      <if test="goodsAmount != null">
+        and GOODS_AMOUNT = #{goodsAmount,jdbcType=INTEGER}
+      </if>
+      <if test="goodsState != null">
+        and GOODS_STATE = #{goodsState,jdbcType=VARCHAR}
+      </if>
+		AND (GOODS_EXPIRE is NULL OR 
+			(
+				1=1
+		      <if test="gmtStartExpire != null">
+		        and GOODS_EXPIRE &gt;= #{gmtStartExpire,jdbcType=TIMESTAMP}
+		      </if>
+		      <if test="gmtEndExpire != null">
+		        and GOODS_EXPIRE &lt;= #{gmtEndExpire,jdbcType=TIMESTAMP}
+		      </if>
+			)
+		)      
+      <if test="gmtStartCreate != null">
+        and GMT_CREATE &gt;= #{gmtStartCreate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="gmtEndCreate != null">
+        and GMT_CREATE &lt;= #{gmtEndCreate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="gmtUpdate != null">
+        and GMT_UPDATE = #{gmtUpdate,jdbcType=TIMESTAMP}
+      </if>
+  </select>
+  
   <!-- add by kwm end -->
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -86,9 +206,6 @@
   <insert id="insertSelective" parameterType="com.all_union.es.esalarm.pojo.flow.FlowGoodsDo">
     insert into flow_goods
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        ID,
-      </if>
       <if test="goodsChannelId != null">
         GOODS_CHANNEL_ID,
       </if>
@@ -124,9 +241,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="goodsChannelId != null">
         #{goodsChannelId,jdbcType=BIGINT},
       </if>

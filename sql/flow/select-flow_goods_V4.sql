@@ -25,7 +25,11 @@ INNER JOIN (
 	AND TP_NAME = '移动'
 	AND r.parentid = 0
 	AND r.shortname = '辽宁'
-	AND g.GOODS_PROVINCE_ID IN (0,r.id)
+	AND g.GOODS_PROVINCE_ID IN (0, r.id)
+	AND (
+		g.GOODS_EXPIRE IS NULL
+		OR g.GOODS_EXPIRE > NOW()
+	)
 	GROUP BY
 		g.GOODS_NAME,
 		g.GOODS_PROVINCE_ID

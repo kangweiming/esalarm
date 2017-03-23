@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.all_union.es.esalarm.dao;
+package com.all_union.es.esalarm.pojo;
 
 import java.io.Serializable;
 

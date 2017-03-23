@@ -33,7 +33,6 @@
 	
 	<!-- 放开rest api -->
 	<http pattern="/rest/**" security="none" />
-
 	
 	<!-- 开启默认的拦截器 -->
 	<http use-expressions="true" auto-config="true">
@@ -50,8 +49,12 @@
 		<intercept-url pattern="/admin" access="hasRole('ADMIN') and hasRole('DBA')" />
 		<intercept-url pattern="/dba" access="hasRole('DBA')" />
 
-		<!-- 其余uri的规则 -->
-		<intercept-url pattern="/background/**" access="hasRole('USER') or hasRole('ADMIN')" />
+		<!-- user -->
+		<intercept-url pattern="/background/user/**" access="hasRole('USER') or hasRole('ADMIN')" />
+		<!-- schedule -->
+		<intercept-url pattern="/background/schedule/**" access="hasRole('ADMIN')" />
+		<!-- flow -->
+		<intercept-url pattern="/background/flow/**" access="hasRole('ADMIN')" />
 		
 		<intercept-url pattern="/**" access="authenticated" />
 

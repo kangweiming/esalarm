@@ -10,7 +10,7 @@ import org.quartz.JobKey;
 import org.quartz.Trigger;
 import org.quartz.TriggerKey;
 
-import com.all_union.es.esalarm.dao.Query;
+import com.all_union.es.esalarm.pojo.Query;
 
 /** 
  * @Description: schedule 查询条件 Query.java自带分页

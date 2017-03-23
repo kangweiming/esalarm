@@ -3,15 +3,10 @@
  */
 package com.all_union.es.esalarm.controller.schedule;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
-import org.apache.catalina.tribes.group.interceptors.TwoPhaseCommitInterceptor.MapEntry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.quartz.Trigger.TriggerState;
@@ -19,17 +14,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.support.RequestContextUtils;
 
-import com.all_union.es.esalarm.annotation.TokenAnnotation;
-import com.all_union.es.esalarm.controller.ControllerBase;
+import com.all_union.es.esalarm.controller.BaseController;
 import com.all_union.es.esalarm.pojo.schedule.ScheduleQuery;
 import com.all_union.es.esalarm.pojo.schedule.ScheduleTask;
 import com.all_union.es.esalarm.service.schedule.ScheduleService;
 import com.kwm.common.convert.Convert;
-import com.kwm.common.lang.DateUtil;
 import com.kwm.common.lang.StringUtil;
 
 /** 
@@ -40,17 +31,17 @@ import com.kwm.common.lang.StringUtil;
  * 
 */
 @Controller
-@RequestMapping("/background")
-public class ScheduleController extends ControllerBase{
+@RequestMapping("/background/schedule")
+public class ScheduleController extends BaseController{
 	private static Logger logger = LogManager.getLogger(ScheduleController.class);
 	
 	@Resource  
     private ScheduleService scheduleService; 
 	
-	// trigger opt：paused resume runimmediately
-	//@TokenAnnotation(needRemoveToken = true) // 自定义注解，需要拦截的方法上如此设置
+	// 自定义注解，需要拦截重复提交的方法上如此设置
+	//@TokenAnnotation(needSaveToken = true) 
 	@RequestMapping("/triggerOpt")
-	public String triggerOpt(RedirectAttributes attr,
+	public String optTriggerTiles(RedirectAttributes attr,
 			@ModelAttribute("triggerName") String  triggerName,
 			@ModelAttribute("triggerGroup") String  triggerGroup,
 			@ModelAttribute("triggerStatus") String  triggerStatus,
@@ -65,6 +56,7 @@ public class ScheduleController extends ControllerBase{
 			@ModelAttribute("optGroup") String  optGroup
 			){
 		
+		logger.debug("do optTriggerTiles method");  
 		// 操作类型
 		if(StringUtil.isNotEmpty(opt)){
 			if(StringUtil.isNotEmpty(optName) && StringUtil.isNotEmpty(optGroup)){
@@ -97,13 +89,15 @@ public class ScheduleController extends ControllerBase{
 		attr.addFlashAttribute("goPage",goPage);
 		attr.addFlashAttribute("curPage",curPage);
 
-		return "redirect:/background/triggerList";
+		//return "redirect:/background/schedule/triggerList";
+		return "redirect:triggerList";
 	}
 	
 	//使用@ModelAttribute，保证重定向时参数不丢失 
 	@RequestMapping("/triggerList")
-	//@TokenAnnotation(needSaveToken = true) // 自定义注解，需要拦截的方法上如此设置
-	public String showTirggersTiles(Model model,
+	// 自定义注解，需要拦截重复提交的方法上如此设置
+	//@TokenAnnotation(needSaveToken = true) 
+	public String listTirggersTiles(Model model,
 		@ModelAttribute("init") String  init,
 		@ModelAttribute("triggerName") String  triggerName,
 		@ModelAttribute("triggerGroup") String  triggerGroup,
@@ -117,7 +111,7 @@ public class ScheduleController extends ControllerBase{
 		@ModelAttribute("flag") String  flag
 		){
 		
-		logger.debug("do method");
+		logger.debug("do listTirggersTiles method");
 				
 		// 需要判断是否是重复提交 使用拦截器		
 		
@@ -127,7 +121,7 @@ public class ScheduleController extends ControllerBase{
 		String strGoPage = null;
 		
 		// for test
-		query.setPageSize(1);
+		//query.setPageSize(1);
 		
 		// 非init标识，则获得查询条件
 		if(!Convert.asBoolean(init)){

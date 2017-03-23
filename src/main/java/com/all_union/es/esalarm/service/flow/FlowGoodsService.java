@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.all_union.es.esalarm.pojo.flow.FlowGoodsDo;
+import com.all_union.es.esalarm.pojo.flow.FlowGoodsQuery;
 
 /** 
  * @Description: 
@@ -28,4 +29,32 @@ public interface FlowGoodsService {
      * 如果流量包规格不存在，那不会返回
 	 */
     List<FlowGoodsDo> listGoodsByTPNameAndProvinceName(String tpName,String provinceShortName);
+    
+    /**
+     * 根据查询条件查询所有记录
+     * @param query
+     * @return
+     */
+    List<FlowGoodsDo> listGoodsByQuery(FlowGoodsQuery query);   
+    
+    /**
+     * 插入记录
+     * @param record
+     * @return
+     */
+    int insertSelective(FlowGoodsDo record);
+    /**
+     * 更新记录
+     * @param record
+     * @return
+     */
+    int updateByPrimaryKeySelective(FlowGoodsDo record);
+    /**
+     * 删除记录
+     * @param id
+     * @return
+     */
+    int deleteByPrimaryKey(Long id);
+    
+
 }

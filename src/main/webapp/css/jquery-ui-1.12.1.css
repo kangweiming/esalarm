@@ -8,7 +8,7 @@
 .ui-datepicker-trigger {  
 	margin-bottom:-5px;  
 } 
-
+/** add end **/
 .ui-draggable-handle {
 	-ms-touch-action: none;
 	touch-action: none;

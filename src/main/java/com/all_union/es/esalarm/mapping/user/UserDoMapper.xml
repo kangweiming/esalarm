@@ -12,7 +12,7 @@
   </sql>
   
   <!-- add by kwm on 20170208 -->
-    <select id="listUserByUserName" parameterType="com.all_union.es.esalarm.dao.user.UserQuery" resultMap="BaseResultMap">
+    <select id="listUserByUserName" parameterType="com.all_union.es.esalarm.pojo.user.UserQuery" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from user_t
@@ -27,7 +27,7 @@
     limit #{pageFristItemZero},#{pageSize}
   </select>
   
-	<select id="countUserByUserName" parameterType="com.all_union.es.esalarm.dao.user.UserQuery" resultType="java.lang.Integer">
+	<select id="countUserByUserName" parameterType="com.all_union.es.esalarm.pojo.user.UserQuery" resultType="java.lang.Integer">
 		SELECT
 			COUNT(*)
 		FROM user_t

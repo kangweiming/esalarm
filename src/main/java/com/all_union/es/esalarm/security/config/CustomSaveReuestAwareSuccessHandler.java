@@ -63,7 +63,7 @@ public class CustomSaveReuestAwareSuccessHandler extends SimpleUrlAuthentication
 		Cookie cookie = new Cookie(WebConstants.LoginID_Cookie,authUser.getUsername());
 		
 		// 设置cookie生命周期
-		cookie.setMaxAge(86400);		 
+		cookie.setMaxAge(86400 * 10);		 
 		// 设置路径，这个路径即该工程下都可以访问该cookie 如果不设置路径，那么只有设置该cookie路径及其子路径可以访问		 
 		cookie.setPath("/");
 		response.addCookie(cookie);		

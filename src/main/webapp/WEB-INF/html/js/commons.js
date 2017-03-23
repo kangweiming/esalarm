@@ -1,7 +1,7 @@
 // 定义rest接口地址
 var resUserUrl = "http://192.168.16.86:8080/esalarm/rest/user/";
-var resFlowUrl = "http://192.168.16.86:8080/esalarm/rest/flow/";
-//var resFlowUrl = "http://localhost:8080/esalarm/rest/flow/";
+//var resFlowUrl = "http://192.168.16.86:8080/esalarm/rest/flow/";
+var resFlowUrl = "http://localhost:8080/esalarm/rest/flow/";
 
 // 定义ajax调用时的全局变量
 var key;

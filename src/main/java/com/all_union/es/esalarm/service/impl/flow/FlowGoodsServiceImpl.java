@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.all_union.es.esalarm.dao.flow.FlowGoodsDoMapper;
 import com.all_union.es.esalarm.pojo.flow.FlowGoodsDo;
+import com.all_union.es.esalarm.pojo.flow.FlowGoodsQuery;
 import com.all_union.es.esalarm.service.flow.FlowGoodsService;
 import com.kwm.common.lang.StringUtil;
 
@@ -59,6 +60,40 @@ public class FlowGoodsServiceImpl implements FlowGoodsService {
 	public FlowGoodsDo selectByPrimaryKey(Long id) {
 		logger.debug("excute...");
 		return this.flowGoodsDao.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public List<FlowGoodsDo> listGoodsByQuery(FlowGoodsQuery query) {
+		logger.debug("excute...");
+		
+		int count = this.flowGoodsDao.countGoodsByQuery(query);
+		
+		if(count > 0){
+			query.setTotalItem(count);
+			return this.flowGoodsDao.listGoodsByQuery(query);
+		}
+		else{
+			query.setTotalItem(0);
+			return null;
+		}
+	}
+
+	@Override
+	public int insertSelective(FlowGoodsDo record) {
+		logger.debug("excute...");
+		return this.flowGoodsDao.insertSelective(record);
+	}
+
+	@Override
+	public int updateByPrimaryKeySelective(FlowGoodsDo record) {
+		logger.debug("excute...");
+		return this.flowGoodsDao.updateByPrimaryKeySelective(record);
+	}
+
+	@Override
+	public int deleteByPrimaryKey(Long id) {
+		logger.debug("excute...");
+		return this.flowGoodsDao.deleteByPrimaryKey(id);
 	}
 
 }

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.all_union.es.esalarm.annotation.TokenAnnotation;
 import com.all_union.es.esalarm.common.WebConstants;
 import com.all_union.es.esalarm.pojo.flow.FlowGoodsDo;
 import com.all_union.es.esalarm.pojo.flow.FlowOrderDo;
@@ -102,7 +103,13 @@ public class FlowOrderRestController {
 		return new ResponseEntity<List<FlowRechargeRecordDo>>(list,HttpStatus.OK);
 	}	
 	
-	
+	/**
+	 * 更新订单
+	 * @param json
+	 * @return
+	 */
+	// 自定义注解，需要拦截重复提交的方法上如此设置
+	@TokenAnnotation(needSaveToken = true) 	
 	@RequestMapping(value = "order/update/", method = RequestMethod.POST)
 	public ResponseEntity<FlowOrderDo> updateOrder_POST(
 			@RequestBody JSONObject json
@@ -152,15 +159,17 @@ public class FlowOrderRestController {
 	 * @param json
 	 * @return
 	 */
+	// 自定义注解，需要拦截重复提交的方法上如此设置
+	@TokenAnnotation(needSaveToken = true) 		
 	@RequestMapping(value = "order/create/", method = RequestMethod.POST)
 	public ResponseEntity<FlowOrderDo> createOrder_POST(
 			@RequestBody JSONObject json
 			){
 		logger.debug("request /rest/flow/order/create/ with json body");
 		
-    	logger.info("==============================================================");
-    	logger.info("param :" + json.toJSONString());
-    	logger.info("==============================================================");		
+		// =====================
+		// 商品的数量没有同步更新
+		// =====================
 		
 		// 获得参数部分json
 		JSONObject jsonStr = json.getJSONObject("jsonStr");

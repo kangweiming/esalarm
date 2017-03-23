@@ -8,7 +8,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 /** 
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
  * @version V1.0 
  * 
 */
-public class ControllerBase {
+public class BaseController {
 	
 	/**
 	 * 获得spring security登录的user对象
@@ -54,4 +55,26 @@ public class ControllerBase {
 	    session.setAttribute("basePath", basePath);
 				
 	}
+	
+	/**
+	 * 自定义的错误处理方法
+	 * 错误页面style及显示的内容需要进一步调试
+	 * @param model
+	 * @param e
+	 * @return
+	 */
+    @ExceptionHandler
+    public String exception(Model model, Exception e) {  
+          
+    	//添加自己的异常处理逻辑，如日志记录　　　
+        model.addAttribute("exceptionMessage", e.getMessage()); 
+        model.addAttribute("exceptionTrace", e.getStackTrace());
+        model.addAttribute("excepitonType",e.toString());
+          
+        // 根据不同的异常类型进行不同处理
+        if(e instanceof Exception) 
+            return "forward:/error.jsp";
+        else
+        	return "forward:/error.jsp";                
+    }  	
 }

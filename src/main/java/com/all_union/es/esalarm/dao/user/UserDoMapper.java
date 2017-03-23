@@ -3,6 +3,7 @@ package com.all_union.es.esalarm.dao.user;
 import java.util.List;
 
 import com.all_union.es.esalarm.pojo.user.UserDo;
+import com.all_union.es.esalarm.pojo.user.UserQuery;
 
 public interface UserDoMapper {
     int deleteByPrimaryKey(Integer id);

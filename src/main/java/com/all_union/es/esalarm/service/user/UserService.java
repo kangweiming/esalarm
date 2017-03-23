@@ -5,8 +5,8 @@ package com.all_union.es.esalarm.service.user;
 
 import java.util.List;
 
-import com.all_union.es.esalarm.dao.user.UserQuery;
 import com.all_union.es.esalarm.pojo.user.UserDo;
+import com.all_union.es.esalarm.pojo.user.UserQuery;
 /** 
  * @Description: 
  * @author kwm

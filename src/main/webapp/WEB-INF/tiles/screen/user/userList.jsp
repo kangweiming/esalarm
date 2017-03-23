@@ -1,3 +1,4 @@
+
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -6,7 +7,7 @@
 	
 <script type="text/javascript" src="${basePath}/js/user/showuser.js"></script>
 
-<form name="userListForm" id="userListForm" action="userList"
+<form name="userListForm" id="userListForm" action="userList" 
 	method="post">
 	<!-- spring security -->
 	<input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />
@@ -14,7 +15,7 @@
 	<input type="hidden" id="goPage" name="goPage" value="${goPage}" /> 
 	<input type="hidden" id="flag" name="flag" value="${flag}" />
 	<div class="right">
-		<div class="board errorB" id="dateFormat" name="dateFormat"
+		<div class="board errorB" id="dateFormat"
 			style="display: none"></div>
 		<h2>人员信息</h2>
 		<div class="formA">
@@ -137,7 +138,7 @@
 							<a href="esalarm/userUpdate?id=${user.id}&timeStamp=${current_time}"
 								target="_self id="userUpdate">编辑</a> 
 							<a href="esalarm/userDelete?id=${user.id}&timeStamp=${current_time}"
-								target="_self id="checkSignUpList">删除</a>
+								target="_self id="userDelete">删除</a>
 						</td>
 						</tr>
 					</c:forEach>
@@ -204,6 +205,7 @@
 				href="userAdd?timeStamp=${current_time}"
 				target="_self">[ 添加人员 ]</a>
 		</div>
+	</div>
 </form>
 <!--  
 	<span>es查询结果:</span>

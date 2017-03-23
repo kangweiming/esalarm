@@ -3,6 +3,17 @@ package com.all_union.es.esalarm.pojo.flow;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+/**
+ * 在date类型变量的get方法上增加此注解：@DateTimeFormat(pattern="yyyy-MM-dd")
+ * 有助于以pojo方式向controller传参(绑定数据)，如果不加此注解，则会出现转换错误
+ * org.springframework.web日志级别调整到debug，才看到出错信息
+ * @Description: 
+ * @author kwm
+ * @date 2017年3月21日 下午5:34:22 
+ * @version V1.0 
+ *
+ */
 public class FlowGoodsDo {
     private Long id;
 
@@ -99,7 +110,8 @@ public class FlowGoodsDo {
     public void setGoodsState(String goodsState) {
         this.goodsState = goodsState == null ? null : goodsState.trim();
     }
-
+    
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     public Date getGoodsExpire() {
         return goodsExpire;
     }

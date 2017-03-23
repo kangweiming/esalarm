@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.all_union.es.esalarm.pojo.schedule;
+package com.all_union.es.esalarm.test.schedule;
 
 
 import java.util.ArrayList;
@@ -31,6 +31,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.all_union.es.esalarm.common.ScheduleConstants;
+import com.all_union.es.esalarm.pojo.schedule.ESQueryJob;
 import com.all_union.es.esalarm.service.schedule.ScheduleService;
 
 /** 

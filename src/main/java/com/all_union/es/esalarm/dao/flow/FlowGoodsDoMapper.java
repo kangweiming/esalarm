@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.all_union.es.esalarm.pojo.flow.FlowGoodsDo;
+import com.all_union.es.esalarm.pojo.flow.FlowGoodsQuery;
 
 public interface FlowGoodsDoMapper {
     int deleteByPrimaryKey(Long id);
@@ -27,4 +28,17 @@ public interface FlowGoodsDoMapper {
      * 如果流量包规格不存在，那不会返回
      */
     List<FlowGoodsDo> listGoodsByTPNameAndProvinceName(Map<String, Object> map);
+    
+    /**
+     * 根据查询条件查询所有记录
+     * @param query
+     * @return
+     */
+    List<FlowGoodsDo> listGoodsByQuery(FlowGoodsQuery query);
+    /**
+     * 根据条件查询记录总数
+     * @param query
+     * @return
+     */
+    int countGoodsByQuery(FlowGoodsQuery query);
 }

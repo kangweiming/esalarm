@@ -302,7 +302,13 @@
 			<artifactId>log4j-slf4j-impl</artifactId>
 			<version>${log4j.version}</version>
 		</dependency>
-
+		<!-- 必须引入这个包，才能使用log4j2配置文件统一管理各种框架的日志输入级别 -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-jcl</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		
 		<!-- 
 		<dependency>
 			<groupId>org.slf4j</groupId>

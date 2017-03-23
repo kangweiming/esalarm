@@ -1,11 +1,11 @@
 /**
  * 
  */
-package com.all_union.es.esalarm.dao.user;
+package com.all_union.es.esalarm.pojo.user;
 
 import java.io.Serializable;
 
-import com.all_union.es.esalarm.dao.Query;
+import com.all_union.es.esalarm.pojo.Query;
 
 /** 
  * @Description: 继承了Query.java，自带分页信息

@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 
 import com.all_union.es.esalarm.controller.user.UserController;
 import com.all_union.es.esalarm.dao.user.UserDoMapper;
-import com.all_union.es.esalarm.dao.user.UserQuery;
 import com.all_union.es.esalarm.pojo.user.UserDo;
+import com.all_union.es.esalarm.pojo.user.UserQuery;
 import com.all_union.es.esalarm.service.user.UserService;
 
 /** 

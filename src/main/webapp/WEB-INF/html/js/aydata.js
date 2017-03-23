@@ -26,7 +26,10 @@ $(document).ready(function() {
         $('.alert-warning').css('display', 'block');
         
         // 清理显示区域
-        
+        // 清空商品区域
+    	$("#goodsContent").empty();
+    	// 清空购买区域
+    	$('#buyTable tbody').empty();    	
     };
     
     // 全局变量
