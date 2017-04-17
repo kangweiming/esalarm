@@ -64,14 +64,7 @@ public class WebConstants {
 	public static final String OPEN_ID_TEST = "1234567890AABBCCDD1234567890";
 	
 	// =============================================================================
-	/**
-	 * 新增信息action
-	 */
-	public static final String FORM_ACTION_ADD = "add";
-	/**
-	 * 更新信息action
-	 */
-	public static final String FORM_ACTION_UPDATE = "update";
+
 	// =============================================================================
 	// 缓存中名字（key）定义
 	/**

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.all_union.es.esalarm.controller.BaseController;
 import com.all_union.es.esalarm.pojo.user.UserDo;
 import com.all_union.es.esalarm.pojo.user.UserQuery;
+import com.all_union.es.esalarm.reflect.ReflectUtil;
 import com.all_union.es.esalarm.service.user.UserService;
 import com.all_union.es.esclient.test.GetData;
 import com.kwm.common.convert.Convert;
@@ -47,50 +48,29 @@ public class UserController extends BaseController{
     //@RequestMapping(value = "/userList", method = RequestMethod.GET)
     public String listUserTiles(Model model,
     		@ModelAttribute("init") String  init,
-    		@ModelAttribute("userName") String  userName,
-    		@ModelAttribute("password") String  password,
-    		@ModelAttribute("age") String  age,
-    		@ModelAttribute("gmtStart1") String  gmtStart1,
-    		@ModelAttribute("gmtStart2") String  gmtStart2,
-    		@ModelAttribute("gmtEnd1") String  gmtEnd1,
-    		@ModelAttribute("gmtEnd2") String  gmtEnd2,
     		@ModelAttribute("goPage") String  goPage,
     		@ModelAttribute("curPage") String  curPage,
-    		@ModelAttribute("flag") String  flag	
+    		@ModelAttribute("flag") String  flag,
+    		@ModelAttribute("query") UserQuery  query
     		){  
     	
     	logger.debug("do listUserTiles method");  
     	    	    	
-    	// 设置查询条件
-    	UserQuery query = new UserQuery();
 		// 转到的页数变量
 		String strGoPage = null;
-		// 列表下面显示的分页数开始页
-		//int iStartPage = 0;
-		// 列表下面显示的分页数结束页
-		//int iEndPage = 0;
-		
-		// for test
-		query.setPageSize(2);
 		
 		// 非init标识，则获得查询条件
 		if(!Convert.asBoolean(init)){
-			query.setUserName(StringUtil.trim(userName));
-			query.setPassword(StringUtil.trim(password));	
-			
-			if(StringUtil.isNotBlank(age))
-				query.setAge(Convert.asInt(StringUtil.trim(age)));		
-									
-			query.setGmtStart1(StringUtil.trim(gmtStart1));
-			query.setGmtEnd1(StringUtil.trim(gmtEnd1));
-			query.setGmtStart2(StringUtil.trim(gmtStart2));
-			query.setGmtEnd2(StringUtil.trim(gmtEnd2));						
+			//处理参数 对于String类型的属性，将空字符串（不是NULL）转成NULL,便于mybatis判断
+			ReflectUtil.replaceFieldString(query,"",null);						
 			
 		}
 		else{
 			// 设置查询条件为全部
-			
+			query =  new UserQuery();
 		}
+		// for test
+		query.setPageSize(2);
 		
 		// 跳转页面号参数
 		strGoPage = StringUtil.trim(goPage);

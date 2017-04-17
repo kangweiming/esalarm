@@ -9,56 +9,43 @@
 	<!-- Bootstrap css -->
     <link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	
-	<title>HTML5 consume rest api test</title>
+	<title>WX JS-SDK Test</title>
 </head>
 <body>
-	<h1>HTML5 consume rest api with jQuery</h1>
-<div class="btn-group" data-toggle="buttons">
-	<label class="btn btn-primary">
-		<input type="radio" name="options" id="option1"> 选项 1
-	</label>
-	<label class="btn btn-primary">
-		<input type="radio" name="options" id="option2"> 选项 2
-	</label>
-	<label class="btn btn-primary">
-		<input type="radio" name="options" id="option3"> 选项 3
-	</label>
-</div>	
-		
-        <div>
-        	<p></p>
-        	<a href="#" id="getinfo1">获取1</a>
-     		<input type="button" class="btn-primary.active" id ="getinfo" value="获取2"/>
-            <p>The name is <span class="name"></span></p>
-            <p>The password is <span class="password"></span></p>
-            <p>The age is <span class="age"></span></p>
-        </div>		
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<h3 class="text-center">
+				WX JS-SDK Test
+			</h3>
+		</div>
+	</div>
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			 <button type="button" id="checkJsApi" class="btn btn-default btn-primary btn-block">checkJsApi</button>
+			 <button type="button" id="onMenuShareAppMessage" class="btn btn-default btn-primary btn-block">分享给朋友onMenuShareAppMessage</button>
+			 <button type="button" id="hideOptionMenu" class="btn btn-default btn-primary btn-block">隐藏右上角菜单hideOptionMenu</button>
+			 <button type="button" id="showOptionMenu" class="btn btn-default btn-primary btn-block">显示右上角菜单showOptionMenu</button>
+		</div>
+	</div>
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+		</div>
+	</div>
+</div>		
 </body>
 
  	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="./js/jquery-3.1.1.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="./bootstrap/js/bootstrap.min.js"></script>
+	<!-- include wx js-sdk -->
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script> 
     <!-- include customer's js -->
     <script src="./js/commons.js"></script>
-    
-<script>
-$(document).ready(function() {
-	
-	jQuery("#getinfo").click(function(){
-		
-	    $.ajax({
-	    	type:"GET",
-	    	dataType: "json",
-	        url: resUserUrl + "6"//支持相对地址
-	    }).then(function(data) {
-	       $('.name').text(data.userName);
-	       $('.password').text(data.password);
-	       $('.age').text(data.age);
-	    });
-	});
-	
-});
-
-</script>
+	<script src="./js/dataHelper.js"></script> 	
+	<!-- inlcude js-sdk implements js --> 
+	<script src="./js/wxconfig.js"></script>
+	<!-- include page impl js -->
+	<script src="./js/test.js"></script>
 </html>

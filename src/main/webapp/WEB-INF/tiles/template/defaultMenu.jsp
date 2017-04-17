@@ -28,5 +28,23 @@
 </sec:authorize>
 <!-- end -->
 
+<!-- 微信管理菜单 begin -->
+<sec:authorize access="hasRole('ADMIN')">
+	<h3>微信管理</h3>
+	<ul>
+		<li><a href="${basePath}/background/wxcms/urltoken?timeStamp=${current_time}">URL和Token</a></li>
+	</ul>
+	<ul>
+		<li><a href="${basePath}/background/wxcms/msgtext/list?init=true&timeStamp=${current_time}">文本消息管理</a></li>
+	</ul>
+	<ul>
+		<li><a href="${basePath}/background/wxcms/msgnews/list?init=true&timeStamp=${current_time}">图文消息管理</a></li>
+	</ul>
+	<ul>
+		<li><a href="${basePath}/background/wxcms/accountMenuGroup/list?init=true&timeStamp=${current_time}">菜单管理</a></li>
+	</ul>
+</sec:authorize>
+<!-- end -->
+
 </div>
 </div>

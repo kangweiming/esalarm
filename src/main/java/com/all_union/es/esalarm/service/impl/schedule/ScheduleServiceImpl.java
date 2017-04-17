@@ -28,6 +28,7 @@ import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.quartz.impl.matchers.NameMatcher;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.all_union.es.esalarm.common.ScheduleConstants;
 import com.all_union.es.esalarm.pojo.schedule.ScheduleQuery;
@@ -44,6 +45,8 @@ import com.kwm.common.lang.StringUtil;
  * 
 */
 @Service("scheduleService")
+//标注@Transactional的类和方法将具有事务性 
+@Transactional
 public class ScheduleServiceImpl implements ScheduleService {
 
 	private static Logger logger = LogManager.getLogger(ScheduleServiceImpl.class);

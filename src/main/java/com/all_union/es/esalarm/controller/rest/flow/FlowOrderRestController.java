@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.all_union.es.esalarm.annotation.TokenAnnotation;
 import com.all_union.es.esalarm.common.WebConstants;
+import com.all_union.es.esalarm.common.wxapi.WxMemoryCacheClient;
 import com.all_union.es.esalarm.pojo.flow.FlowGoodsDo;
 import com.all_union.es.esalarm.pojo.flow.FlowOrderDo;
 import com.all_union.es.esalarm.pojo.flow.FlowOrderDoKey;
@@ -31,16 +34,18 @@ import com.all_union.es.esalarm.pojo.flow.FlowOrderGoodsDo;
 import com.all_union.es.esalarm.pojo.flow.FlowOrderState;
 import com.all_union.es.esalarm.pojo.flow.FlowOrderTransDo;
 import com.all_union.es.esalarm.pojo.flow.FlowRechargeRecordDo;
-import com.all_union.es.esalarm.pojo.flow.FlowUserDo;
+import com.all_union.es.esalarm.pojo.wxcms.AccountFans;
 import com.all_union.es.esalarm.service.flow.FlowOrderGoodsService;
 import com.all_union.es.esalarm.service.flow.FlowOrderService;
 import com.all_union.es.esalarm.service.flow.FlowOrderTransService;
-import com.all_union.es.esalarm.service.flow.FlowUserService;
+import com.all_union.es.esalarm.service.wxcms.AccountFansService;
 import com.kwm.common.lang.DateUtil;
 import com.kwm.common.lang.StringUtil;
 
 /** 
  * @Description: 
+ * 
+ * openid获取原理是aydata.html已经加入拦截器，拦截器调用oauth2接口获得openid,并存入缓存
  * @author kwm
  * @date 2017年3月14日 下午9:31:20 
  * @version V1.0 
@@ -54,8 +59,8 @@ public class FlowOrderRestController {
 	@Autowired
 	private FlowOrderService flowOrderService;
 	
-	@Autowired
-	private FlowUserService flowUserService;
+//	@Autowired
+//	private FlowUserService flowUserService;
 	
 //	@Autowired
 //	private FlowGoodsService flowGoodsService;
@@ -66,6 +71,9 @@ public class FlowOrderRestController {
 	@Autowired
 	private FlowOrderTransService flowOrderTransService;
 	
+	@Autowired
+	private AccountFansService accountFansService;
+	
 	/**
 	 * 根据open_id查询充值记录
 	 * @param json
@@ -73,17 +81,21 @@ public class FlowOrderRestController {
 	 */
 	@RequestMapping(value = "order/record/", method = RequestMethod.POST)
 	public ResponseEntity<List<FlowRechargeRecordDo>> listRechargeRecord_POST(
-			@RequestBody JSONObject json
+			@RequestBody JSONObject json,
+			HttpServletRequest request
 			){
 		logger.debug("request /rest/flow/order/record/ with json body");
 		
 		// 获得参数部分json
 		JSONObject jsonStr = json.getJSONObject("jsonStr");
-		
+						
 		// 解析并获得参数
-		String open_id = jsonStr.getString("open_id");
 		int idx = jsonStr.getIntValue("idx");
 		int pageSize = jsonStr.getIntValue("pageSize");
+		
+		// 获取openid测试
+		 String open_id = WxMemoryCacheClient.getOpenid(request.getSession().getId());
+		logger.debug("===========get openid :" + open_id);
 		
 		// 参数检查
 		if(StringUtil.isBlank(open_id))
@@ -112,7 +124,8 @@ public class FlowOrderRestController {
 	@TokenAnnotation(needSaveToken = true) 	
 	@RequestMapping(value = "order/update/", method = RequestMethod.POST)
 	public ResponseEntity<FlowOrderDo> updateOrder_POST(
-			@RequestBody JSONObject json
+			@RequestBody JSONObject json,
+			HttpServletRequest request
 			){
 		logger.debug("request /rest/flow/order/update/ with json body");
 		
@@ -121,7 +134,10 @@ public class FlowOrderRestController {
 		
 		// 解析并获得参数
 		Long orderNo = jsonStr.getLong("orderNo");
-		String open_id = jsonStr.getString("open_id");
+		
+		// 获取openid测试
+		String open_id = WxMemoryCacheClient.getOpenid(request.getSession().getId());	
+		logger.debug("===========get openid :" + open_id);
 		
 		// 参数检查
 		if(orderNo < 0 || StringUtil.isBlank(open_id))
@@ -163,7 +179,8 @@ public class FlowOrderRestController {
 	@TokenAnnotation(needSaveToken = true) 		
 	@RequestMapping(value = "order/create/", method = RequestMethod.POST)
 	public ResponseEntity<FlowOrderDo> createOrder_POST(
-			@RequestBody JSONObject json
+			@RequestBody JSONObject json,
+			HttpServletRequest request
 			){
 		logger.debug("request /rest/flow/order/create/ with json body");
 		
@@ -173,9 +190,12 @@ public class FlowOrderRestController {
 		
 		// 获得参数部分json
 		JSONObject jsonStr = json.getJSONObject("jsonStr");
+				
+		// 获取openid测试
+		String open_id = WxMemoryCacheClient.getOpenid(request.getSession().getId());	
+		logger.debug("===========get openid :" + open_id);
 		
 		// 解析并获得参数
-		String open_id = jsonStr.getString("open_id");
 		String mobile = jsonStr.getString("mobile");
 		// 商品ID数组 流量商品只有一个
 		JSONArray goodslist = jsonStr.getJSONArray("goodslist");
@@ -202,8 +222,10 @@ public class FlowOrderRestController {
     	// 有效期
     	order.setExpireTime(DateUtil.addMinute(now, WebConstants.ORDER_EXPIRE_MINUTES));
     	// 根据open_id获得userid
-    	FlowUserDo user = flowUserService.selectByOpenId(open_id);
-    	order.setUserId(user.getId());
+    	//FlowUserDo user = flowUserService.selectByOpenId(open_id);
+    	//order.setUserId(user.getId());
+    	AccountFans fans = accountFansService.getByOpenId(open_id);
+    	order.setUserId(fans.getId());
     	
     	// 充值电话号码
     	order.setMobile(mobile);
@@ -262,44 +284,6 @@ public class FlowOrderRestController {
 				
 		// 写入订单表
 		flowOrderService.insertSelective(order);
-		
-//		// flowOrderTransService
-//		// 订单流水对象
-//		FlowOrderTransDo trans = new FlowOrderTransDo();
-//		// 订单号
-//		trans.setOrderNo(order.getOrderNo());
-//		// 商户ID
-//		trans.setMerchId(WebConstants.ORDER_TRANS_DEFAULT_MERCH_ID);
-//		// 店铺ID
-//		trans.setShopId(WebConstants.ORDER_TRANS_DEFAULT_SHOP_ID);
-//		// 交易代码
-//		trans.setTransCode(WebConstants.ORDER_TRANS_TRANS_CODE_OPEN);
-//		// 交易名称
-//		trans.setTransName(WebConstants.ORDER_TRANS_TRANS_NAME_OPEN);
-//		// 订单状态
-//		trans.setState(order.getState());
-//		// 订单状态描述
-//		trans.setStateDesc(order.getStateDesc());
-//		// 总价
-//		trans.setTotalPrice(order.getTotalPrice());
-//		// 实付(折扣后)
-//		trans.setActuallyPaid(order.getActuallyPaid());
-//		
-//		// gmtcreate gmtupdate
-//		trans.setGmtCreate(now);
-//		trans.setGmtUpdate(now);
-//		
-//		// open_id
-//		trans.setOpenId(open_id);
-//		// nickname
-//		trans.setNickName(null);
-//		// PREPAY_ID
-//		trans.setPrepayId(null);
-//		// BANK_TYPE
-//		trans.setBankType(null);
-//		
-//		// 插入订单流水记录
-//		flowOrderTransService.insertSelective(trans);
     	
 		// 插入订单流水记录
 		insertOrderTrans(order,now,open_id);
@@ -352,4 +336,5 @@ public class FlowOrderRestController {
 		// 插入订单流水记录
 		flowOrderTransService.insertSelective(trans);		
 	}
+
 }

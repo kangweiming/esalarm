@@ -6,7 +6,7 @@ $(document).ready(function(){
 			$("#dateFormat").show();
 			return;
 		}
-		$("#triggerListForm").submit();
+		$('form:first').submit();
 	});
 	
 	$("#reset").click(function(){
@@ -59,80 +59,35 @@ function dateValid(){
 	return boolValid;
 }
 
-function goToPageDirectory(goToPage){
-	
-	var goToPagetext = $("#"+goToPage).val().trim();
-	var page = $('#goPage');
-	
-	if(isNull(goToPagetext)){
-		alert("请输入你要跳转的页面！");
-		return false;
-	}
-	if(!isNumber(goToPagetext)){
-		alert("请输入正整数！");
-		return false;
-	}
-	
-	if(goToPagetext < 1){
-		alert("请输入大于0的数！");
-		return false;
-	}
-	page.val(goToPagetext);
-	$('#flag').val("GO");
-	$('#triggerListForm').submit();
-}
-
-function onchagePage(pagenum){
-	$('#goPage').val(pagenum);
-	$('#triggerListForm').submit();
-}
-
 function pauseTrigger(optName,optGroup){
-	$('#triggerListForm').attr("action", "triggerOpt");
+	$('form:first').attr("action", "triggerOpt");
 	$('#opt').val("pauseTrigger");
 	$('#optName').val(optName);
 	$('#optGroup').val(optGroup);
-	$('#triggerListForm').submit();
+	$('form:first').submit();
 }
 
 function resumeTrigger(optName,optGroup){
-	$('#triggerListForm').attr("action", "triggerOpt");
+	$('form:first').attr("action", "triggerOpt");
 	$('#opt').val("resumeTrigger");
 	$('#optName').val(optName);
 	$('#optGroup').val(optGroup);
-	$('#triggerListForm').submit();
+	$('form:first').submit();
 }
 
 function runTrigger(optName,optGroup){
-	$('#triggerListForm').attr("action", "triggerOpt");
+	$('form:first').attr("action", "triggerOpt");
 	$('#opt').val("runTrigger");
 	$('#optName').val(optName);
 	$('#optGroup').val(optGroup);
-	$('#triggerListForm').submit();
+	$('form:first').submit();
 }
 
 function deleteTrigger(optName,optGroup){
-	$('#triggerListForm').attr("action", "triggerOpt");
+	$('form:first').attr("action", "triggerOpt");
 	$('#opt').val("deleteTrigger");
 	$('#optName').val(optName);
 	$('#optGroup').val(optGroup);
-	$('#triggerListForm').submit();
-}
-
-function isNumber( s ){   
-  var regu = "^[0-9]+$";
-  var re = new RegExp(regu);
-  if (s.search(re) != -1) {
-       return true;
-  } else {
-       return false;
-  }
-}
-
-function isNull( str ){
-   if (str=="") return true;
-   var regu = "^[ ]+$";
-   var re = new RegExp(regu);
-   return re.test(str);
+	$('form:first').submit();
 }
 

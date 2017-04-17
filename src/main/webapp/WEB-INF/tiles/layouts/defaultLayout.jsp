@@ -11,7 +11,36 @@
 <script type="text/javascript" src="${basePath}/js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="${basePath}/js/jquery-ui-1.12.1.js"></script>
 <script type="text/javascript" src="${basePath}/js/jquery.bgiframe.js"></script>
+<script type="text/javascript" src="${basePath}/js/util.js"></script>
+<script type="text/javascript" src="${basePath}/js/paging.js"></script>
+
+<!-- kindeditor -->
+<link 	type="text/css"	href="${basePath}/kindeditor/themes/default/default.css" rel="stylesheet">
+<script type="text/javascript" src="${basePath}/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript" src="${basePath}/kindeditor/zh_CN.js"></script>
+
 <script type="text/javascript">
+
+	// kindeditor
+	KindEditor.ready(function(K) {
+		// 必须增加spring security的csrf参数，extraFileUploadParams参数不好用
+		_uploadJson = '${basePath}/background/wxcms/ckeditorImage?${_csrf.parameterName}=${_csrf.token}';
+		editor = K.create('.show-kindeditor', {
+			
+			resizeType:1,
+			minWidth:300,
+			allowPreviewEmoticons:false,
+			allowImageUpload : true,
+			uploadJson:_uploadJson,// 上传功能的实现页面
+			afterUpload: function(){this.sync();}, //图片上传后，将上传内容同步到textarea中
+            afterBlur: function(){this.sync();},   ////失去焦点时，将上传内容同步到textarea中	
+			items : ['fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+			         'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+			         'insertunorderedlist','|','image', 'link','source','about']
+		});
+	});	
+	
+	// datepicker
 	$(function() {
 		$(".date-pick").datepicker({
 			dateFormat : "yy-mm-dd",
@@ -37,9 +66,10 @@
 		              .appendTo( this );
 		          }
 		        }
-		      });
-		
+		});		
 	});
+	
+
 </script>
 <style>
   .ui-tooltip, .arrow:after {

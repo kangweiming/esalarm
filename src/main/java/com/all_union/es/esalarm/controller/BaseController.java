@@ -22,6 +22,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 public class BaseController {
 	
 	/**
+	 * 获得基本的path路径，如
+	 * http://localhost:8080/esalarm/
+	 * http://www.kkk.com/esalarm/
+	 */
+	public String basePath;
+	/**
 	 * 获得spring security登录的user对象
 	 * @return
 	 */
@@ -51,30 +57,36 @@ public class BaseController {
 			session.setAttribute("user", authUser);
 				
 		// http://localhost:8080/esalarm/
-	    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath();
+	    //basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath();
+		basePath = request.getScheme( )+ "://" + request.getServerName();
+		if(request.getServerPort() != 80)
+			basePath += ":"+request.getServerPort();
+		basePath += request.getContextPath();
+		
 	    session.setAttribute("basePath", basePath);
 				
 	}
 	
-	/**
-	 * 自定义的错误处理方法
-	 * 错误页面style及显示的内容需要进一步调试
-	 * @param model
-	 * @param e
-	 * @return
-	 */
-    @ExceptionHandler
-    public String exception(Model model, Exception e) {  
-          
-    	//添加自己的异常处理逻辑，如日志记录　　　
-        model.addAttribute("exceptionMessage", e.getMessage()); 
-        model.addAttribute("exceptionTrace", e.getStackTrace());
-        model.addAttribute("excepitonType",e.toString());
-          
-        // 根据不同的异常类型进行不同处理
-        if(e instanceof Exception) 
-            return "forward:/error.jsp";
-        else
-        	return "forward:/error.jsp";                
-    }  	
+//	/**
+//	 * 自定义的错误处理方法
+//	 * 错误页面style及显示的内容需要进一步调试
+//	 * 完善后再打开
+//	 * @param model
+//	 * @param e
+//	 * @return
+//	 */
+//    @ExceptionHandler
+//    public String exception(Model model, Exception e) {  
+//          
+//    	//添加自己的异常处理逻辑，如日志记录　　　
+//        model.addAttribute("exceptionMessage", e.getMessage()); 
+//        model.addAttribute("exceptionTrace", e.getStackTrace());
+//        model.addAttribute("excepitonType",e.toString());
+//          
+//        // 根据不同的异常类型进行不同处理
+//        if(e instanceof Exception) 
+//            return "forward:/error.jsp";
+//        else
+//        	return "forward:/error.jsp";                
+//    }  	
 }

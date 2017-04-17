@@ -1,7 +1,14 @@
+//--------------------
+//var myDomain = "http://localhost:8080";
+//var myDomain = "http://www.kkkkkk.tk";
+var myDomain = window.location.protocol + "//" + window.location.host;
+//var myDomain = document.domain;
+
 // 定义rest接口地址
-var resUserUrl = "http://192.168.16.86:8080/esalarm/rest/user/";
-//var resFlowUrl = "http://192.168.16.86:8080/esalarm/rest/flow/";
-var resFlowUrl = "http://localhost:8080/esalarm/rest/flow/";
+var resUserUrl = myDomain + "/esalarm/rest/user/";
+var resFlowUrl = myDomain + "/esalarm/rest/flow/";
+// 获取js-ticket的地址
+var resJSTicket = myDomain + "/esalarm/wxapi/jsTicket";
 
 // 定义ajax调用时的全局变量
 var key;
@@ -165,6 +172,43 @@ $(function() {
                 failurefn();
             }
         });
-    }	
+    }
+    
+    // 获取js-ticket 发送给SpringMvc controller，返回为json对象
+    // configUrl:需注入配置信息的URL
+	jQuery.axjsonJSTicket = function(data,successfn, config, key) {
+		data = (data == null || data == "" || typeof(data) == "undefined") ? {
+			"date": new Date().getTime()
+		} : data;
+		
+		$.ajax({
+			type: "POST",
+			url : resJSTicket,//与微信交互获得jsticket的服务地址
+			//data: JSON.stringify({url:configUrl}),
+			data: JSON.stringify(data),
+			dataType:'json',
+			headers: {
+				'Content-Type': 'application/json',
+				'AuthKey': key
+			},
+			//成功返回之后调用的函数             
+			success: function(data) {
+				if(config != null && config != undefined && config != '') {
+					successfn(data, config);
+				} else {
+					successfn(data);
+				}
+			},
+			//调用出错执行的函数
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				console.log(XMLHttpRequest.status);
+				console.log(textStatus);
+				//console.log(textStatus);
+				if(XMLHttpRequest.status != '200') {
+					alert("AJAX请求错误：请求状态码：" + XMLHttpRequest.status + " readyState:" + XMLHttpRequest.readyState + "错误：" + textStatus);
+				}
+			}
+		});
+	};    
 
 });

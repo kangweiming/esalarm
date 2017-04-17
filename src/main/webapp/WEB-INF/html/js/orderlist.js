@@ -25,8 +25,8 @@ $(document).ready(function() {
 		if(isEnd)
 			return;
 		// 将json数组及其他参数放入json参数中
-		var jsonstr = dataHelper.setJson(null, 'open_id', '1234567890AABBCCDD1234567890');
-		jsonstr = dataHelper.setJson(jsonstr, 'idx', idx);
+		//var jsonstr = dataHelper.setJson(null, 'open_id', '1234567890AABBCCDD1234567890');
+		var jsonstr = dataHelper.setJson(null, 'idx', idx);
 		jsonstr = dataHelper.setJson(jsonstr, 'pageSize', pageSize);
 		//console.log("jsonstr: " + jsonstr);
 		
@@ -51,22 +51,23 @@ $(document).ready(function() {
 	
 	// 充值记录查询成功回调
 	function listRechargeRecordSuccess(data,config){
-		if(null == data){
-			console.log("list recharge record failed");
-			$("#loadMore").text("没有记录了");
-			isEnd = true;
-			return;
-		}
-		console.log("list recharge record 。。。");
 		
 		// 将config参数具象化为JSON对象
 		config = JSON.parse(config);
 		
-		// 写入记录
-		// 清空购买区域
+		// 清空记录
 		if(config.isClear == true)
 			$('#RechargeRecord tbody').empty();
 		
+		if(null == data){
+			console.log("list recharge record failed");
+			$("#loadMore").text("没有充值记录了");
+			isEnd = true;
+			return;
+		}
+		console.log("list recharge record 。。。");
+				
+		// 写入记录		
     	$.each(data,function(i,item){
     		
     		var tr;
@@ -84,7 +85,8 @@ $(document).ready(function() {
     		tr += "</td>";    		
     		
     		tr += "<td>";
-    		tr += getMyDate(item.gmtUpdate);
+    		//tr += getMyDate(item.gmtUpdate);
+    		tr += item.gmtUpdate;
     		tr += "</td>";    		
 
     		tr += "<td>";

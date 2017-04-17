@@ -1,3 +1,30 @@
+/** add by kwm begin */
+.btn{
+	display:inline-block;
+	cursor:pointer;
+	background-color:#0083f1;
+	border: 1px solid #0083f1; 
+	border-radius:3px;
+	width:90px;
+	height: 30px;
+	line-height: 28px;
+	margin-left: 10px;
+	color:#fff;
+}
+
+.gray-btn{
+	display:inline-block;
+	cursor:pointer;
+	background-color:#8d8d8d;
+	border: 1px solid #8d8d8d; 
+	border-radius:3px;
+	width:90px;
+	height: 30px;
+	line-height: 28px;
+	margin-left: 10px;
+}
+/** add by kwm end */
+
 body {margin:0;font-size:12px;font-family:"Arial","MS Gothic";word-break:break-all;background:#fff;}
 img{border:0;}
 a:link,a:visited{color:#0083f1;text-decoration:none;}

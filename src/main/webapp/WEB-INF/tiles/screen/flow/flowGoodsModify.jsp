@@ -1,6 +1,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> 
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -9,11 +10,10 @@
 	
 <script type="text/javascript" src="${basePath}/js/flow/flowgoodsmodify.js"></script>
 
-<form name="flowGoodsModifyForm" id="flowGoodsModifyForm" action="flowGoodsModify" 
+<form name="flowGoodsModifyForm" id="flowGoodsModifyForm" action="flowGoodsModifyAction" 
 	method="post">
 	<!-- spring security -->
 	<input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />
-	<input type="hidden" name="action"  value="${formaction}" />
 	<input type="hidden" name="id"  value="${goods.id}" />
 	<input type="hidden" name="token" value="${token}">
 	<div class="right">
@@ -119,7 +119,7 @@
 					<td colspan="6">
 						<div class="formActionB buttomBlue">
 							<c:choose>
-								<c:when test="${formaction == 'update'}">
+								<c:when test="${goods.id != null}">
 									 <a href="#" id="submit">更新</a><a href="#" id="refresh" >刷新</a>
 								</c:when>
 								<c:otherwise>
@@ -133,14 +133,4 @@
 		</div>
 	</div>
 </form>
-<!--  
-	<span>es查询结果:</span>
-	<c:forEach var="obj" items="${ls}">
-		<br />
-		<br />	
-		<span>obj.jct.transName : ${obj.get('jct').get('transName')}</span>
-		<span>obj: ${obj}</span>
-		<br />
-		<br />
-	</c:forEach>
--->
+

@@ -194,7 +194,7 @@ $(document).ready(function() {
     		
     		// 将json数组及其他参数放入json参数中
     		var jsonstr = dataHelper.setJson(null, 'orderNo', order.orderNoStr);
-    		jsonstr = dataHelper.setJson(jsonstr, 'open_id', '1234567890AABBCCDD1234567890');
+    		//jsonstr = dataHelper.setJson(jsonstr, 'open_id', '1234567890AABBCCDD1234567890');
     		
     		//console.log("jsonstr: " + jsonstr);
     		
@@ -244,8 +244,8 @@ $(document).ready(function() {
     		//console.log(goodslist);
     		
     		// 将json数组及其他参数放入json参数中
-    		var jsonstr = dataHelper.setJson(null, 'open_id', '1234567890AABBCCDD1234567890');
-    		jsonstr = dataHelper.setJson(jsonstr, 'goodslist', goodslist);
+    		//var jsonstr = dataHelper.setJson(null, 'open_id', '1234567890AABBCCDD1234567890');
+    		var jsonstr = dataHelper.setJson(null, 'goodslist', goodslist);
     		jsonstr = dataHelper.setJson(jsonstr, 'mobile', tel);
     		
     		//console.log("jsonstr: " + jsonstr);

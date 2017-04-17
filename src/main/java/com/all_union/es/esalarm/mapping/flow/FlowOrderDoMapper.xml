@@ -40,15 +40,15 @@
 			flow_order o,
 			flow_goods g,
 			flow_order_goods og,
-			flow_user u
+			t_wxcms_account_fans u
 		WHERE
 			1 = 1
-		AND u.ID = o.USER_ID
+		AND u.id = o.USER_ID
 		AND og.ORDER_NO = o.ORDER_NO
 		AND og.GOODS_ID = g.ID
 		AND o.STATE IN ('SUCCESS', 'NOTPAY')
 		<if test="open_id != null">
-			AND u.OPEN_ID = #{open_id,jdbcType=VARCHAR}
+			AND u.openid = #{open_id,jdbcType=VARCHAR}
 		</if>
 		ORDER BY o.GMT_UPDATE DESC		
 		<if test="idx > -1 and pageSize > -1" >

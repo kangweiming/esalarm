@@ -43,7 +43,7 @@ $().ready(function(){
 			return;
 		}
 		
-		$("#flowGoodsModifyForm").submit();
+		$('form:first').submit();
 	});
 	
 	$("#refresh").click(function(){
@@ -91,20 +91,4 @@ function dateValid(){
 	return boolValid;
 }
 
-function isNumber( s ){   
-  var regu = "^[0-9]+$";
-  var re = new RegExp(regu);
-  if (s.search(re) != -1) {
-       return true;
-  } else {
-       return false;
-  }
-}
-
-function isNull( str ){
-   if (str=="") return true;
-   var regu = "^[ ]+$";
-   var re = new RegExp(regu);
-   return re.test(str);
-}
 

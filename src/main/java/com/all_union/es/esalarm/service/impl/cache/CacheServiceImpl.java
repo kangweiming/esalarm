@@ -4,8 +4,6 @@
 package com.all_union.es.esalarm.service.impl.cache;
 
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -15,20 +13,25 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.all_union.es.esalarm.common.WebConstants;
+import com.all_union.es.esalarm.common.WebMemoryCache;
+import com.all_union.es.esalarm.common.wxapi.WxMemoryCacheClient;
 import com.all_union.es.esalarm.dao.flow.FlowTelecomOperatorDoMapper;
 import com.all_union.es.esalarm.dao.resource.ResourceAreaDoMapper;
+import com.all_union.es.esalarm.dao.wxcms.AccountDao;
 import com.all_union.es.esalarm.pojo.flow.FlowTelecomOperatorDo;
 import com.all_union.es.esalarm.pojo.resource.ResourceAreaDo;
+import com.all_union.es.esalarm.pojo.wxcms.Account;
+import com.all_union.es.esalarm.service.cache.CacheService;
 
 /** 
- * @Description: 
+ * @Description: 缓存预读
  * @author kwm
  * @date 2017年3月21日 上午11:06:14 
  * @version V1.0 
  * 
 */
 @Service("cacheService")
-public class CacheServiceImpl implements com.all_union.es.esalarm.service.cache.CacheService {
+public class CacheServiceImpl implements CacheService {
 
 	private static Logger logger = LogManager.getLogger(CacheServiceImpl.class);
 	
@@ -38,11 +41,8 @@ public class CacheServiceImpl implements com.all_union.es.esalarm.service.cache.
 	@Resource
 	private ResourceAreaDoMapper resourceAreaDao;
 	
-	/**
-	 * 缓存
-	 */
-	private Map<String,Object> cache;
-	
+	@Resource
+	private AccountDao accountDao;
 	/* (non-Javadoc)
 	 * @see com.all_union.es.esalarm.service.cache.CacheService#loadCache()
 	 */
@@ -50,24 +50,22 @@ public class CacheServiceImpl implements com.all_union.es.esalarm.service.cache.
 	@PostConstruct //初始化
 	public void loadCache() {
 		
-		logger.debug("excute...");
-		
-		if(null == cache)
-			cache = new ConcurrentHashMap<String,Object>();
+		logger.debug("excute...");		
 		
 		// 缓存运营商
 		List<FlowTelecomOperatorDo> tpList = this.FlowTelecomOperatorDao.listAll();		
-		cache.put(WebConstants.CACHE_TP_LIST, tpList);
+		WebMemoryCache.putCache(WebConstants.CACHE_TP_LIST, tpList);
 		
 		// 缓存省级行政区域
 		List<ResourceAreaDo> provinceList = this.resourceAreaDao.listAllProvince();
-		cache.put(WebConstants.CACHE_PROVINCE_LIST, provinceList);		
+		WebMemoryCache.putCache(WebConstants.CACHE_PROVINCE_LIST, provinceList);	
+		
+		// 微信相关缓存预读
+		Account account = accountDao.getSingleAccount();
+		WxMemoryCacheClient.addMpAccount(account);
+	
 		
 	}
 
-	@Override
-	public Object getCache(String key){
-		logger.debug("excute...");
-		return cache.get(key);
-	}
+
 }

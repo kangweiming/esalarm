@@ -33,11 +33,22 @@
 	
 	<!-- 放开rest api -->
 	<http pattern="/rest/**" security="none" />
+	<!-- 放开微信回调 api -->
+	<http pattern="/wxapi/**" security="none" />
+	<!-- 放开上传目录 -->
+	<http pattern="/upload/**" security="none" />
+	<!-- 放开富文本编辑器目录 -->
+	<http pattern="/kindeditor/**" security="none" />
 	
 	<!-- 开启默认的拦截器 -->
 	<http use-expressions="true" auto-config="true">
-		<!-- <headers/> -->
-
+		<!-- kindeditor 上传文件需要，否则报错:
+		Refused to display 'http://localhost:8080/esalarm/background/wxcms/ckeditorImage?dir=image' 
+		in a frame because it set 'X-Frame-Options' to 'DENY'. -->
+		<headers>
+			<frame-options policy="SAMEORIGIN" />
+		</headers>
+		
 		<!-- 静态资源 这么除了/login好用，其他页面获取不到资源 <intercept-url pattern="/css/**" access="anonymous"/> 
 			<intercept-url pattern="/images/**" access="anonymous"/> <intercept-url pattern="/js/**" 
 			access="anonymous"/> -->
@@ -55,9 +66,15 @@
 		<intercept-url pattern="/background/schedule/**" access="hasRole('ADMIN')" />
 		<!-- flow -->
 		<intercept-url pattern="/background/flow/**" access="hasRole('ADMIN')" />
-		
+		<!-- wxcms -->
+		<intercept-url pattern="/background/wxcms/**" access="hasRole('ADMIN')" />
+		<!-- wxweb -->
+		<intercept-url pattern="/wxweb/**" access="permitAll" />
+		  
 		<intercept-url pattern="/**" access="authenticated" />
-
+		<!--
+		<intercept-url pattern="/**" access="permitAll" />
+		-->
 		<!-- 自定义登录页面  -->
 		<!-- 
 			form-login如果不配置authentication-success-handler-ref="customSuccessHandler"，

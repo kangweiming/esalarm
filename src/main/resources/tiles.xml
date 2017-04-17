@@ -2,7 +2,7 @@
 <!DOCTYPE tiles-definitions PUBLIC  "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">  
 
 <tiles-definitions>  
- 
+  
    <!-- Base Definition -->
    <definition name="base-definition" 
        template="/WEB-INF/tiles/layouts/defaultLayout.jsp">  
@@ -12,10 +12,64 @@
        <put-attribute name="body" value="" />  
        <put-attribute name="footer" value="/WEB-INF/tiles/template/defaultFooter.jsp" />  
    </definition>  
+   
+   <!-- wxcms page begin -->
+   
+   <!-- urltoken Page -->
+   <definition name="tiles-urltoken" extends="base-definition">  
+       <put-attribute name="title" value="URL和Token" />  
+       <put-attribute name="body" value="/WEB-INF/tiles/screen/wxcms/urltoken.jsp" />  
+   </definition> 
+
+   <!-- msgtextList Page -->
+   <definition name="tiles-msgtextList" extends="base-definition">
+       <put-attribute name="title" value="文本消息管理" />  
+       <put-attribute name="body" value="/WEB-INF/tiles/screen/wxcms/msgtextList.jsp" />  
+   </definition> 
+   <!-- msgtextModify Page -->
+   <definition name="tiles-msgtextModify" extends="base-definition">
+       <put-attribute name="title" value="文本消息新增/编辑" />  
+       <put-attribute name="body" value="/WEB-INF/tiles/screen/wxcms/msgtextModify.jsp" />  
+   </definition> 
+   
+   <!-- msgnewsList Page -->
+   <definition name="tiles-msgnewsList" extends="base-definition">
+       <put-attribute name="title" value="图文消息管理" />  
+       <put-attribute name="body" value="/WEB-INF/tiles/screen/wxcms/msgnewsList.jsp" />  
+   </definition> 
+   <!-- msgnewsModify Page -->
+   <definition name="tiles-msgnewsModify" extends="base-definition">
+       <put-attribute name="title" value="图文消息新增/编辑" />  
+       <put-attribute name="body" value="/WEB-INF/tiles/screen/wxcms/msgnewsModify.jsp" />  
+   </definition> 
+   
+   <!-- menuGroupList Page -->
+   <definition name="tiles-menuGroupList" extends="base-definition">
+       <put-attribute name="title" value="菜单组列表" />  
+       <put-attribute name="body" value="/WEB-INF/tiles/screen/wxcms/menuGroupList.jsp" />  
+   </definition> 
+   <!-- menuGroupModify Page -->
+   <definition name="tiles-menuGroupModify" extends="base-definition">
+       <put-attribute name="title" value="菜单组新增/编辑" />  
+       <put-attribute name="body" value="/WEB-INF/tiles/screen/wxcms/menuGroupModify.jsp" />  
+   </definition> 
+
+   <!-- menuList Page -->
+   <definition name="tiles-menuList" extends="base-definition">
+       <put-attribute name="title" value="菜单列表" />  
+       <put-attribute name="body" value="/WEB-INF/tiles/screen/wxcms/menuList.jsp" />  
+   </definition> 
+   <!-- menuModify Page -->
+   <definition name="tiles-menuModify" extends="base-definition">
+       <put-attribute name="title" value="菜单新增" />  
+       <put-attribute name="body" value="/WEB-INF/tiles/screen/wxcms/menuModify.jsp" />  
+   </definition> 
+
+   <!-- wxcms page end -->
 
    <!-- default Page -->
    <definition name="tiles-default" extends="base-definition">  
-       <put-attribute name="title" value="人员信息" />  
+       <put-attribute name="title" value="欢迎登录" />  
        <put-attribute name="body" value="/WEB-INF/tiles/default.jsp" />  
    </definition> 
       
@@ -35,18 +89,12 @@
    <definition name="tiles-flowGoodsList" extends="base-definition">  
        <put-attribute name="title" value="流量商品列表" />  
        <put-attribute name="body" value="/WEB-INF/tiles/screen/flow/flowGoodsList.jsp" />  
-   </definition>  
-   <!-- flowGoodsAdd Page -->
-   <definition name="tiles-flowGoodsAdd" extends="base-definition">  
-       <put-attribute name="title" value="流量商品新增" />  
+   </definition>   
+   <!-- flowGoodsModify Page -->
+   <definition name="tiles-flowGoodsModify" extends="base-definition">  
+       <put-attribute name="title" value="流量商品新增/编辑" />  
        <put-attribute name="body" value="/WEB-INF/tiles/screen/flow/flowGoodsModify.jsp" />  
-   </definition>  
-   <!-- flowGoodsUpdate Page -->
-   <definition name="tiles-flowGoodsUpdate" extends="base-definition">  
-       <put-attribute name="title" value="流量商品编辑" />  
-       <put-attribute name="body" value="/WEB-INF/tiles/screen/flow/flowGoodsModify.jsp" />  
-   </definition>  
-
+   </definition> 
    
    <!-- login definition -->
    <definition name="login-definition" 

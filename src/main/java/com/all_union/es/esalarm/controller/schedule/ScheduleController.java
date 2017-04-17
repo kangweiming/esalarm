@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.all_union.es.esalarm.controller.BaseController;
 import com.all_union.es.esalarm.pojo.schedule.ScheduleQuery;
 import com.all_union.es.esalarm.pojo.schedule.ScheduleTask;
+import com.all_union.es.esalarm.reflect.ReflectUtil;
 import com.all_union.es.esalarm.service.schedule.ScheduleService;
 import com.kwm.common.convert.Convert;
 import com.kwm.common.lang.StringUtil;
@@ -42,18 +43,12 @@ public class ScheduleController extends BaseController{
 	//@TokenAnnotation(needSaveToken = true) 
 	@RequestMapping("/triggerOpt")
 	public String optTriggerTiles(RedirectAttributes attr,
-			@ModelAttribute("triggerName") String  triggerName,
-			@ModelAttribute("triggerGroup") String  triggerGroup,
-			@ModelAttribute("triggerStatus") String  triggerStatus,
-			@ModelAttribute("gmtStart1") String  gmtStart1,
-			@ModelAttribute("gmtStart2") String  gmtStart2,
-			@ModelAttribute("gmtEnd1") String  gmtEnd1,
-			@ModelAttribute("gmtEnd2") String  gmtEnd2,
 			@ModelAttribute("goPage") String  goPage,
 			@ModelAttribute("curPage") String  curPage,
 			@ModelAttribute("opt") String  opt,
 			@ModelAttribute("optName") String  optName,
-			@ModelAttribute("optGroup") String  optGroup
+			@ModelAttribute("optGroup") String  optGroup,
+			@ModelAttribute("query") ScheduleQuery query
 			){
 		
 		logger.debug("do optTriggerTiles method");  
@@ -77,14 +72,7 @@ public class ScheduleController extends BaseController{
 		}
 		
 		// 重定向时带上查询参数，使查询条件不丢失	
-		attr.addFlashAttribute("triggerName",triggerName);
-		attr.addFlashAttribute("triggerGroup",triggerGroup);
-		attr.addFlashAttribute("triggerStatus",triggerStatus);
-
-		attr.addFlashAttribute("gmtStart1",gmtStart1);
-		attr.addFlashAttribute("gmtStart2",gmtStart2);
-		attr.addFlashAttribute("gmtEnd1",gmtEnd1);
-		attr.addFlashAttribute("gmtEnd2",gmtEnd2);
+		attr.addFlashAttribute("query",query);
 
 		attr.addFlashAttribute("goPage",goPage);
 		attr.addFlashAttribute("curPage",curPage);
@@ -99,24 +87,16 @@ public class ScheduleController extends BaseController{
 	//@TokenAnnotation(needSaveToken = true) 
 	public String listTirggersTiles(Model model,
 		@ModelAttribute("init") String  init,
-		@ModelAttribute("triggerName") String  triggerName,
-		@ModelAttribute("triggerGroup") String  triggerGroup,
-		@ModelAttribute("triggerStatus") String  triggerStatus,
-		@ModelAttribute("gmtStart1") String  gmtStart1,
-		@ModelAttribute("gmtStart2") String  gmtStart2,
-		@ModelAttribute("gmtEnd1") String  gmtEnd1,
-		@ModelAttribute("gmtEnd2") String  gmtEnd2,
 		@ModelAttribute("goPage") String  goPage,
 		@ModelAttribute("curPage") String  curPage,
-		@ModelAttribute("flag") String  flag
+		@ModelAttribute("flag") String  flag,
+		@ModelAttribute("query") ScheduleQuery query
 		){
 		
 		logger.debug("do listTirggersTiles method");
 				
 		// 需要判断是否是重复提交 使用拦截器		
 		
-    	// 设置查询条件
-		ScheduleQuery query = new ScheduleQuery();
 		// 转到的页数变量
 		String strGoPage = null;
 		
@@ -126,18 +106,13 @@ public class ScheduleController extends BaseController{
 		// 非init标识，则获得查询条件
 		if(!Convert.asBoolean(init)){
 
-			query.setTriggerName(StringUtil.trim(triggerName));
-			query.setTriggerGroup(StringUtil.trim(triggerGroup));
-			query.setTriggerStatus(StringUtil.trim(triggerStatus));
-									
-			query.setGmtStart1(StringUtil.trim(gmtStart1));
-			query.setGmtEnd1(StringUtil.trim(gmtEnd1));
-			query.setGmtStart2(StringUtil.trim(gmtStart2));
-			query.setGmtEnd2(StringUtil.trim(gmtEnd2));						
+			//处理参数 对于String类型的属性，将空字符串（不是NULL）转成NULL,便于mybatis判断
+			ReflectUtil.replaceFieldString(query,"",null);					
 			
 		}
 		else{
 			// 设置查询条件为全部
+			query = new ScheduleQuery();
 			
 		}
 		

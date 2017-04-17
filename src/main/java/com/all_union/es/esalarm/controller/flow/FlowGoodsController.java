@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.all_union.es.esalarm.annotation.TokenAnnotation;
 import com.all_union.es.esalarm.common.WebConstants;
+import com.all_union.es.esalarm.common.WebMemoryCache;
 import com.all_union.es.esalarm.controller.BaseController;
 import com.all_union.es.esalarm.pojo.flow.FlowChannelDo;
 import com.all_union.es.esalarm.pojo.flow.FlowChannelQuery;
@@ -65,14 +66,11 @@ public class FlowGoodsController extends BaseController {
 	
 	// 自定义注解，需要拦截重复提交的方法上如此设置
 	@TokenAnnotation(needSaveToken = true) 
-	@RequestMapping(value = "/flowGoodsModify")
-	//public String modifyFlowGoods(@ModelAttribute("goods") FlowGoodsDo goods,@ModelAttribute("action") String action){
-	//public String modifyFlowGoods(@ModelAttribute FlowGoodsDo goods,@ModelAttribute String action){
-	public String modifyFlowGoods(RedirectAttributes attr,FlowGoodsDo goods,String action) throws Throwable{
+	@RequestMapping(value = "/flowGoodsModifyAction")
+	//public String modifyFlowGoods(@ModelAttribute("goods") FlowGoodsDo goods){
+	//public String modifyFlowGoods(@ModelAttribute FlowGoodsDo goods){
+	public String modifyFlowGoodsAction(RedirectAttributes attr,FlowGoodsDo goods) throws Throwable{
 		
-		if(StringUtil.isBlank(action)){
-			throw new Exception("参数错误");
-		}
 		// 成功消息
 		String successMsg = "";
 		// 替换""为null
@@ -80,7 +78,8 @@ public class FlowGoodsController extends BaseController {
 
 		// 当前时间
 		Date now = new Date();
-		if(action.equals(WebConstants.FORM_ACTION_ADD)){
+		
+		if(goods.getId() == null){
 			// 增加 默认有效期是null，即不限时间						
 			goods.setGmtCreate(now);
 			goods.setGmtUpdate(now);
@@ -88,6 +87,7 @@ public class FlowGoodsController extends BaseController {
 			flowGoodsService.insertSelective(goods);
 			
 			successMsg = "添加商品成功！";
+			
 		}
 		else{
 			// 更新 默认有效期是null，即不限时间
@@ -95,7 +95,7 @@ public class FlowGoodsController extends BaseController {
 			
 			flowGoodsService.updateByPrimaryKeySelective(goods);
 			
-			successMsg = "更新商品成功！";
+			successMsg = "更新商品成功！";			
 		}
 		
 		attr.addFlashAttribute("msg",successMsg);
@@ -103,65 +103,44 @@ public class FlowGoodsController extends BaseController {
 		
 	}
 	
-	@RequestMapping(value = "/flowGoodsAdd")
-	public String addFlowGoodsTiles(Model model){
-		logger.debug("do addFlowGoodsTiles method");
+	@RequestMapping(value = "/flowGoodsModify")
+	public String modifyFlowGoodsTiles(Model model,@ModelAttribute("id") String id){
+		logger.debug("do method");
 		
-		// 设置页面标题栏(与update过程共用同一页面)
-		model.addAttribute("bodyTitle", "流量商品新增");
-		// 设置action类型
-		model.addAttribute("formaction", WebConstants.FORM_ACTION_ADD);
 		//-----------------------------------
     	// 运营商信息
-    	model.addAttribute(WebConstants.CACHE_TP_LIST, cacheService.getCache("tpList"));
+    	model.addAttribute(WebConstants.CACHE_TP_LIST, WebMemoryCache.getCache("tpList"));
 		    	
     	// 省级行政区域信息
-    	model.addAttribute(WebConstants.CACHE_PROVINCE_LIST, cacheService.getCache("provinceList"));
+    	model.addAttribute(WebConstants.CACHE_PROVINCE_LIST, WebMemoryCache.getCache("provinceList"));
 		
     	//-----------------------------------
     	// 渠道信息 - 所有渠道
     	FlowChannelQuery channelQuery = new FlowChannelQuery();
     	// 查询所有记录时，将pageSize设置到最大
     	channelQuery.setPageSize(Integer.MAX_VALUE);
-    	List<FlowChannelDo> channelList = flowChannelService.listChannelByQuery(new FlowChannelQuery());
+    	List<FlowChannelDo> channelList = flowChannelService.listChannelByQuery(channelQuery);
     	model.addAttribute("channelList",channelList);		
 		
-		return "tiles-flowGoodsAdd"; 
-	}
-	
-	@RequestMapping(value = "/flowGoodsUpdate")
-	public String updateFlowGoodsTiles(Model model,@ModelAttribute("id") String id){
-		logger.debug("do updateFlowGoodsTiles method");
+		if(StringUtil.isBlank(id)){
+			// 增加页面
+			// 设置页面标题栏
+			model.addAttribute("bodyTitle", "流量商品新增");
+		}
+		else{
+			// 设置页面标题栏
+			model.addAttribute("bodyTitle", "流量商品编辑");
+			
+			// 根据ID查询出商品信息
+			FlowGoodsDo goods = flowGoodsService.selectByPrimaryKey(Convert.asLong(StringUtil.trim(id)));
+			
+			model.addAttribute("goods", goods);
+		}	
 		
-		// 设置页面标题栏
-		model.addAttribute("bodyTitle", "流量商品编辑");
-		// 设置action类型
-		model.addAttribute("formaction", WebConstants.FORM_ACTION_UPDATE);
+		return "tiles-flowGoodsModify";
 		
-		// 根据ID查询出商品信息
-		FlowGoodsDo goods = flowGoodsService.selectByPrimaryKey(Convert.asLong(StringUtil.trim(id)));
-		
-		model.addAttribute("goods", goods);
-
-		//-----------------------------------
-    	// 运营商信息
-    	model.addAttribute(WebConstants.CACHE_TP_LIST, cacheService.getCache("tpList"));
-		    	
-    	// 省级行政区域信息
-    	model.addAttribute(WebConstants.CACHE_PROVINCE_LIST, cacheService.getCache("provinceList"));
-		
-    	//-----------------------------------
-    	// 渠道信息 - 所有渠道
-    	FlowChannelQuery channelQuery = new FlowChannelQuery();
-    	// 查询所有记录时，将pageSize设置到最大
-    	channelQuery.setPageSize(Integer.MAX_VALUE);
-    	List<FlowChannelDo> channelList = flowChannelService.listChannelByQuery(new FlowChannelQuery());
-    	model.addAttribute("channelList",channelList);
-    	
-		return "tiles-flowGoodsUpdate"; 
-	}	
-	
-    //@RequestMapping(value = "/userList", method = RequestMethod.POST)
+	}		
+    
     @RequestMapping(value = "/flowGoodsDelete")
     public String deleteFlowGoods(RedirectAttributes attr,
     		@ModelAttribute("init") String  init,
@@ -183,7 +162,7 @@ public class FlowGoodsController extends BaseController {
 		attr.addFlashAttribute("curPage",curPage);
 		attr.addFlashAttribute("flag",flag);
 		attr.addFlashAttribute("query",query);
-    	   	
+		    	   	
     	return "redirect:flowGoodsList";
     }	
 
@@ -242,10 +221,10 @@ public class FlowGoodsController extends BaseController {
 		
     	//-----------------------------------
     	// 运营商信息
-    	model.addAttribute(WebConstants.CACHE_TP_LIST, cacheService.getCache("tpList"));
+    	model.addAttribute(WebConstants.CACHE_TP_LIST, WebMemoryCache.getCache("tpList"));
 		    	
     	// 省级行政区域信息
-    	model.addAttribute(WebConstants.CACHE_PROVINCE_LIST, cacheService.getCache("provinceList"));
+    	model.addAttribute(WebConstants.CACHE_PROVINCE_LIST, WebMemoryCache.getCache("provinceList"));
     	
     	//-----------------------------------
     	// 渠道信息 - 所有渠道

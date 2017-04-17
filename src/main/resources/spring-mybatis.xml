@@ -2,16 +2,19 @@
 <beans xmlns="http://www.springframework.org/schema/beans"  
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"  
     xmlns:context="http://www.springframework.org/schema/context"  
-    xmlns:mvc="http://www.springframework.org/schema/mvc"  
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:tx="http://www.springframework.org/schema/tx"  
     xsi:schemaLocation="http://www.springframework.org/schema/beans    
                         http://www.springframework.org/schema/beans/spring-beans-4.3.xsd    
                         http://www.springframework.org/schema/context    
                         http://www.springframework.org/schema/context/spring-context-4.3.xsd    
                         http://www.springframework.org/schema/mvc    
-                        http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">  
+                        http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+                        http://www.springframework.org/schema/tx   
+          				http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">  
     
     <!-- 自动扫描 -->  
-    <context:component-scan base-package="com.all_union.es.esalarm" />  
+    <context:component-scan base-package="com.all_union.es.esalarm" />
     
     <!-- 引入配置文件 -->  
     <bean id="propertyConfigurer"  
@@ -38,7 +41,8 @@
     </bean>  
   
     <!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->  
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    	<property name="configLocation" value="classpath:mybatis-config.xml" />  
         <property name="dataSource" ref="dataSource" />  
         <!-- 自动扫描mapping.xml文件 -->  
         <property name="mapperLocations" value="classpath:com/all_union/es/esalarm/mapping/**/*.xml"></property>
@@ -55,5 +59,11 @@
         class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
         <property name="dataSource" ref="dataSource" />  
     </bean>  
+    
+    <!-- 事务注解驱动，标注@Transactional的类和方法将具有事务性 方法注解会覆盖类注解-->  
+    <!-- 有@PostConstruct注解的方法上 @Transactional无效，据说@PostInitialize好用，
+    	暂没查到@PostInitialize具体资料，怀疑不是官方API-->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
   
 </beans>  

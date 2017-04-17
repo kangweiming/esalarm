@@ -9,6 +9,27 @@
 	<url>http://maven.apache.org</url>
 	<build>
 		<finalName>esalarm</finalName>
+		<!-- 打包时默认不会包含src/main/javasrc/main/resources和目录下的各种资源文件
+			这个resource配置明确包含xml和properties文件
+		 -->
+		<resources>
+		    <resource>
+		        <directory>src/main/java</directory>
+		        <includes>
+		            <include>**/*.properties</include>
+		            <include>**/*.xml</include>
+		        </includes>
+		        <filtering>false</filtering>
+		    </resource>
+		    <resource>
+		        <directory>src/main/resources</directory>
+		        <includes>
+		            <include>**/*.properties</include>
+		            <include>**/*.xml</include>
+		        </includes>
+		        <filtering>false</filtering>
+		    </resource>
+		</resources>		
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -18,7 +39,7 @@
 					<target>1.8</target> <!-- yours Java version -->
 					<encoding>UTF-8</encoding>
 				</configuration>
-			</plugin>
+			</plugin>		
 		</plugins>
 	</build>
 	<properties>
@@ -77,9 +98,27 @@
 		<toolkit.common.collection.version>1.0</toolkit.common.collection.version>
 		<!-- es client version -->
 		<es.client.version>0.0.1-SNAPSHOT</es.client.version>
+		
+		<!-- dom4j version -->
+		<dom4j.version>1.6.1</dom4j.version>
+		<!-- thoughtworks.xstream version -->
+		<thoughtworks.xstream.version>1.4.9</thoughtworks.xstream.version>
 	</properties>
 
 	<dependencies>
+		<!-- 微信功能新增的依赖，记得梳理 begin -->
+		<!-- dom4j -->
+		<dependency>
+           <groupId>dom4j</groupId>
+           <artifactId>dom4j</artifactId>
+           <version>${dom4j.version}</version>
+        </dependency>		
+		<dependency>  
+		    <groupId>com.thoughtworks.xstream</groupId>  
+		    <artifactId>xstream</artifactId>  
+		    <version>${thoughtworks.xstream.version}</version>  
+		</dependency>         
+		<!-- 微信功能新增的依赖，记得梳理 end -->
 		<!-- 通用工具包 -->
 		<dependency>
 			<groupId>toolkit.common</groupId>
@@ -143,6 +182,14 @@
 			<groupId>javax.servlet.jsp.jstl</groupId>
 			<artifactId>jstl-api</artifactId>
 			<version>${jstl-api.version}</version>
+			<!-- servlet-api版本是2.5的，太老了，排除 --> 
+			<exclusions>
+				<exclusion>
+					<groupId>javax.servlet</groupId>
+					<artifactId>servlet-api</artifactId>
+				</exclusion>
+			</exclusions>
+			
 		</dependency> 
 
 		<!-- add for quartz begin -->
@@ -272,7 +319,7 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql-connector-java.version}</version>
 		</dependency>
-		<!-- 导入dbcp的jar包，用来在applicationContext.xml中配置数据库 -->
+		<!-- 导入dbcp的jar包，用来在spring-mybatis.xml中配置数据库 -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-dbcp2</artifactId>
@@ -338,18 +385,20 @@
 			<artifactId>fastjson</artifactId>
 			<version>${fastjson.version}</version>
 		</dependency>
-		<!-- 映入JSON jackson1.x -->
+		<!-- 映入JSON jackson1.x 
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>${jackson-mapper-asl.version}</version>
 		</dependency>
-		<!-- jackson2.x -->
+		-->
+		<!-- jackson2.x 
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>${jackson-databind.version}</version>
 		</dependency>
+		-->
 		<!-- 上传组件包 -->
 		<dependency>
 			<groupId>commons-fileupload</groupId>
@@ -366,6 +415,7 @@
 			<artifactId>commons-codec</artifactId>
 			<version>${commons-codec.version}</version>
 		</dependency>
+		
 	</dependencies>
 
 </project>

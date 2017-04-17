@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.all_union.es.esalarm.common.WebConstants;
+import com.all_union.es.esalarm.common.wxapi.WxApiClient;
 
 /** 
  * @Description: 
@@ -35,7 +36,7 @@ public class LoginController extends BaseController{
     public String defaultPage(ModelMap model) {
     	
     	logger.debug("request /default");
-    	
+    	    	    	
         return "tiles-default";  
     } 
     
