@@ -6,8 +6,6 @@
     http://www.springframework.org/schema/security 
     http://www.springframework.org/schema/security/spring-security-4.2.xsd">
 
-
-
 	<!-- 从数据库中获取用户权限 -->
 	<!-- 静态资源 与web.xml配置对应：
 	<servlet-mapping>
