@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://10.20.91.130/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.all_union.es.esalarm.dao.wxcms.AccountMenuGroupDao">
+
+	<!-- add by kwm begin -->
+	<select id="listMenuGroupByQuery" parameterType="com.all_union.es.esalarm.pojo.wxcms.AccountMenuGroupQuery" resultType="com.all_union.es.esalarm.pojo.wxcms.AccountMenuGroup">
+		SELECT * FROM t_wxcms_account_menu_group 
+		WHERE 1=1
+		<if test="baseDo.name != null">
+        	and name like CONCAT('%',#{baseDo.name},'%')
+      	</if>
+		<if test="baseDo.enable != null">
+        	and enable = #{baseDo.enable}
+      	</if>      	
+		ORDER BY ID 
+		limit #{pageFristItemZero},#{pageSize}
+	</select>
+	<select id="countMenuGroupByQuery" parameterType="com.all_union.es.esalarm.pojo.wxcms.AccountMenuGroupQuery" resultType="java.lang.Integer">
+		SELECT count(*) FROM t_wxcms_account_menu_group 
+		WHERE 1=1
+		<if test="baseDo.name != null">
+        	and name like CONCAT('%',#{baseDo.name},'%')
+      	</if>
+		<if test="baseDo.enable != null">
+        	and enable = #{baseDo.enable}
+      	</if>      	
+	</select>
+	
+	<!-- add by kwm end -->
+	<select id="list" parameterType="com.all_union.es.esalarm.pojo.wxcms.AccountMenuGroup" resultType="com.all_union.es.esalarm.pojo.wxcms.AccountMenuGroup">
+		SELECT * FROM t_wxcms_account_menu_group ORDER BY ID
+	</select>
+
+	<select id="getTotalItemsCount" parameterType="com.all_union.es.esalarm.pojo.wxcms.AccountMenuGroup" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM t_wxcms_account_menu_group
+	</select>
+
+	<select id="paginationEntity" resultType="com.all_union.es.esalarm.pojo.wxcms.AccountMenuGroup">
+		SELECT * FROM t_wxcms_account_menu_group ORDER BY ID LIMIT #{param2.start} , #{param2.pageSize} 
+	</select>
+
+	<select id="getById" parameterType="java.lang.String" resultType="com.all_union.es.esalarm.pojo.wxcms.AccountMenuGroup">
+		SELECT * FROM t_wxcms_account_menu_group WHERE ID = #{id}
+	</select>
+
+	<insert id="add" parameterType="com.all_union.es.esalarm.pojo.wxcms.AccountMenuGroup" flushCache="true"  useGeneratedKeys="true" keyProperty="id"  >
+		INSERT INTO t_wxcms_account_menu_group ( NAME,ENABLE,ID,CREATETIME )  VALUES ( #{name},#{enable},#{id},#{createtime} ) 
+	</insert>
+	
+	<update id="updateMenuGroupDisable" flushCache="true">
+		UPDATE t_wxcms_account_menu_group SET ENABLE = 0
+	</update>
+	
+	<update id="updateMenuGroupEnable" parameterType="java.lang.String" flushCache="true">
+		UPDATE t_wxcms_account_menu_group SET ENABLE = 1 WHERE ID = #{id}
+	</update>
+
+	<update id="update" parameterType="com.all_union.es.esalarm.pojo.wxcms.AccountMenuGroup" flushCache="true">
+		UPDATE t_wxcms_account_menu_group SET NAME = #{name},ENABLE = #{enable},CREATETIME = #{createtime} WHERE ID = #{id} 
+	</update>
+
+	<delete id="deleteAllMenu" parameterType="com.all_union.es.esalarm.pojo.wxcms.AccountMenuGroup" >
+		DELETE FROM t_wxcms_account_menu WHERE GID = #{id}
+	</delete>
+
+	<delete id="delete" parameterType="com.all_union.es.esalarm.pojo.wxcms.AccountMenuGroup" >
+		DELETE FROM t_wxcms_account_menu_group WHERE ID = #{id}
+	</delete>
+
+</mapper>

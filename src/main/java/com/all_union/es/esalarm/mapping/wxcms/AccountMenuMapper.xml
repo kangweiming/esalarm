@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://10.20.91.130/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.all_union.es.esalarm.dao.wxcms.AccountMenuDao">
+
+	<!-- add by kwm begin -->
+	<select id="listMenuByQuery" parameterType="com.all_union.es.esalarm.pojo.wxcms.AccountMenuQuery" resultType="com.all_union.es.esalarm.pojo.wxcms.AccountMenu">
+		SELECT m.* ,m2.name as parentName
+		from t_wxcms_account_menu m LEFT JOIN t_wxcms_account_menu m2
+		on m.parentId = m2.id
+		WHERE 1=1
+		<if test="baseDo.name != null">
+        	and m.name like CONCAT('%',#{baseDo.name},'%')
+      	</if>
+		<if test="baseDo.inputcode != null">
+        	and m.inputCode like CONCAT('%',#{baseDo.inputcode},'%')
+      	</if>
+		<if test="baseDo.gid != null">
+        	and m.gid = #{baseDo.gid}
+      	</if>
+		<if test="baseDo.parentid != null">
+        	and m.parentId = #{baseDo.parentid}
+      	</if>
+		ORDER BY m.id 
+		limit #{pageFristItemZero},#{pageSize}			
+	</select>
+	<select id="countMenuByQuery" parameterType="com.all_union.es.esalarm.pojo.wxcms.AccountMenuQuery" resultType="java.lang.Integer">
+		SELECT count(*)
+		from t_wxcms_account_menu m LEFT JOIN t_wxcms_account_menu m2
+		on m.parentId = m2.id
+		WHERE 1=1
+		<if test="baseDo.name != null">
+        	and m.name like CONCAT('%',#{baseDo.name},'%')
+      	</if>
+		<if test="baseDo.inputcode != null">
+        	and m.inputCode like CONCAT('%',#{baseDo.inputcode},'%')
+      	</if>
+		<if test="baseDo.gid != null">
+        	and m.gid = #{baseDo.gid}
+      	</if>
+		<if test="baseDo.parentid != null">
+        	and m.parentId = #{baseDo.parentid}
+      	</if>
+	</select>	
+	
+	<select id="listParentMenuByGid" parameterType="java.lang.String" resultType="com.all_union.es.esalarm.pojo.wxcms.AccountMenu">
+		SELECT * FROM t_wxcms_account_menu where parentId = 0 AND gid = #{gid} ORDER BY sort
+	</select>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.all_union.es.esalarm.pojo.wxcms.AccountMenu" flushCache="true">
+		UPDATE t_wxcms_account_menu 
+	    <set>
+	      <if test="mtype != null">
+	        MTYPE = #{mtype},
+	      </if>
+	      <if test="eventType != null">
+	        EVENTTYPE = #{eventType},
+	      </if>
+	      <if test="name != null">
+	        NAME = #{name},
+	      </if>
+	      <if test="inputcode != null">
+	        INPUTCODE = #{inputcode},
+	        URL = '',
+	        MSGID = '',
+	      </if>
+	      <if test="url != null">
+	        URL = #{url},
+	        MSGID = '',
+	        INPUTCODE = '',
+	      </if>
+	      <if test="sort != null">
+	        SORT = #{sort},
+	      </if>
+	      <if test="parentid != null">
+	        PARENTID = #{parentid},
+	      </if>
+	      <if test="msgId != null">
+	        MSGID = #{msgId},
+	        URL = '',
+	        INPUTCODE = '',
+	      </if>
+	      <if test="createtime != null">
+	       CREATETIME = #{createtime},
+	      </if>
+	      <if test="gid != null">
+	       GID = #{gid},
+	      </if>
+	    </set>
+		WHERE ID = #{id} 
+	</update>
+	
+	<!-- add by kwm end -->
+	<select id="listForPage" parameterType="com.all_union.es.esalarm.pojo.wxcms.AccountMenu" resultType="com.all_union.es.esalarm.pojo.wxcms.AccountMenu">
+		SELECT m.* ,m2.name as parentName
+		from t_wxcms_account_menu m LEFT JOIN t_wxcms_account_menu m2
+		on m.parentId = m2.id
+		WHERE m.gid = #{gid}
+	</select>
+	
+	<select id="listParentMenu" resultType="com.all_union.es.esalarm.pojo.wxcms.AccountMenu">
+		SELECT * FROM t_wxcms_account_menu where parentId = 0 ORDER BY sort
+	</select>
+
+	<select id="listWxMenus"  parameterType="java.lang.String" resultType="com.all_union.es.esalarm.pojo.wxcms.AccountMenu">
+		SELECT * FROM t_wxcms_account_menu 
+		where gid = #{gid}
+		ORDER BY parentId, sort
+	</select>
+
+	<select id="getById" parameterType="java.lang.String" resultType="com.all_union.es.esalarm.pojo.wxcms.AccountMenu">
+		SELECT * FROM t_wxcms_account_menu WHERE ID = #{id}
+	</select>
+
+	<insert id="add" parameterType="com.all_union.es.esalarm.pojo.wxcms.AccountMenu" flushCache="true">
+		INSERT INTO t_wxcms_account_menu ( MTYPE,EVENTTYPE,NAME,INPUTCODE,URL,SORT,MSGID,PARENTID,GID,CREATETIME )  VALUES ( #{mtype},#{eventType},#{name},#{inputcode},#{url},#{sort},#{msgId},#{parentid},#{gid},#{createtime} ) 
+	</insert>
+
+	<update id="update" parameterType="com.all_union.es.esalarm.pojo.wxcms.AccountMenu" flushCache="true">
+		UPDATE t_wxcms_account_menu SET MTYPE = #{mtype},NAME = #{name},INPUTCODE = #{inputcode},URL = #{url},SORT = #{sort},PARENTID = #{parentid},CREATETIME = #{createtime} WHERE ID = #{id} 
+	</update>
+
+	<delete id="delete" parameterType="com.all_union.es.esalarm.pojo.wxcms.AccountMenu" >
+		DELETE FROM t_wxcms_account_menu WHERE ID = #{id}
+	</delete>
+
+</mapper>
